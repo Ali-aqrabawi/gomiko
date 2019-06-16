@@ -1,7 +1,7 @@
 gomiko
 ******
-multi-vendor networking SDK.
 
+multi-vendor networking SDK.
 
 Supports:
 ---------
@@ -13,17 +13,15 @@ Supports:
 * Arista EOS
 * Juniper JunOS
 
-
 Features:
 ---------
 * SSH
 * Telnet
 * TextFSM
 
-
 Examples:
 ---------
-Example :
+Example1 :
 
 .. code-block:: go
 
@@ -34,8 +32,7 @@ Example :
 
     func main() {
 
-    	device := gomiko.NewDevice("162.221.4.102", "admin", "J3llyfish1", "cisco_asa")
-    	fmt.Println("werw")
+    	device := gomiko.NewDevice("192.168.1.99", "admin", "pass", "cisco_asa")
 
     	device.Connect()
 
