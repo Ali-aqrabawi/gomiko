@@ -1,21 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="67278f0d-887f-4ca2-807e-9234499a0127" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/utils/logger.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/connections/ssh.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/connections/ssh.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/lib/arista/device_factory.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/lib/arista/device_factory.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/lib/cisco/base.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/lib/cisco/base.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/lib/cisco/device_factory.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/lib/cisco/device_factory.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/lib/driver.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/lib/driver.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/lib/juniper/device_factory.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/lib/juniper/device_factory.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/lib/juniper/junos.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/lib/juniper/junos.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/lib/mikrotik/device_factory.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/lib/mikrotik/device_factory.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/lib/mikrotik/mtikos.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/lib/mikrotik/mtikos.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/readme.rst" beforeDir="false" afterPath="$PROJECT_DIR$/readme.rst" afterDir="false" />
-    </list>
+    <list default="true" id="67278f0d-887f-4ca2-807e-9234499a0127" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +10,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pkg/lib/cisco/base.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="208">
@@ -39,8 +25,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pkg/lib/mikrotik/mtikos.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="313">
-              <caret line="53" column="60" selection-start-line="53" selection-start-column="60" selection-end-line="53" selection-end-column="60" />
+            <state relative-caret-position="343">
+              <caret line="57" lean-forward="true" selection-start-line="57" selection-end-line="57" />
             </state>
           </provider>
         </entry>
@@ -78,11 +64,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pkg/utils/logger.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="5" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="5" />
+            <state relative-caret-position="270">
+              <caret line="18" column="5" lean-forward="true" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -117,8 +103,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pkg/lib/driver.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="373">
-              <caret line="74" column="7" lean-forward="true" selection-start-line="74" selection-start-column="7" selection-end-line="74" selection-end-column="7" />
+            <state relative-caret-position="164">
+              <caret line="53" selection-start-line="53" selection-end-line="53" />
             </state>
           </provider>
         </entry>
@@ -214,11 +200,11 @@
         <option value="$PROJECT_DIR$/pkg/lib/juniper/device_factory.go" />
         <option value="$PROJECT_DIR$/pkg/lib/juniper/junos.go" />
         <option value="$PROJECT_DIR$/pkg/lib/mikrotik/device_factory.go" />
-        <option value="$PROJECT_DIR$/pkg/lib/mikrotik/mtikos.go" />
         <option value="$PROJECT_DIR$/pkg/lib/arista/device_factory.go" />
-        <option value="$PROJECT_DIR$/pkg/utils/logger.go" />
-        <option value="$PROJECT_DIR$/pkg/lib/driver.go" />
         <option value="$PROJECT_DIR$/pkg/lib/cisco/base.go" />
+        <option value="$PROJECT_DIR$/pkg/lib/driver.go" />
+        <option value="$PROJECT_DIR$/pkg/lib/mikrotik/mtikos.go" />
+        <option value="$PROJECT_DIR$/pkg/utils/logger.go" />
       </list>
     </option>
   </component>
@@ -240,57 +226,6 @@
             <path>
               <item name="gomiko" type="b2602c69:ProjectViewProjectNode" />
               <item name="gomiko" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gomiko" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gomiko" type="462c0819:PsiDirectoryNode" />
-              <item name="pkg" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gomiko" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gomiko" type="462c0819:PsiDirectoryNode" />
-              <item name="pkg" type="462c0819:PsiDirectoryNode" />
-              <item name="connections" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gomiko" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gomiko" type="462c0819:PsiDirectoryNode" />
-              <item name="pkg" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gomiko" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gomiko" type="462c0819:PsiDirectoryNode" />
-              <item name="pkg" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="arista" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gomiko" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gomiko" type="462c0819:PsiDirectoryNode" />
-              <item name="pkg" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="cisco" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gomiko" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gomiko" type="462c0819:PsiDirectoryNode" />
-              <item name="pkg" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="juniper" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gomiko" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gomiko" type="462c0819:PsiDirectoryNode" />
-              <item name="pkg" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="mikrotik" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gomiko" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gomiko" type="462c0819:PsiDirectoryNode" />
-              <item name="pkg" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -344,12 +279,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1366" y="25" width="1920" height="1055" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.11579509" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.11579509" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="0" sideWeight="0.6574173" visible="true" weight="0.33045357" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="0" sideWeight="0.6574173" visible="true" weight="0.33045357" />
       <window_info anchor="bottom" id="Database Changes" order="1" />
       <window_info anchor="bottom" id="Event Log" order="2" sideWeight="0.3425827" side_tool="true" visible="true" weight="0.33045357" />
       <window_info anchor="bottom" id="Version Control" order="3" />
@@ -553,13 +487,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/lib/mikrotik/mtikos.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="53" column="60" selection-start-line="53" selection-start-column="60" selection-end-line="53" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pkg/connections/ssh.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="563">
@@ -587,13 +514,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/utils/logger.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="5" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pkg/lib/cisco/asa.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -615,13 +535,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/lib/driver.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="373">
-          <caret line="74" column="7" lean-forward="true" selection-start-line="74" selection-start-column="7" selection-end-line="74" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pkg/lib/cisco/base.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
@@ -629,6 +542,27 @@
           <folding>
             <element signature="e#15#90#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pkg/lib/driver.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="53" selection-start-line="53" selection-end-line="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pkg/lib/mikrotik/mtikos.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="343">
+          <caret line="57" lean-forward="true" selection-start-line="57" selection-end-line="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pkg/utils/logger.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="5" lean-forward="true" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
         </state>
       </provider>
     </entry>
