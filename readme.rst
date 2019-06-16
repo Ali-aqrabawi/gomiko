@@ -1,14 +1,6 @@
 gomiko
 ******
-multi-vendor network SDK.
-
-Requires:
----------
-* asyncio
-* AsyncSSH
-* Python >=3.5
-* pyYAML
-* asyncssh
+multi-vendor networking SDK.
 
 Supports:
 ---------
@@ -16,7 +8,9 @@ Supports:
 * Cisco IOS XR
 * Cisco ASA
 * Cisco NX-OS
-
+* Mikrotik RouterOS
+* Arista EOS
+* Juniper JunOS
 
 Features:
 ---------
@@ -26,7 +20,7 @@ Features:
 
 Examples:
 ---------
-Example of interacting with Cisco IOS devices:
+Example :
 
 .. code-block:: go
 

@@ -4,7 +4,6 @@ import (
 	"errors"
 	"gomiko/pkg/connections"
 	"regexp"
-	"strings"
 	"time"
 )
 
@@ -14,6 +13,7 @@ type Driver struct {
 }
 
 func (d Driver) SendCommand(cmd string, expectPattern string) (string, error) {
+
 	if d.Connection == nil {
 		return "", errors.New("not connected to device, make sure to call .Connect() first")
 	}
@@ -60,11 +60,18 @@ func readRoutine(d Driver, pattern string, buffChan chan<- string) {
 	var result string
 	result, err := d.Connection.Read()
 
-	for (err == nil) && (!strings.Contains(result, pattern)) {
+	r, _ := regexp.Compile(pattern)
+
+	for (err == nil) && (!r.MatchString(result)) {
 		outSlice, _ := d.Connection.Read()
 		result += outSlice
 
 	}
+	//for (err == nil) && (!strings.Contains(result, pattern)) {
+	//	outSlice, _ := d.Connection.Read()
+	//	result += outSlice
+	//
+	//}
 
 	buffChan <- result
 

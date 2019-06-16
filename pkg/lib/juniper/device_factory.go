@@ -8,7 +8,7 @@ import (
 
 func NewDevice(Host string, Username string, Password string, DeviceType string) types.Device {
 	connection := connections.NewConnection(Host, Username, Password, "ssh")
-	driver := lib.Driver{connection,"\n"}
-	return &JunOSDevice{Password, DeviceType, "", driver, connection}
+	driver := lib.Driver{connection, "\n"}
+	return &JunOSDevice{Host, Password, DeviceType, "", driver, connection}
 
 }

@@ -4,10 +4,12 @@ import (
 	"errors"
 	"gomiko/pkg/connections"
 	"gomiko/pkg/lib"
+	"gomiko/pkg/utils"
 	"strings"
 )
 
 type CSCODevice struct {
+	Host       string
 	Password   string
 	DeviceType string
 	Prompt     string
@@ -18,29 +20,34 @@ type CSCODevice struct {
 func (d *CSCODevice) Connect() {
 
 	d.Connection.Connect()
-	d.Prompt = d.Driver.FindDevicePrompt("(.*)[#>]", "")
+	d.Prompt = d.Driver.FindDevicePrompt("(.*)[#>]", "#|>")
+	logger.Log(d.Host, "prompt found:" + d.Prompt)
 	d.sessionPreparation()
 
 }
 
 func (d *CSCODevice) Disconnect() {
-
 	d.Connection.Disconnect()
 
 }
 
 func (d *CSCODevice) SendCommand(cmd string) (string, error) {
+	logger.Log(d.Host, "sending command: "+cmd)
 	if d.Connection == nil {
 		return "", errors.New("not connected to device, make sure to call .Connect() first")
 	}
 
 	result, err := d.Driver.SendCommand(cmd, d.Prompt)
+	if err != nil {
+		logger.Fatal(d.Host, "failed to send command: "+cmd, err)
+	}
 
 	return result, err
 
 }
 
 func (d *CSCODevice) SendConfigSet(cmds []string) (string, error) {
+	logger.Log(d.Host, "sending config set: "+strings.Join(cmds, ", "))
 	if d.Connection == nil {
 		return "", errors.New("not connected to device, make sure to call .Connect() first")
 	}
@@ -57,12 +64,13 @@ func (d *CSCODevice) SendConfigSet(cmds []string) (string, error) {
 }
 
 func (d *CSCODevice) sessionPreparation() {
+	logger.Log(d.Host, "session preparation started...")
 
-	out, err := d.Driver.SendCommand("enable", "Password:")
+	out, err := d.Driver.SendCommand("enable", "Password:|"+d.Prompt)
 	out, err = d.Driver.SendCommand(d.Password, d.Prompt)
 
 	if !strings.Contains(out, "#") {
-		panic("failed to enter enable mode: " + out)
+		logger.Fatal(d.Host, "failed to enter enable mode", nil)
 	}
 
 	cmd := getPagerDisableCmd(d.DeviceType)
@@ -70,7 +78,9 @@ func (d *CSCODevice) sessionPreparation() {
 	out, err = d.SendCommand(cmd)
 
 	if err != nil {
-		panic(err)
+		logger.Fatal(d.Host, "failed to disable pagination", err)
 	}
+	logger.Log(d.Host, "session preparation done!")
+	logger.Log(d.Host, "device output: "+out)
 
 }

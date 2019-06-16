@@ -1,8 +1,8 @@
 package connections
 
 import (
-	"fmt"
 	"golang.org/x/crypto/ssh"
+	"gomiko/pkg/utils"
 	"io"
 )
 
@@ -22,20 +22,20 @@ func NewSSHConn(host string, username string, password string) *SSHConn {
 }
 
 func (c *SSHConn) Connect() {
+	logger.Log(c.Host, "connecting to device...")
+
 	sshConfig := &ssh.ClientConfig{User: c.Username, Auth: []ssh.AuthMethod{ssh.Password(c.Password)}, HostKeyCallback: ssh.InsecureIgnoreHostKey(), Timeout: 0}
 	sshConfig.Ciphers = append(sshConfig.Ciphers, ciphers...)
 	addr := c.Host + ":22"
 	conn, err := ssh.Dial("tcp", addr, sshConfig)
 	if err != nil {
-		fmt.Println("connection failed")
-		panic(err)
+		logger.Fatal(c.Host, "failed to connect: ", err)
 	}
 
 	session, err := conn.NewSession()
 
 	if err != nil {
-		fmt.Println("open session failed")
-		panic(err)
+		logger.Fatal(c.Host, "failed to open session: ", err)
 	}
 
 	reader, _ := session.StdoutPipe()
@@ -56,19 +56,20 @@ func (c *SSHConn) Connect() {
 
 	if err := session.RequestPty("vt100", 0, 200, modes); err != nil {
 
-		panic(err)
+		logger.Fatal(c.Host, "failed to request pty: ", err)
 	}
 	if err := session.Shell(); err != nil {
-		panic(err)
+		logger.Fatal(c.Host, "failed to invoke shell: ", err)
 	}
 
 }
 
 func (c *SSHConn) Disconnect() {
+	logger.Log(c.Host, "disconnecting...")
 
 	err := c.client.Close()
 	if err != nil {
-		panic(err)
+		logger.Fatal(c.Host, "failed to disconnect: ", err)
 	}
 
 }
