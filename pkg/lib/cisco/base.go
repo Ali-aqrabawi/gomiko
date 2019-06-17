@@ -54,13 +54,12 @@ func (d *CSCODevice) sessionPreparation() {
 	logger.Log(d.Host, "session preparation started...")
 
 	out, err := d.Driver.SendCommand("enable", "Password:|"+d.Prompt)
-	if strings.Contains(out,"Password:"){
+	if strings.Contains(out, "Password:") {
 		out, err = d.Driver.SendCommand(d.Password, d.Prompt)
 	}
 
-
 	if !strings.Contains(out, "#") {
-		logger.Fatal(d.Host, "failed to enter enable mode", nil)
+		logger.Fatal(d.Host, "failed to enter enable mode, output: "+out, nil)
 	}
 
 	cmd := getPagerDisableCmd(d.DeviceType)

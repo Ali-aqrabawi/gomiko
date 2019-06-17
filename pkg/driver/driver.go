@@ -64,7 +64,7 @@ func (d *Driver) SendCommandsSet(cmds []string, expectPattern string) (string, e
 func (d *Driver) FindDevicePrompt(regex string, pattern string) string {
 	var out string
 	r, _ := regexp.Compile(regex)
-	d.connection.Write(d.Return)
+
 	if pattern != "" {
 		out = d.ReadUntil(pattern)
 	} else {
@@ -119,3 +119,4 @@ func readRoutine(d *Driver, pattern string, buffChan chan<- string) {
 	buffChan <- result
 
 }
+

@@ -18,6 +18,7 @@ func (d *MikroTikROS) Connect() {
 	d.Driver.Connect()
 	d.Prompt = d.Driver.FindDevicePrompt("\\[.*(@.*\\] >)", "] >")
 	logger.Log(d.Host, "prompt found: "+d.Prompt)
+	d.sessionPreparation()
 
 }
 
@@ -43,5 +44,14 @@ func (d *MikroTikROS) SendConfigSet(cmds []string) (string, error) {
 	results, err := d.Driver.SendCommandsSet(cmds, d.Prompt)
 
 	return results, err
+
+}
+
+func (d *MikroTikROS) sessionPreparation() {
+	logger.Log(d.Host, "session preparation started...")
+
+	out, _ := d.Driver.SendCommand("", d.Prompt)
+	logger.Log(d.Host, "device output: "+out)
+	logger.Log(d.Host, "session preparation done!")
 
 }

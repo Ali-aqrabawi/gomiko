@@ -16,7 +16,6 @@ type JunOSDevice struct {
 
 func (d *JunOSDevice) Connect() {
 	d.Driver.Connect()
-	d.Driver.ReadUntil("% ")
 	d.Prompt = d.Driver.FindDevicePrompt("(@.*)[#>%]", "%")
 	logger.Log(d.Host, "prompt found: "+d.Prompt)
 	d.sessionPreparation()
@@ -51,6 +50,7 @@ func (d *JunOSDevice) SendConfigSet(cmds []string) (string, error) {
 
 func (d *JunOSDevice) sessionPreparation() {
 	logger.Log(d.Host, "session preparation started...")
+
 	out, err := d.Driver.SendCommand("cli", d.Prompt)
 	if !strings.Contains(out, ">") {
 		logger.Fatal(d.Host, "failed to enter enable mode", nil)

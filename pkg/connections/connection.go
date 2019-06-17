@@ -5,6 +5,7 @@ type Connection interface {
 	Disconnect()
 	Read() (string, error)
 	Write(cmd string) int
+
 }
 
 func NewConnection(host string, username string, password string, protocol string) Connection {
