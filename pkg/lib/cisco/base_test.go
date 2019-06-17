@@ -1,24 +1,23 @@
 package cisco
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
 
-//type mockDriver struct {
-//	ReadReturn   string
-//	ReadCount    *int
-//	CmdCalls     *string
-//	PatternCalls *string
-//}
 type mockDriver struct {
 	ReadSideEffect func() string
 	CmdCalls       *string
 	PatternCalls   *string
 	PromptRegex    *string
+	GenericCalls   *string
 }
 
 func (c mockDriver) Connect() {
 
 }
 func (c mockDriver) Disconnect() {
+	*c.GenericCalls = "disconnect"
 
 }
 func (c mockDriver) SendCommand(cmd string, expectPattern string) (string, error) {
@@ -32,6 +31,9 @@ func (c mockDriver) SendCommand(cmd string, expectPattern string) (string, error
 
 }
 func (c mockDriver) SendCommandsSet(cmds []string, expectPattern string) (string, error) {
+	for _, cmd := range cmds {
+		c.SendCommand(cmd, expectPattern)
+	}
 	return c.ReadUntil(expectPattern), nil
 
 }
@@ -63,13 +65,10 @@ func TestCSCODevice_Connect_userMode(t *testing.T) {
 		callsCount += 1
 		switch callsCount {
 		case 1:
-			println("ddddd1")
 			return "switch1"
 		case 2:
-			println("dddd2")
 			return "lorem ipsum 123\nPassword:lorem"
 		case 3:
-			println("dddd3")
 			return "lorem ipsum 123\nswitch#lorem"
 		default:
 			return ""
@@ -77,7 +76,7 @@ func TestCSCODevice_Connect_userMode(t *testing.T) {
 		}
 
 	}
-	base := CSCODevice{"host", "password", "cisco_asa", "", mockD}
+	base := CSCODevice{"host", "password", "cisco_ios", "", mockD}
 	base.Connect()
 
 	if base.Prompt != "switch1" {
@@ -89,7 +88,7 @@ func TestCSCODevice_Connect_userMode(t *testing.T) {
 		t.Errorf("wrong Cisco Pattern calls, Expected: (%s) Got: (%s)", expected, patternCalls)
 	}
 
-	expected = "enable, password, terminal pager 0, "
+	expected = "enable, password, terminal len 0, "
 
 	if cmdCalls != expected {
 		t.Errorf("wrong Cisco commands calls, Expected: (%s) Got: (%s)", expected, patternCalls)
@@ -117,13 +116,10 @@ func TestCSCODevice_Connect_noUserMode(t *testing.T) {
 		callsCount += 1
 		switch callsCount {
 		case 1:
-			println("ddddd1")
 			return "switch1"
 		case 2:
-			println("dddd2")
 			return "lorem ipsum 123\nswitch1#lorem"
 		case 3:
-			println("dddd3")
 			return "switch1#"
 		default:
 			return ""
@@ -131,7 +127,7 @@ func TestCSCODevice_Connect_noUserMode(t *testing.T) {
 		}
 
 	}
-	base := CSCODevice{"host", "password", "cisco_asa", "", mockD}
+	base := CSCODevice{"host", "password", "cisco_ios", "", mockD}
 	base.Connect()
 
 	expected := "#|>, Password:|switch1, switch1, "
@@ -140,7 +136,7 @@ func TestCSCODevice_Connect_noUserMode(t *testing.T) {
 		t.Errorf("wrong Cisco Pattern calls, Expected: (%s) Got: (%s)", expected, patternCalls2)
 	}
 
-	expected = "enable, terminal pager 0, "
+	expected = "enable, terminal len 0, "
 
 	if cmdCalls2 != expected {
 		t.Errorf("wrong Cisco commands calls, Expected: (%s) Got: (%s)", expected, cmdCalls2)
@@ -149,53 +145,72 @@ func TestCSCODevice_Connect_noUserMode(t *testing.T) {
 }
 
 //
-//func TestCSCODevice_Disconnect(t *testing.T) {
-//
-//	base := CSCODevice{"host", "password", "cisco_asa", "", mockDriver{}}
-//	base.Disconnect()
-//
-//	if !stringInSlice("disconnect", calls) {
-//		t.Error("Driver.Connect was not called")
-//	}
-//
-//}
-//
-//func TestCSCODevice_SendCommand(t *testing.T) {
-//
-//	base := CSCODevice{"host", "password", "cisco_asa", "switch100", mockDriver{}}
-//	result, _ := base.SendCommand("cmd")
-//	if !strings.Contains(result, "switch100") && !strings.Contains(result, "cmd") {
-//		t.Error("Driver.SendCommand was not called as expected")
-//	}
-//
-//}
-//
-//func TestCSCODevice_SendConfigSet(t *testing.T) {
-//	cmds := []string{"cmd1", "cmd2"}
-//	base := CSCODevice{"host", "password", "cisco_asa", "switch100", mockDriver{}}
-//	result, _ := base.SendConfigSet(cmds)
-//
-//	if !strings.Contains(result, cmds[0]) && !strings.Contains(result, cmds[1]) && !strings.Contains(result, "switch100") {
-//		t.Error("Driver.SendCommandSet was called with wrong args")
-//	}
-//
-//}
-//
-//func TestASADevice_sessionPreparation(t *testing.T) {
-//	base := CSCODevice{"host", "secrect123", "cisco_asa", "switch44", mockDriver{}}
-//
-//	base.sessionPreparation()
-//	println(cmdCalls[0])
-//	println(cmdCalls[1])
-//	println(cmdCalls[2])
-//
-//}
-//
-//func stringInSlice(a string, list []string) bool {
-//	for _, b := range list {
-//		if b == a {
-//			return true
-//		}
-//	}
-//	return false
-//}
+func TestCSCODevice_Disconnect(t *testing.T) {
+	mockD := mockDriver{}
+	var genericCalls string
+	mockD.GenericCalls = &genericCalls
+
+	base := CSCODevice{"host", "password", "cisco_ios", "", mockD}
+
+	base.Disconnect()
+
+	if genericCalls != "disconnect" {
+		t.Error("Driver.Connect was not called")
+	}
+
+}
+
+func TestCSCODevice_SendCommand(t *testing.T) {
+	mockD := mockDriver{}
+	var cmdCalls, patternCalls, promptRegexCall string
+	mockD.CmdCalls = &cmdCalls
+	mockD.PatternCalls = &patternCalls
+	mockD.PromptRegex = &promptRegexCall
+	mockD.ReadSideEffect = func() string {
+		return "show vlans\n" +
+			"vlan 1 v2\n" +
+			"vlan 2 v2 \n" +
+			"switch1# "
+
+	}
+
+	base := CSCODevice{"host", "password", "cisco_ios", "switch1", mockD}
+	result, _ := base.SendCommand("show vlan")
+
+	if !strings.Contains(result, "vlan 1 v2") && !strings.Contains(result, "vlan 2 v2 ") {
+		t.Error("wrong result returned")
+	}
+
+	expected := "show vlan, "
+
+	if cmdCalls != expected {
+		t.Errorf("wrong commands calls, expected: (%s) got: (%s)", expected, cmdCalls)
+	}
+
+}
+
+func TestCSCODevice_SendConfigSet(t *testing.T) {
+	mockD := mockDriver{}
+	var cmdCalls, patternCalls, promptRegexCall string
+	mockD.CmdCalls = &cmdCalls
+	mockD.PatternCalls = &patternCalls
+	mockD.PromptRegex = &promptRegexCall
+	mockD.ReadSideEffect = func() string {
+		return "show vlans\n" +
+			"vlan 1 v2\n" +
+			"vlan 2 v2 \n" +
+			"switch1# "
+
+	}
+
+	base := CSCODevice{"host", "password", "cisco_ios", "switch1", mockD}
+	cmds := []string{"show interface", "show ip route"}
+	base.SendConfigSet(cmds)
+
+	expected := "config term, show interface, show ip route, end, "
+
+	if cmdCalls != expected {
+		t.Errorf("wrong commands calls, expected: (%s) got: (%s)", expected, cmdCalls)
+	}
+
+}
