@@ -3,6 +3,7 @@ package lib
 import (
 	"errors"
 	"gomiko/pkg/connections"
+	"gomiko/pkg/utils"
 	"regexp"
 	"time"
 )
@@ -51,7 +52,9 @@ func (d Driver) FindDevicePrompt(regex string, pattern string) string {
 	} else {
 		out, _ = d.Connection.Read()
 	}
-
+	if !r.MatchString(out) {
+		logger.Fatal("", "failed to find prompt, pattern: "+pattern+" , output: "+out, nil)
+	}
 	return r.FindStringSubmatch(out)[1]
 
 }

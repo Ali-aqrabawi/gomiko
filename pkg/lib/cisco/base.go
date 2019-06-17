@@ -20,8 +20,8 @@ type CSCODevice struct {
 func (d *CSCODevice) Connect() {
 
 	d.Connection.Connect()
-	d.Prompt = d.Driver.FindDevicePrompt("(.*)[#>]", "#|>")
-	logger.Log(d.Host, "prompt found:" + d.Prompt)
+	d.Prompt = d.Driver.FindDevicePrompt("\r?(.*)[#>]", "#|>")
+	logger.Log(d.Host, "prompt found: " + d.Prompt)
 	d.sessionPreparation()
 
 }
@@ -80,7 +80,8 @@ func (d *CSCODevice) sessionPreparation() {
 	if err != nil {
 		logger.Fatal(d.Host, "failed to disable pagination", err)
 	}
-	logger.Log(d.Host, "session preparation done!")
+
 	logger.Log(d.Host, "device output: "+out)
+	logger.Log(d.Host, "session preparation done!")
 
 }

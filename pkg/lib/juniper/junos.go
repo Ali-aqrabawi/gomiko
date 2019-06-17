@@ -72,7 +72,8 @@ func (d *JunOSDevice) sessionPreparation() {
 	if err != nil {
 		logger.Fatal(d.Host, "failed to disable pagination", err)
 	}
-	logger.Log(d.Host, "session preparation done!")
+
 	logger.Log(d.Host, "device output: "+out)
+	logger.Log(d.Host, "session preparation done!")
 
 }
