@@ -22,7 +22,6 @@ func NewSSHConn(host string, username string, password string) *SSHConn {
 }
 
 func (c *SSHConn) Connect() {
-	logger.Log(c.Host, "connecting to device...")
 
 	sshConfig := &ssh.ClientConfig{User: c.Username, Auth: []ssh.AuthMethod{ssh.Password(c.Password)}, HostKeyCallback: ssh.InsecureIgnoreHostKey(), Timeout: 0}
 	sshConfig.Ciphers = append(sshConfig.Ciphers, ciphers...)
@@ -65,7 +64,6 @@ func (c *SSHConn) Connect() {
 }
 
 func (c *SSHConn) Disconnect() {
-	logger.Log(c.Host, "disconnecting...")
 
 	err := c.client.Close()
 	if err != nil {

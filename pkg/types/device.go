@@ -7,3 +7,4 @@ type Device interface {
 	SendConfigSet(cmds []string) (string, error)
 }
 
+

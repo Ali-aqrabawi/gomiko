@@ -1,14 +1,13 @@
 package juniper
 
 import (
-	"gomiko/pkg/connections"
-	"gomiko/pkg/lib"
+	"gomiko/pkg/driver"
 	"gomiko/pkg/types"
 )
 
 func NewDevice(Host string, Username string, Password string, DeviceType string) types.Device {
-	connection := connections.NewConnection(Host, Username, Password, "ssh")
-	driver := lib.Driver{connection, "\n"}
-	return &JunOSDevice{Host, Password, DeviceType, "", driver, connection}
+	devDriver := driver.NewDriver(Host, Username, Password, "\n", "ssh")
+
+	return &JunOSDevice{Host, Password, DeviceType, "", devDriver}
 
 }

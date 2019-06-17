@@ -1,9 +1,7 @@
 package cisco
 
 import (
-	"errors"
-	"gomiko/pkg/connections"
-	"gomiko/pkg/lib"
+	"gomiko/pkg/driver"
 	"gomiko/pkg/utils"
 	"strings"
 )
@@ -13,29 +11,22 @@ type CSCODevice struct {
 	Password   string
 	DeviceType string
 	Prompt     string
-	Driver     lib.Driver
-	Connection connections.Connection
+	Driver     driver.IDriver
 }
 
 func (d *CSCODevice) Connect() {
-
-	d.Connection.Connect()
+	d.Driver.Connect()
 	d.Prompt = d.Driver.FindDevicePrompt("\r?(.*)[#>]", "#|>")
-	logger.Log(d.Host, "prompt found: " + d.Prompt)
+	logger.Log(d.Host, "prompt found: "+d.Prompt)
 	d.sessionPreparation()
 
 }
 
 func (d *CSCODevice) Disconnect() {
-	d.Connection.Disconnect()
-
+	d.Driver.Disconnect()
 }
 
 func (d *CSCODevice) SendCommand(cmd string) (string, error) {
-	logger.Log(d.Host, "sending command: "+cmd)
-	if d.Connection == nil {
-		return "", errors.New("not connected to device, make sure to call .Connect() first")
-	}
 
 	result, err := d.Driver.SendCommand(cmd, d.Prompt)
 	if err != nil {
@@ -47,10 +38,6 @@ func (d *CSCODevice) SendCommand(cmd string) (string, error) {
 }
 
 func (d *CSCODevice) SendConfigSet(cmds []string) (string, error) {
-	logger.Log(d.Host, "sending config set: "+strings.Join(cmds, ", "))
-	if d.Connection == nil {
-		return "", errors.New("not connected to device, make sure to call .Connect() first")
-	}
 
 	results, _ := d.Driver.SendCommand("config term", d.Prompt)
 
@@ -67,7 +54,10 @@ func (d *CSCODevice) sessionPreparation() {
 	logger.Log(d.Host, "session preparation started...")
 
 	out, err := d.Driver.SendCommand("enable", "Password:|"+d.Prompt)
-	out, err = d.Driver.SendCommand(d.Password, d.Prompt)
+	if strings.Contains(out,"Password:"){
+		out, err = d.Driver.SendCommand(d.Password, d.Prompt)
+	}
+
 
 	if !strings.Contains(out, "#") {
 		logger.Fatal(d.Host, "failed to enter enable mode", nil)

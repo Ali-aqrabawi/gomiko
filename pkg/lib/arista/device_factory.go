@@ -1,17 +1,15 @@
 package arista
 
 import (
-	"gomiko/pkg/connections"
-	"gomiko/pkg/lib"
+	"gomiko/pkg/driver"
 	"gomiko/pkg/lib/cisco"
 	"gomiko/pkg/types"
 )
 
 func NewDevice(Host string, Username string, Password string, DeviceType string) types.Device {
-	connection := connections.NewConnection(Host, Username, Password, "ssh")
-	driver := lib.Driver{connection, "\n"}
+	devDriver := driver.NewDriver(Host, Username, Password, "\n", "ssh")
 	//Arista is exactly same as Cisco.
-	base := cisco.CSCODevice{Host, Password, DeviceType, "", driver, connection}
+	base := cisco.CSCODevice{Host, Password, DeviceType, "", devDriver}
 
 	return &EOSDevice{Host, Username, Password, base}
 

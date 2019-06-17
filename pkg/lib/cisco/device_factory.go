@@ -1,15 +1,14 @@
 package cisco
 
 import (
-	"gomiko/pkg/connections"
-	"gomiko/pkg/lib"
+	"gomiko/pkg/driver"
 	"gomiko/pkg/types"
 )
 
 func NewDevice(Host string, Username string, Password string, DeviceType string) types.Device {
-	connection := connections.NewConnection(Host, Username, Password, "ssh")
-	driver := lib.Driver{connection, "\n"}
-	base := CSCODevice{Host, Password, DeviceType, "", driver, connection}
+
+	devDriver := driver.NewDriver(Host, Username, Password, "\n", "ssh")
+	base := CSCODevice{Host, Password, DeviceType, "", devDriver}
 	switch DeviceType {
 	case "cisco_asa":
 		return &ASADevice{Host, Username, Password, base}
@@ -22,5 +21,5 @@ func NewDevice(Host string, Username string, Password string, DeviceType string)
 
 	}
 
-	return &CSCODevice{Host, Password, DeviceType, "", driver, connection}
+	return &CSCODevice{Host, Password, DeviceType, "", devDriver}
 }

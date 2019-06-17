@@ -1,9 +1,7 @@
 package juniper
 
 import (
-	"errors"
-	"gomiko/pkg/connections"
-	"gomiko/pkg/lib"
+	"gomiko/pkg/driver"
 	"gomiko/pkg/utils"
 	"strings"
 )
@@ -13,12 +11,11 @@ type JunOSDevice struct {
 	Password   string
 	DeviceType string
 	Prompt     string
-	Driver     lib.Driver
-	Connection connections.Connection
+	Driver     driver.IDriver
 }
 
 func (d *JunOSDevice) Connect() {
-	d.Connection.Connect()
+	d.Driver.Connect()
 	d.Driver.ReadUntil("% ")
 	d.Prompt = d.Driver.FindDevicePrompt("(@.*)[#>%]", "%")
 	logger.Log(d.Host, "prompt found: "+d.Prompt)
@@ -28,15 +25,11 @@ func (d *JunOSDevice) Connect() {
 
 func (d *JunOSDevice) Disconnect() {
 
-	d.Connection.Disconnect()
+	d.Driver.Disconnect()
 
 }
 
 func (d *JunOSDevice) SendCommand(cmd string) (string, error) {
-	logger.Log(d.Host, "sending command: "+cmd)
-	if d.Connection == nil {
-		return "", errors.New("not connected to device, make sure to call .Connect() first")
-	}
 
 	result, err := d.Driver.SendCommand(cmd, d.Prompt)
 
@@ -45,10 +38,6 @@ func (d *JunOSDevice) SendCommand(cmd string) (string, error) {
 }
 
 func (d *JunOSDevice) SendConfigSet(cmds []string) (string, error) {
-	logger.Log(d.Host, "sending config set: "+strings.Join(cmds, ", "))
-	if d.Connection == nil {
-		return "", errors.New("not connected to device, make sure to call .Connect() first")
-	}
 
 	results, _ := d.Driver.SendCommand("configure", d.Prompt)
 
