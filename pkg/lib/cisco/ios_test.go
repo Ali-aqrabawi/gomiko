@@ -40,7 +40,10 @@ func TestIOSDevice_SendCommand(t *testing.T) {
 
 	var calls string
 	mockb.Calls = &calls
-	iosDevice.SendCommand("cmd")
+	_, err := iosDevice.SendCommand("cmd")
+	if err != nil {
+		panic(err)
+	}
 
 	if calls != "SendCommand" {
 		t.Error("base.SendCommand() was not called")
@@ -56,7 +59,10 @@ func TestIOSDevice_SendConfigSet(t *testing.T) {
 	var calls string
 	mockb.Calls = &calls
 	cmds := []string{"cmd1", "cmd2"}
-	iosDevice.SendConfigSet(cmds)
+	_, err := iosDevice.SendConfigSet(cmds)
+	if err != nil {
+		panic(err)
+	}
 
 	if calls != "SendConfigSet" {
 		t.Error("base.SendConfigSet() was not called")

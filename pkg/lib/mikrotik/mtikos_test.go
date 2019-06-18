@@ -32,7 +32,10 @@ func (c mockDriver) SendCommand(cmd string, expectPattern string) (string, error
 }
 func (c mockDriver) SendCommandsSet(cmds []string, expectPattern string) (string, error) {
 	for _, cmd := range cmds {
-		c.SendCommand(cmd, expectPattern)
+		_,err:=c.SendCommand(cmd, expectPattern)
+		if err != nil {
+			panic(err)
+		}
 	}
 	return c.ReadUntil(expectPattern), nil
 
@@ -50,7 +53,6 @@ func (c mockDriver) ReadUntil(pattern string) string {
 	return c.ReadSideEffect()
 
 }
-
 
 func TestMikroTikROS_Connect(t *testing.T) {
 
@@ -89,7 +91,7 @@ func TestMikroTikROS_Connect(t *testing.T) {
 		t.Errorf("wrong Mikrotik Pattern calls, Expected: (%s) Got: (%s)", expected, patternCalls)
 	}
 
-	expected = ", "  // MikroTik does not need any sessionPreparation
+	expected = ", " // MikroTik does not need any sessionPreparation
 
 	if cmdCalls != expected {
 		t.Errorf("wrong Mikrotik commands calls, Expected: (%s) Got: (%s)", expected, cmdCalls)
@@ -102,7 +104,6 @@ func TestMikroTikROS_Connect(t *testing.T) {
 	}
 
 }
-
 
 func TestMikroTikROS_Disconnect(t *testing.T) {
 	mockD := mockDriver{}
@@ -127,9 +128,9 @@ func TestMikroTikROS_SendCommand(t *testing.T) {
 	mockD.PromptRegex = &promptRegexCall
 	mockD.ReadSideEffect = func() string {
 		return "ip route print\n" +
-			   "0 ADS  0.0.0.0/0\n" +
-			   "1 ADC  192.168.122.0/24\n" +
-			   "@MikroTik] > "
+			"0 ADS  0.0.0.0/0\n" +
+			"1 ADC  192.168.122.0/24\n" +
+			"@MikroTik] > "
 
 	}
 
@@ -157,15 +158,18 @@ func TestMikroTikROS_SendConfigSet(t *testing.T) {
 	mockD.PromptRegex = &promptRegexCall
 	mockD.ReadSideEffect = func() string {
 		return "ip route print\n" +
-			   "0 ADS  0.0.0.0/0\n" +
-			   "1 ADC  192.168.122.0/24\n" +
-			   "@MikroTik] > "
+			"0 ADS  0.0.0.0/0\n" +
+			"1 ADC  192.168.122.0/24\n" +
+			"@MikroTik] > "
 
 	}
 
 	base := MikroTikROS{"host", "password", "cisco_ios", "switch1", mockD}
 	cmds := []string{"mikrotik command1", "mikrotik command2"}
-	base.SendConfigSet(cmds)
+	_, err := base.SendConfigSet(cmds)
+	if err != nil {
+		panic(err)
+	}
 
 	expected := "mikrotik command1, mikrotik command2, "
 

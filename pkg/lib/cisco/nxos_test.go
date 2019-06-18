@@ -40,7 +40,10 @@ func TestNXOSDevice_SendCommand(t *testing.T) {
 
 	var calls string
 	mockb.Calls = &calls
-	nxosDevice.SendCommand("cmd")
+	_, err := nxosDevice.SendCommand("cmd")
+	if err != nil {
+		panic(err)
+	}
 
 	if calls != "SendCommand" {
 		t.Error("base.SendCommand() was not called")
@@ -56,7 +59,10 @@ func TestNXOSDevice_SendConfigSet(t *testing.T) {
 	var calls string
 	mockb.Calls = &calls
 	cmds := []string{"cmd1", "cmd2"}
-	nxosDevice.SendConfigSet(cmds)
+	_, err := nxosDevice.SendConfigSet(cmds)
+	if err != nil{
+		panic(err)
+	}
 
 	if calls != "SendConfigSet" {
 		t.Error("base.SendConfigSet() was not called")

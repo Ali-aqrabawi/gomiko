@@ -52,6 +52,9 @@ func (d *JunOSDevice) sessionPreparation() {
 	utils.LogInfo(d.Host, "session preparation started...")
 
 	out, err := d.Driver.SendCommand("cli", d.Prompt)
+	if err != nil {
+		utils.LogFatal(d.Host, "failed to send cli command", err)
+	}
 	if !strings.Contains(out, ">") {
 		utils.LogFatal(d.Host, "failed to enter cli mode", nil)
 	}

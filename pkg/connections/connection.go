@@ -5,7 +5,6 @@ type Connection interface {
 	Disconnect()
 	Read() (string, error)
 	Write(cmd string) int
-
 }
 
 func NewConnection(host string, username string, password string, protocol string) Connection {
@@ -13,8 +12,6 @@ func NewConnection(host string, username string, password string, protocol strin
 	case "ssh":
 		return NewSSHConn(host, username, password)
 
-	case "telnet":
-		return NewTelnetConn(host, username, password)
 	default:
 		panic("invalid protocol: " + protocol)
 
