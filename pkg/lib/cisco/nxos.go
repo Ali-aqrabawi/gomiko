@@ -1,12 +1,16 @@
 package cisco
 
-import "gomiko/pkg/types"
+import (
+	"gomiko/pkg/driver"
+	"gomiko/pkg/types"
+)
 
 type NXOSDevice struct {
 	Host     string
 	Username string
 	Password string
-	base   types.Device
+	Driver   driver.IDriver
+	base     types.Device
 }
 
 func (d *NXOSDevice) Connect() {
@@ -15,7 +19,6 @@ func (d *NXOSDevice) Connect() {
 }
 
 func (d *NXOSDevice) Disconnect() {
-
 	d.base.Disconnect()
 
 }

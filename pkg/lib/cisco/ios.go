@@ -1,11 +1,15 @@
 package cisco
 
-import "gomiko/pkg/types"
+import (
+	"gomiko/pkg/driver"
+	"gomiko/pkg/types"
+)
 
 type IOSDevice struct {
 	Host     string
 	Username string
 	Password string
+	Driver driver.IDriver
 	base     types.Device
 }
 

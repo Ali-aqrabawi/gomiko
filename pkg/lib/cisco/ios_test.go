@@ -4,13 +4,11 @@ import (
 	"testing"
 )
 
-
-
 func TestIOSDevice_Connect(t *testing.T) {
 
 	// [1] test happy scenario with login -> userMode -> enableMode
 	mockb := mockBase{}
-	iosDevice := IOSDevice{"host", "username", "password", &mockb}
+	iosDevice := IOSDevice{"host", "username", "password", mockDriver{}, &mockb}
 
 	var calls string
 	mockb.Calls = &calls
@@ -24,7 +22,7 @@ func TestIOSDevice_Connect(t *testing.T) {
 
 func TestIOSDevice_Disconnect(t *testing.T) {
 	mockb := mockBase{}
-	iosDevice := IOSDevice{"host", "username", "password", &mockb}
+	iosDevice := IOSDevice{"host", "username", "password", mockDriver{}, &mockb}
 
 	var calls string
 	mockb.Calls = &calls
@@ -38,7 +36,7 @@ func TestIOSDevice_Disconnect(t *testing.T) {
 
 func TestIOSDevice_SendCommand(t *testing.T) {
 	mockb := mockBase{}
-	iosDevice := IOSDevice{"host", "username", "password", &mockb}
+	iosDevice := IOSDevice{"host", "username", "password", mockDriver{}, &mockb}
 
 	var calls string
 	mockb.Calls = &calls
@@ -53,7 +51,7 @@ func TestIOSDevice_SendCommand(t *testing.T) {
 func TestIOSDevice_SendConfigSet(t *testing.T) {
 
 	mockb := mockBase{}
-	iosDevice := IOSDevice{"host", "username", "password", &mockb}
+	iosDevice := IOSDevice{"host", "username", "password", mockDriver{}, &mockb}
 
 	var calls string
 	mockb.Calls = &calls

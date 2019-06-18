@@ -28,13 +28,13 @@ func (c *SSHConn) Connect() {
 	addr := c.Host + ":22"
 	conn, err := ssh.Dial("tcp", addr, sshConfig)
 	if err != nil {
-		logger.Fatal(c.Host, "failed to connect: ", err)
+		utils.LogFatal(c.Host, "failed to connect: ", err)
 	}
 
 	session, err := conn.NewSession()
 
 	if err != nil {
-		logger.Fatal(c.Host, "failed to open session: ", err)
+		utils.LogFatal(c.Host, "failed to open session: ", err)
 	}
 
 	reader, _ := session.StdoutPipe()
@@ -55,10 +55,10 @@ func (c *SSHConn) Connect() {
 
 	if err := session.RequestPty("vt100", 0, 200, modes); err != nil {
 
-		logger.Fatal(c.Host, "failed to request pty: ", err)
+		utils.LogFatal(c.Host, "failed to request pty: ", err)
 	}
 	if err := session.Shell(); err != nil {
-		logger.Fatal(c.Host, "failed to invoke shell: ", err)
+		utils.LogFatal(c.Host, "failed to invoke shell: ", err)
 	}
 
 }
@@ -67,7 +67,7 @@ func (c *SSHConn) Disconnect() {
 
 	err := c.client.Close()
 	if err != nil {
-		logger.Fatal(c.Host, "failed to disconnect: ", err)
+		utils.LogFatal(c.Host, "failed to disconnect: ", err)
 	}
 
 }

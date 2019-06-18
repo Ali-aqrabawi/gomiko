@@ -17,7 +17,7 @@ type JunOSDevice struct {
 func (d *JunOSDevice) Connect() {
 	d.Driver.Connect()
 	d.Prompt = d.Driver.FindDevicePrompt("(@.*)[#>%]", "%")
-	logger.Log(d.Host, "prompt found: "+d.Prompt)
+	utils.LogInfo(d.Host, "prompt found: "+d.Prompt)
 	d.sessionPreparation()
 
 }
@@ -49,20 +49,20 @@ func (d *JunOSDevice) SendConfigSet(cmds []string) (string, error) {
 }
 
 func (d *JunOSDevice) sessionPreparation() {
-	logger.Log(d.Host, "session preparation started...")
+	utils.LogInfo(d.Host, "session preparation started...")
 
 	out, err := d.Driver.SendCommand("cli", d.Prompt)
 	if !strings.Contains(out, ">") {
-		logger.Fatal(d.Host, "failed to enter enable mode", nil)
+		utils.LogFatal(d.Host, "failed to enter cli mode", nil)
 	}
 
 	out, err = d.SendCommand("set cli screen-length 0")
 
 	if err != nil {
-		logger.Fatal(d.Host, "failed to disable pagination", err)
+		utils.LogFatal(d.Host, "failed to disable pagination", err)
 	}
 
-	logger.Log(d.Host, "device output: "+out)
-	logger.Log(d.Host, "session preparation done!")
+	utils.LogInfo(d.Host, "device output: "+out)
+	utils.LogInfo(d.Host, "session preparation done!")
 
 }

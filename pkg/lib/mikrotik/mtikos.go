@@ -17,7 +17,7 @@ func (d *MikroTikROS) Connect() {
 
 	d.Driver.Connect()
 	d.Prompt = d.Driver.FindDevicePrompt("\\[.*(@.*\\] >)", "] >")
-	logger.Log(d.Host, "prompt found: "+d.Prompt)
+	utils.LogInfo(d.Host, "prompt found: "+d.Prompt)
 	d.sessionPreparation()
 
 }
@@ -32,7 +32,7 @@ func (d *MikroTikROS) SendCommand(cmd string) (string, error) {
 
 	result, err := d.Driver.SendCommand(cmd, d.Prompt)
 	if err != nil {
-		logger.Fatal(d.Host, "failed to send command: "+cmd, err)
+		utils.LogFatal(d.Host, "failed to send command: "+cmd, err)
 	}
 
 	return result, err
@@ -48,10 +48,10 @@ func (d *MikroTikROS) SendConfigSet(cmds []string) (string, error) {
 }
 
 func (d *MikroTikROS) sessionPreparation() {
-	logger.Log(d.Host, "session preparation started...")
+	utils.LogInfo(d.Host, "session preparation started...")
 
 	out, _ := d.Driver.SendCommand("", d.Prompt)
-	logger.Log(d.Host, "device output: "+out)
-	logger.Log(d.Host, "session preparation done!")
+	utils.LogInfo(d.Host, "device output: "+out)
+	utils.LogInfo(d.Host, "session preparation done!")
 
 }

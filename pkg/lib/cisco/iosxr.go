@@ -1,12 +1,16 @@
 package cisco
 
-import "gomiko/pkg/types"
+import (
+	"gomiko/pkg/driver"
+	"gomiko/pkg/types"
+)
 
 type IOSXRDevice struct {
 	Host     string
 	Username string
 	Password string
-	base   types.Device
+	Driver   driver.IDriver
+	base     types.Device
 }
 
 func (d *IOSXRDevice) Connect() {
@@ -19,7 +23,6 @@ func (d *IOSXRDevice) Disconnect() {
 	d.base.Disconnect()
 
 }
-
 
 func (d *IOSXRDevice) SendCommand(cmd string) (string, error) {
 	return d.base.SendCommand(cmd)

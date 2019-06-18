@@ -18,19 +18,19 @@ type Driver struct {
 }
 
 func (d *Driver) Connect() {
-	logger.Log(d.Host, "connecting to Device...")
+	utils.LogInfo(d.Host, "connecting to Device...")
 	d.connection.Connect()
 
 }
 
 func (d *Driver) Disconnect() {
-	logger.Log(d.Host, "disconnecting Device...")
+	utils.LogInfo(d.Host, "disconnecting Device...")
 	d.connection.Disconnect()
 
 }
 
 func (d *Driver) SendCommand(cmd string, expectPattern string) (string, error) {
-	logger.Log(d.Host, "sending command: "+cmd)
+	utils.LogInfo(d.Host, "sending command: "+cmd)
 
 	if d.connection == nil {
 		return "", errors.New("not connected to device, make sure to call .Connect() first")
@@ -47,7 +47,7 @@ func (d *Driver) SendCommand(cmd string, expectPattern string) (string, error) {
 }
 
 func (d *Driver) SendCommandsSet(cmds []string, expectPattern string) (string, error) {
-	logger.Log(d.Host, "sending config set: "+strings.Join(cmds, ", "))
+	utils.LogInfo(d.Host, "sending config set: "+strings.Join(cmds, ", "))
 	if d.connection == nil {
 		return "", errors.New("not connected to device, make sure to call .Connect() first")
 	}
@@ -71,7 +71,7 @@ func (d *Driver) FindDevicePrompt(regex string, pattern string) string {
 		out, _ = d.connection.Read()
 	}
 	if !r.MatchString(out) {
-		logger.Fatal("", "failed to find prompt, pattern: "+pattern+" , output: "+out, nil)
+		utils.LogFatal("", "failed to find prompt, pattern: "+pattern+" , output: "+out, nil)
 	}
 	return r.FindStringSubmatch(out)[1]
 
