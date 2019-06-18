@@ -1,8 +1,8 @@
 package cisco
 
 import (
-	"gomiko/pkg/driver"
-	"gomiko/pkg/types"
+	"github.com/Ali-aqrabawi/gomiko/pkg/driver"
+	"github.com/Ali-aqrabawi/omiko/pkg/types"
 )
 
 type ASADevice struct {

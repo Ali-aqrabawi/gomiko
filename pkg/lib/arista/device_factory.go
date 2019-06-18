@@ -1,9 +1,9 @@
 package arista
 
 import (
-	"gomiko/pkg/driver"
-	"gomiko/pkg/lib/cisco"
-	"gomiko/pkg/types"
+	"github.com/Ali-aqrabawi/gomiko/pkg/driver"
+	"github.com/Ali-aqrabawi/gomiko/pkg/lib/cisco"
+	"github.com/Ali-aqrabawi/gomiko/pkg/types"
 )
 
 func NewDevice(Host string, Username string, Password string, DeviceType string) types.Device {

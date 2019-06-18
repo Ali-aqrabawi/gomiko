@@ -1,8 +1,8 @@
 package mikrotik
 
 import (
-	"gomiko/pkg/driver"
-	"gomiko/pkg/types"
+	"github.com/Ali-aqrabawi/gomiko/pkg/driver"
+	"github.com/Ali-aqrabawi/gomiko/pkg/types"
 )
 
 func NewDevice(Host string, Username string, Password string, DeviceType string) types.Device {

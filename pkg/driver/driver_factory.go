@@ -1,6 +1,6 @@
 package driver
 
-import "gomiko/pkg/connections"
+import "github.com/Ali-aqrabawi/gomiko/pkg/connections"
 
 type IDriver interface {
 	Connect()

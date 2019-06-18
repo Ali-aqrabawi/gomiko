@@ -1,8 +1,8 @@
 package juniper
 
 import (
-	"gomiko/pkg/driver"
-	"gomiko/pkg/utils"
+	"github.com/Ali-aqrabawi/gomiko/pkg/driver"
+	"github.com/Ali-aqrabawi/gomiko/pkg/utils"
 	"strings"
 )
 

@@ -2,8 +2,8 @@ package driver
 
 import (
 	"errors"
-	"gomiko/pkg/connections"
-	"gomiko/pkg/utils"
+	"github.com/Ali-aqrabawi/gomiko/pkg/connections"
+	"github.com/Ali-aqrabawi/gomiko/pkg/utils"
 	"regexp"
 	"strings"
 	"time"

@@ -2,6 +2,7 @@ gomiko
 ******
 
 multi-vendor networking SDK.
+inspired by `netmiko`
 
 Supports:
 ---------
@@ -13,15 +14,38 @@ Supports:
 * Arista EOS
 * Juniper JunOS
 
-Features:
+Quick Start:
 ---------
-* SSH
-* Telnet
-* TextFSM
+get gomiko pkg, `go get -u github.com/Ali-aqrabawi/gomiko`
 
 Examples:
 ---------
-Example1 :
+Example1 sending command:
+
+.. code-block:: go
+
+    import (
+    	"fmt"
+        "github.com/Ali-aqrabawi/gomiko"
+    )
+
+    func main() {
+
+    	device := gomiko.NewDevice("192.168.1.99", "admin", "pass", "cisco_asa")
+
+    	device.Connect()
+
+
+    	}
+
+    	result, _ := device.SendCommand("show version")
+
+        device.Disconnect()
+
+    	fmt.Println(result)
+
+
+Example2 sending config list:
 
 .. code-block:: go
 
@@ -40,6 +64,8 @@ Example1 :
     	cmds := []string{"object network GoLangObj","host 44.6.3.1"}
 
     	result, _ := device.SendConfigSet(cmds)
+
+        device.Disconnect()
 
     	fmt.Println(result)
 
