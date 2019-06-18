@@ -1,4 +1,4 @@
-package pkg
+package gomiko
 
 import (
 	"github.com/Ali-aqrabawi/gomiko/pkg/lib/arista"
