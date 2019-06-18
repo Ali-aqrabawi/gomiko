@@ -20,7 +20,7 @@ get gomiko pkg:
 
 .. code:: bash
 
-    go get -u github.com/Ali-aqrabawi/gomiko
+    go get -u github.com/Ali-aqrabawi/gomiko/pkg
 
 
 Examples:
@@ -31,7 +31,7 @@ Example1 sending command:
 
     import (
     	"fmt"
-        "github.com/Ali-aqrabawi/gomiko"
+        "github.com/Ali-aqrabawi/gomiko/pkg"
     )
 
     func main() {
@@ -56,7 +56,7 @@ Example2 sending config list:
 
     import (
     	"fmt"
-    	"gomiko/pkg"
+    	"github.com/Ali-aqrabawi/gomiko/pkg"
     )
 
     func main() {
