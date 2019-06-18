@@ -4,7 +4,7 @@ gomiko
     :target: https://travis-ci.org/Ali-aqrabawi/gomiko
 
 multi-vendor networking SDK.
-inspired by `netmiko`
+inspired by `netmiko`.
 
 Supports:
 ---------
