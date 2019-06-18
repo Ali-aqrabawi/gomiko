@@ -2,9 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="67278f0d-887f-4ca2-807e-9234499a0127" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/connections/ssh.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/connections/ssh.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/readme.rst" beforeDir="false" afterPath="$PROJECT_DIR$/readme.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/connections/connection.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/connections/ssh.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/connections/telnet.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/device_factory.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/driver/driver.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/driver/driver_factory.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/driver/driver_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/lib/arista/device_factory.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/lib/arista/eos.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/lib/arista/eos_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/lib/cisco/asa.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/lib/cisco/asa_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/lib/cisco/base.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/lib/cisco/base_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/lib/cisco/commands.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/lib/cisco/device_factory.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/lib/cisco/ios.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/lib/cisco/ios_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/lib/cisco/iosxr.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/lib/cisco/iosxr_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/lib/cisco/nxos.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/lib/cisco/nxos_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/lib/juniper/device_factory.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/lib/juniper/junos.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/lib/juniper/junos_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/lib/mikrotik/device_factory.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/lib/mikrotik/mtikos.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/lib/mikrotik/mtikos_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/types/device.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/utils/logger.go" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,10 +42,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pkg/lib/cisco/base.go">
+        <entry file="file://$PROJECT_DIR$/lib/cisco/base.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="150">
-              <caret line="10" column="21" lean-forward="true" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
+              <caret line="10" column="21" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
               <folding>
                 <element signature="e#15#125#0" expanded="true" />
               </folding>
@@ -27,19 +54,7 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pkg/lib/mikrotik/mtikos_test.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2385">
-              <caret line="159" column="37" selection-start-line="159" selection-start-column="37" selection-end-line="159" selection-end-column="37" />
-              <folding>
-                <element signature="e#18#50#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pkg/device_factory.go">
+        <entry file="file://$PROJECT_DIR$/device_factory.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="375">
               <caret line="25" selection-start-line="25" selection-end-line="25" />
@@ -51,28 +66,40 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pkg/types/device.go">
+        <entry file="file://$PROJECT_DIR$/driver/driver.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
+            <state relative-caret-position="165">
+              <caret line="11" column="20" lean-forward="true" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
+              <folding>
+                <element signature="e#16#159#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pkg/connections/connection.go">
+        <entry file="file://$PROJECT_DIR$/driver/driver_factory.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="43" lean-forward="true" selection-start-line="2" selection-start-column="43" selection-end-line="2" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/connections/connection.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="105">
-              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+              <caret line="7" selection-start-line="7" selection-end-line="7" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pkg/connections/ssh.go">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/connections/ssh.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="27" lean-forward="true" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="27" />
+            <state relative-caret-position="90">
+              <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
               <folding>
                 <element signature="e#21#84#0" expanded="true" />
               </folding>
@@ -80,31 +107,31 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/readme.rst">
           <provider selected="true" editor-type-id="restructured-text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pkg/lib/cisco/ios.go">
+        <entry file="file://$PROJECT_DIR$/lib/cisco/ios.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="38">
-              <caret line="4" column="5" lean-forward="true" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="29" />
+              <caret line="4" column="5" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="29" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pkg/utils/logger.go">
+        <entry file="file://$PROJECT_DIR$/utils/logger.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="210">
-              <caret line="14" column="19" lean-forward="true" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
+              <caret line="14" column="19" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pkg/lib/cisco/iosxr_test.go">
+        <entry file="file://$PROJECT_DIR$/lib/cisco/iosxr_test.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="825">
               <caret line="55" column="74" selection-start-line="55" selection-start-column="74" selection-end-line="55" selection-end-column="74" />
@@ -160,12 +187,11 @@
   </component>
   <component name="GOROOT" path="/usr/local/go" />
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/pkg" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/lib/cisco/base.go" />
         <option value="$PROJECT_DIR$/lib/driver.go" />
         <option value="$PROJECT_DIR$/lib/cisco/ios.go" />
         <option value="$PROJECT_DIR$/lib/cisco/nxos.go" />
@@ -214,8 +240,9 @@
         <option value="$PROJECT_DIR$/pkg/lib/mikrotik/device_factory.go" />
         <option value="$PROJECT_DIR$/pkg/lib/mikrotik/mtikos.go" />
         <option value="$PROJECT_DIR$/pkg/device_factory.go" />
-        <option value="$PROJECT_DIR$/pkg/connections/ssh.go" />
         <option value="$PROJECT_DIR$/readme.rst" />
+        <option value="$PROJECT_DIR$/pkg/connections/ssh.go" />
+        <option value="$PROJECT_DIR$/driver/driver.go" />
       </list>
     </option>
   </component>
@@ -255,6 +282,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/pkg/driver" />
       <recent name="$PROJECT_DIR$/pkg" />
       <recent name="$PROJECT_DIR$/lib" />
@@ -291,7 +319,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1366" y="25" width="1920" height="1055" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.11579509" />
@@ -321,7 +348,7 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/pkg/lib/arista/eos.go</url>
+          <url>file://$PROJECT_DIR$/lib/arista/eos.go</url>
           <line>2</line>
           <properties />
           <option name="timeStamp" value="1" />
@@ -360,7 +387,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/connections/telnet.go">
+    <entry file="file://$PROJECT_DIR$/connections/telnet.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="11" column="27" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
@@ -453,35 +480,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/driver/driver_factory.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="8" lean-forward="true" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/driver/driver.go">
+    <entry file="file://$PROJECT_DIR$/lib/arista/device_factory.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="29" selection-start-line="5" selection-start-column="29" selection-end-line="5" selection-end-column="29" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/lib/arista/device_factory.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="29" selection-start-line="5" selection-start-column="29" selection-end-line="5" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/lib/arista/eos.go">
+    <entry file="file://$PROJECT_DIR$/lib/arista/eos.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="58">
           <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/driver/driver_test.go">
+    <entry file="file://$PROJECT_DIR$/driver/driver_test.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
@@ -491,21 +504,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/lib/arista/eos_test.go">
+    <entry file="file://$PROJECT_DIR$/lib/arista/eos_test.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1845">
           <caret line="123" lean-forward="true" selection-start-line="123" selection-end-line="123" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/lib/cisco/asa.go">
+    <entry file="file://$PROJECT_DIR$/lib/cisco/asa.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" column="6" lean-forward="true" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/lib/cisco/asa_test.go">
+    <entry file="file://$PROJECT_DIR$/lib/cisco/asa_test.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
@@ -515,7 +528,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/lib/cisco/base_test.go">
+    <entry file="file://$PROJECT_DIR$/lib/cisco/base_test.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2775">
           <caret line="185" column="29" lean-forward="true" selection-start-line="185" selection-start-column="29" selection-end-line="185" selection-end-column="29" />
@@ -525,21 +538,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/lib/cisco/commands.go">
+    <entry file="file://$PROJECT_DIR$/lib/cisco/commands.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="32" selection-start-line="5" selection-start-column="32" selection-end-line="5" selection-end-column="32" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/lib/cisco/device_factory.go">
+    <entry file="file://$PROJECT_DIR$/lib/cisco/device_factory.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/lib/cisco/ios_test.go">
+    <entry file="file://$PROJECT_DIR$/lib/cisco/ios_test.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="945">
           <caret line="63" column="1" selection-start-line="63" selection-start-column="1" selection-end-line="63" selection-end-column="1" />
@@ -549,21 +562,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/lib/cisco/iosxr.go">
+    <entry file="file://$PROJECT_DIR$/lib/cisco/iosxr.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/lib/cisco/nxos.go">
+    <entry file="file://$PROJECT_DIR$/lib/cisco/nxos.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="28">
           <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/lib/cisco/nxos_test.go">
+    <entry file="file://$PROJECT_DIR$/lib/cisco/nxos_test.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="795">
           <caret line="53" column="72" selection-start-line="53" selection-start-column="72" selection-end-line="53" selection-end-column="72" />
@@ -573,21 +586,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/lib/juniper/device_factory.go">
+    <entry file="file://$PROJECT_DIR$/lib/juniper/device_factory.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/lib/juniper/junos.go">
+    <entry file="file://$PROJECT_DIR$/lib/juniper/junos.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/lib/juniper/junos_test.go">
+    <entry file="file://$PROJECT_DIR$/lib/juniper/junos_test.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2250">
           <caret line="150" column="4" selection-start-line="150" selection-start-column="4" selection-end-line="150" selection-end-column="4" />
@@ -597,21 +610,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/lib/mikrotik/device_factory.go">
+    <entry file="file://$PROJECT_DIR$/lib/mikrotik/device_factory.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/lib/mikrotik/mtikos.go">
+    <entry file="file://$PROJECT_DIR$/lib/mikrotik/mtikos.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/lib/mikrotik/mtikos_test.go">
+    <entry file="file://$PROJECT_DIR$/lib/mikrotik/mtikos_test.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2385">
           <caret line="159" column="37" selection-start-line="159" selection-start-column="37" selection-end-line="159" selection-end-column="37" />
@@ -621,14 +634,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/types/device.go">
+    <entry file="file://$PROJECT_DIR$/types/device.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/device_factory.go">
+    <entry file="file://$PROJECT_DIR$/device_factory.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
           <caret line="25" selection-start-line="25" selection-end-line="25" />
@@ -638,14 +651,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/utils/logger.go">
+    <entry file="file://$PROJECT_DIR$/utils/logger.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
-          <caret line="14" column="19" lean-forward="true" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
+          <caret line="14" column="19" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/lib/cisco/iosxr_test.go">
+    <entry file="file://$PROJECT_DIR$/lib/cisco/iosxr_test.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="825">
           <caret line="55" column="74" selection-start-line="55" selection-start-column="74" selection-end-line="55" selection-end-column="74" />
@@ -655,37 +668,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/lib/cisco/base.go">
+    <entry file="file://$PROJECT_DIR$/lib/cisco/base.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
-          <caret line="10" column="21" lean-forward="true" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
+          <caret line="10" column="21" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
           <folding>
             <element signature="e#15#125#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/connections/connection.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/lib/cisco/ios.go">
+    <entry file="file://$PROJECT_DIR$/lib/cisco/ios.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
-          <caret line="4" column="5" lean-forward="true" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/connections/ssh.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="27" lean-forward="true" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="27" />
-          <folding>
-            <element signature="e#21#84#0" expanded="true" />
-          </folding>
+          <caret line="4" column="5" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -696,6 +692,40 @@
         </state>
       </provider>
       <provider selected="true" editor-type-id="restructured-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/connections/connection.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/driver/driver.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="20" lean-forward="true" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
+          <folding>
+            <element signature="e#16#159#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/driver/driver_factory.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="43" lean-forward="true" selection-start-line="2" selection-start-column="43" selection-end-line="2" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/connections/ssh.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+          <folding>
+            <element signature="e#21#84#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
   </component>
 </project>
