@@ -1,0 +1,16 @@
+language: go
+go:
+  - 1.8.x
+  - 1.9.x
+  - 1.10.x
+  - 1.11.x
+
+# Sudo is required for docker
+sudo: required
+
+# Enable docker
+services:
+  - docker
+
+script:
+  - go test -v ./...

@@ -1,5 +1,7 @@
 gomiko
 ******
+.. image:: https://travis-ci.org/Ali-aqrabawi/gomiko.svg?branch=master
+    :target: https://travis-ci.org/Ali-aqrabawi/gomiko
 
 multi-vendor networking SDK.
 inspired by `netmiko`
