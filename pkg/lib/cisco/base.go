@@ -54,8 +54,14 @@ func (d *CSCODevice) sessionPreparation() {
 	utils.LogInfo(d.Host, "session preparation started...")
 
 	out, err := d.Driver.SendCommand("enable", "Password:|"+d.Prompt)
+	if err != nil {
+		utils.LogFatal(d.Host, "failed to send enable command", err)
+	}
 	if strings.Contains(out, "Password:") {
 		out, err = d.Driver.SendCommand(d.Password, d.Prompt)
+		if err != nil {
+			utils.LogFatal(d.Host, "failed to send enable password", err)
+		}
 	}
 
 	if !strings.Contains(out, "#") {
