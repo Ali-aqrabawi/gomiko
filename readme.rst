@@ -15,8 +15,13 @@ Supports:
 * Juniper JunOS
 
 Quick Start:
----------
-get gomiko pkg, `go get -u github.com/Ali-aqrabawi/gomiko`
+------------
+get gomiko pkg:
+
+.. code:: bash
+
+    go get -u github.com/Ali-aqrabawi/gomiko
+
 
 Examples:
 ---------

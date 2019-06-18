@@ -1,8 +1,8 @@
 package connections
 
 import (
+	"github.com/Ali-aqrabawi/gomiko/pkg/utils"
 	"golang.org/x/crypto/ssh"
-	"gomiko/pkg/utils"
 	"io"
 )
 
