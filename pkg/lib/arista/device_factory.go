@@ -11,6 +11,6 @@ func NewDevice(Host string, Username string, Password string, DeviceType string)
 	//Arista is exactly same as Cisco.
 	base := cisco.CSCODevice{Host, Password, DeviceType, "", devDriver}
 
-	return &EOSDevice{Host, Username, Password, base}
+	return &EOSDevice{Host, Username, Password, &base}
 
 }

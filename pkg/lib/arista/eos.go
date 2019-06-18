@@ -1,12 +1,14 @@
 package arista
 
-import "gomiko/pkg/lib/cisco"
+import (
+	"gomiko/pkg/types"
+)
 
 type EOSDevice struct {
 	Host     string
 	Username string
 	Password string
-	base     cisco.CSCODevice
+	base     types.Device
 }
 
 func (d *EOSDevice) Connect() {

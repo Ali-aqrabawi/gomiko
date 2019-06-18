@@ -1,10 +1,12 @@
 package cisco
 
+import "gomiko/pkg/types"
+
 type IOSXRDevice struct {
 	Host     string
 	Username string
 	Password string
-	base   CSCODevice
+	base   types.Device
 }
 
 func (d *IOSXRDevice) Connect() {
