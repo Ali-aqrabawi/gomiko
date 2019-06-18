@@ -10,12 +10,3 @@ func getPagerDisableCmd(device_type string) string {
 	}
 
 }
-
-func getTermWidthCmd(device_type string) string {
-	switch device_type {
-	default:
-		return "terminal width 511"
-
-	}
-
-}

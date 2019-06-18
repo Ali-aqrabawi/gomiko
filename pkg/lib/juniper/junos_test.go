@@ -32,7 +32,10 @@ func (c mockDriver) SendCommand(cmd string, expectPattern string) (string, error
 }
 func (c mockDriver) SendCommandsSet(cmds []string, expectPattern string) (string, error) {
 	for _, cmd := range cmds {
-		c.SendCommand(cmd, expectPattern)
+		_, err := c.SendCommand(cmd, expectPattern)
+		if err != nil {
+			panic(err)
+		}
 	}
 	return c.ReadUntil(expectPattern), nil
 
@@ -163,10 +166,12 @@ func TestJunOSDevice_SendConfigSet(t *testing.T) {
 
 	base := JunOSDevice{"host", "password", "juniper", "jun189", mockD}
 	cmds := []string{"set routing-options static route 192.168.47.0/24 next-hop 172.16.1.2"}
-	base.SendConfigSet(cmds)
+	_, err := base.SendConfigSet(cmds)
+	if err != nil {
+		panic(err)
+	}
 
 	expected := "configure, set routing-options static route 192.168.47.0/24 next-hop 172.16.1.2, commit, exit, "
-
 
 	if cmdCalls != expected {
 		t.Errorf("wrong commands calls, expected: (%s) got: (%s)", expected, cmdCalls)

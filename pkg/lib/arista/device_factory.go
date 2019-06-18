@@ -9,8 +9,9 @@ import (
 func NewDevice(Host string, Username string, Password string, DeviceType string) types.Device {
 	devDriver := driver.NewDriver(Host, Username, Password, "\n", "ssh")
 	//Arista is exactly same as Cisco.
-	base := cisco.CSCODevice{Host, Password, DeviceType, "", devDriver}
+	//base := cisco.CSCODevice{Host, Password, DeviceType, "", devDriver}
+	base := cisco.NewDevice(Host,Username,Password,DeviceType)
 
-	return &EOSDevice{Host, Username, Password, devDriver,&base}
+	return &EOSDevice{Host, Username, Password, devDriver,base}
 
 }

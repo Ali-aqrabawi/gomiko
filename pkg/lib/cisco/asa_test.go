@@ -28,11 +28,6 @@ func (b mockBase) SendConfigSet(cmds []string) (string, error) {
 
 }
 
-func (b mockBase) sessionPreparation() {
-	*b.Calls = "sessionPreparation"
-
-}
-
 func TestASADevice_Connect(t *testing.T) {
 
 	// [1] test happy scenario with login -> userMode -> enableMode
@@ -70,7 +65,10 @@ func TestASADevice_SendCommand(t *testing.T) {
 
 	var calls string
 	mockb.Calls = &calls
-	asaDevice.SendCommand("cmd")
+	_, err := asaDevice.SendCommand("cmd")
+	if err != nil {
+		panic(err)
+	}
 
 	if calls != "SendCommand" {
 		t.Error("base.SendCommand() was not called")
@@ -86,7 +84,10 @@ func TestASADevice_SendConfigSet(t *testing.T) {
 	var calls string
 	mockb.Calls = &calls
 	cmds := []string{"cmd1", "cmd2"}
-	asaDevice.SendConfigSet(cmds)
+	_, err := asaDevice.SendConfigSet(cmds)
+	if err != nil {
+		panic(err)
+	}
 
 	if calls != "SendConfigSet" {
 		t.Error("base.SendConfigSet() was not called")

@@ -1,6 +1,8 @@
 package arista
 
-import "testing"
+import (
+	"testing"
+)
 
 type mockBase struct {
 	Calls *string
@@ -23,11 +25,6 @@ func (b mockBase) SendCommand(cmd string) (string, error) {
 func (b mockBase) SendConfigSet(cmds []string) (string, error) {
 	*b.Calls = "SendConfigSet"
 	return "", nil
-
-}
-
-func (b mockBase) sessionPreparation() {
-	*b.Calls = "sessionPreparation"
 
 }
 
@@ -58,7 +55,10 @@ func (c mockDriver) SendCommand(cmd string, expectPattern string) (string, error
 }
 func (c mockDriver) SendCommandsSet(cmds []string, expectPattern string) (string, error) {
 	for _, cmd := range cmds {
-		c.SendCommand(cmd, expectPattern)
+		_, err := c.SendCommand(cmd, expectPattern)
+		if err != nil {
+			panic(err)
+		}
 	}
 	return c.ReadUntil(expectPattern), nil
 
@@ -77,16 +77,16 @@ func (c mockDriver) ReadUntil(pattern string) string {
 
 }
 
-func TestASADevice_Connect(t *testing.T) {
+func TestEOSDevice_Connect(t *testing.T) {
 
 	// [1] test happy scenario with login -> userMode -> enableMode
 
 	mockb := mockBase{}
-	asaDevice := EOSDevice{"host", "username", "password", mockDriver{}, &mockb}
+	eosDevice := EOSDevice{"host", "username", "password", mockDriver{}, &mockb}
 
 	var calls string
 	mockb.Calls = &calls
-	asaDevice.Connect()
+	eosDevice.Connect()
 
 	if calls != "Connect" {
 		t.Error("base.Connect() was not called")
@@ -94,13 +94,13 @@ func TestASADevice_Connect(t *testing.T) {
 
 }
 
-func TestASADevice_Disconnect(t *testing.T) {
+func TestEOSDevice_Disconnect(t *testing.T) {
 	mockb := mockBase{}
-	asaDevice := EOSDevice{"host", "username", "password", mockDriver{}, &mockb}
+	eosDevice := EOSDevice{"host", "username", "password", mockDriver{}, &mockb}
 
 	var calls string
 	mockb.Calls = &calls
-	asaDevice.Disconnect()
+	eosDevice.Disconnect()
 
 	if calls != "Disconnect" {
 		t.Error("base.Disconnect() was not called")
@@ -108,13 +108,16 @@ func TestASADevice_Disconnect(t *testing.T) {
 
 }
 
-func TestASADevice_SendCommand(t *testing.T) {
+func TestEOSDevice_SendCommand(t *testing.T) {
 	mockb := mockBase{}
-	asaDevice := EOSDevice{"host", "username", "password", mockDriver{}, &mockb}
+	eosDevice := EOSDevice{"host", "username", "password", mockDriver{}, &mockb}
 
 	var calls string
 	mockb.Calls = &calls
-	asaDevice.SendCommand("cmd")
+	_, err := eosDevice.SendCommand("cmd")
+	if err != nil {
+		panic(err)
+	}
 
 	if calls != "SendCommand" {
 		t.Error("base.SendCommand() was not called")
@@ -122,15 +125,18 @@ func TestASADevice_SendCommand(t *testing.T) {
 
 }
 
-func TestASADevice_SendConfigSet(t *testing.T) {
+func TestEOSDevice_SendConfigSet(t *testing.T) {
 
 	mockb := mockBase{}
-	asaDevice := EOSDevice{"host", "username", "password", mockDriver{}, &mockb}
+	eosDevice := EOSDevice{"host", "username", "password", mockDriver{}, &mockb}
 
 	var calls string
 	mockb.Calls = &calls
 	cmds := []string{"cmd1", "cmd2"}
-	asaDevice.SendConfigSet(cmds)
+	_, err := eosDevice.SendConfigSet(cmds)
+	if err != nil {
+		panic(err)
+	}
 
 	if calls != "SendConfigSet" {
 		t.Error("base.SendConfigSet() was not called")

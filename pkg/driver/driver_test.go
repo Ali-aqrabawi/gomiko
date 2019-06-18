@@ -61,7 +61,7 @@ func TestDriver_FindDevicePrompt(t *testing.T) {
 			if r := recover(); r == nil {
 				t.Errorf("The code did not panic")
 			}
-			return
+
 		}()
 
 		testDriver.FindDevicePrompt("\r?(.*)[#>]", ">|#")
