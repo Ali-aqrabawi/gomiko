@@ -8,8 +8,9 @@ type mockBase struct {
 	Calls *string
 }
 
-func (b mockBase) Connect() {
+func (b mockBase) Connect() error {
 	*b.Calls = "Connect"
+	return nil
 
 }
 func (b mockBase) Disconnect() {
@@ -37,7 +38,9 @@ func TestASADevice_Connect(t *testing.T) {
 
 	var calls string
 	mockb.Calls = &calls
-	asaDevice.Connect()
+	if err := asaDevice.Connect(); err != nil {
+		t.Fatal(err)
+	}
 
 	if calls != "Connect" {
 		t.Error("base.Connect() was not called")

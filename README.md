@@ -4,14 +4,8 @@
 
 multi-vendor networking SDK.
 inspired by `netmiko`.
-
-
-## Quick Start
-
-get gomiko pkg `go get -u github.com/Ali-aqrabawi/gomiko/pkg`
-
  
-## supports
+## Supports
 * Cisco IOS
 * Cisco IOS XR
 * Cisco ASA
@@ -20,8 +14,10 @@ get gomiko pkg `go get -u github.com/Ali-aqrabawi/gomiko/pkg`
 * Arista EOS
 * Juniper JunOS
 
-## Examples
- 
+## Installation
+get gomiko pkg `go get -u github.com/Ali-aqrabawi/gomiko/pkg`.
+
+## Examples 
  1. execute a command:
 
         import (
@@ -33,7 +29,9 @@ get gomiko pkg `go get -u github.com/Ali-aqrabawi/gomiko/pkg`
 
     	    device := gomiko.NewDevice("192.168.1.99", "admin", "pass", "cisco_asa")
 
-    	    device.Connect()
+    	    if err := device.Connect(); err != nil {
+    	        log.Fatal(err)    	    
+    	    }
     	    	
     	    result, _ := device.SendCommand("show version")
 
@@ -57,8 +55,9 @@ get gomiko pkg `go get -u github.com/Ali-aqrabawi/gomiko/pkg`
 
     	    device := gomiko.NewDevice("192.168.1.99", "admin", "pass", "cisco_asa")
 
-    	    device.Connect()
-
+    	    if err := device.Connect(); err != nil {
+    	        log.Fatal(err)
+    	    }
 
     	    cmds := []string{"object network GoLangObj","host 44.6.3.1"}
 

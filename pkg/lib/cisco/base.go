@@ -1,8 +1,8 @@
 package cisco
 
 import (
+	"errors"
 	"github.com/Ali-aqrabawi/gomiko/pkg/driver"
-	"github.com/Ali-aqrabawi/gomiko/pkg/utils"
 	"strings"
 )
 
@@ -14,11 +14,17 @@ type CSCODevice struct {
 	Driver     driver.IDriver
 }
 
-func (d *CSCODevice) Connect() {
-	d.Driver.Connect()
-	d.Prompt = d.Driver.FindDevicePrompt("\r?(.*)[#>]", "#|>")
-	utils.LogInfo(d.Host, "prompt found: "+d.Prompt)
-	d.sessionPreparation()
+func (d *CSCODevice) Connect() error {
+	if err := d.Driver.Connect(); err != nil {
+		return err
+	}
+	prompt, err := d.Driver.FindDevicePrompt("\r?(.*)[#>]", "#|>")
+
+	if err != nil {
+		return err
+	}
+	d.Prompt = prompt
+	return d.sessionPreparation()
 
 }
 
@@ -29,9 +35,7 @@ func (d *CSCODevice) Disconnect() {
 func (d *CSCODevice) SendCommand(cmd string) (string, error) {
 
 	result, err := d.Driver.SendCommand(cmd, d.Prompt)
-	if err != nil {
-		utils.LogFatal(d.Host, "failed to send command: "+cmd, err)
-	}
+
 
 	return result, err
 
@@ -50,33 +54,27 @@ func (d *CSCODevice) SendConfigSet(cmds []string) (string, error) {
 
 }
 
-func (d *CSCODevice) sessionPreparation() {
-	utils.LogInfo(d.Host, "session preparation started...")
+func (d *CSCODevice) sessionPreparation() error {
 
 	out, err := d.Driver.SendCommand("enable", "Password:|"+d.Prompt)
 	if err != nil {
-		utils.LogFatal(d.Host, "failed to send enable command", err)
+		return errors.New("failed to send enable command:" + err.Error())
 	}
 	if strings.Contains(out, "Password:") {
 		out, err = d.Driver.SendCommand(d.Password, d.Prompt)
 		if err != nil {
-			utils.LogFatal(d.Host, "failed to send enable password", err)
+			return errors.New("failed to send enable password:" + err.Error())
 		}
 	}
 
 	if !strings.Contains(out, "#") {
-		utils.LogFatal(d.Host, "failed to enter enable mode, output: "+out, nil)
+		return errors.New("failed to enter enable mode")
 	}
 
 	cmd := getPagerDisableCmd(d.DeviceType)
 
 	out, err = d.SendCommand(cmd)
 
-	if err != nil {
-		utils.LogFatal(d.Host, "failed to disable pagination", err)
-	}
-
-	utils.LogInfo(d.Host, "device output: "+out)
-	utils.LogInfo(d.Host, "session preparation done!")
+	return err
 
 }

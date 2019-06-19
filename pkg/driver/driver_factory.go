@@ -3,13 +3,12 @@ package driver
 import "github.com/Ali-aqrabawi/gomiko/pkg/connections"
 
 type IDriver interface {
-	Connect()
+	Connect() error
 	Disconnect()
 	SendCommand(cmd string, expectPattern string) (string, error)
 	SendCommandsSet(cmds []string, expectPattern string) (string, error)
-	FindDevicePrompt(regex string, pattern string) string
-	ReadUntil(pattern string) string
-
+	FindDevicePrompt(regex string, pattern string) (string, error)
+	ReadUntil(pattern string) (string, error)
 }
 
 func NewDriver(Host string, Username string, Password string, Return string, protocol string) IDriver {

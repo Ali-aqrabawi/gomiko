@@ -12,7 +12,9 @@ func TestIOSXRDevice_Connect(t *testing.T) {
 
 	var calls string
 	mockb.Calls = &calls
-	iosxrDevice.Connect()
+	if err := iosxrDevice.Connect(); err != nil {
+		t.Fatal(err)
+	}
 
 	if calls != "Connect" {
 		t.Error("base.Connect() was not called")

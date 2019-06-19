@@ -1,8 +1,8 @@
 package juniper
 
 import (
+	"errors"
 	"github.com/Ali-aqrabawi/gomiko/pkg/driver"
-	"github.com/Ali-aqrabawi/gomiko/pkg/utils"
 	"strings"
 )
 
@@ -14,11 +14,17 @@ type JunOSDevice struct {
 	Driver     driver.IDriver
 }
 
-func (d *JunOSDevice) Connect() {
-	d.Driver.Connect()
-	d.Prompt = d.Driver.FindDevicePrompt("(@.*)[#>%]", "%")
-	utils.LogInfo(d.Host, "prompt found: "+d.Prompt)
-	d.sessionPreparation()
+func (d *JunOSDevice) Connect() error {
+	if err := d.Driver.Connect(); err != nil {
+		return err
+	}
+	prompt, err := d.Driver.FindDevicePrompt("(@.*)[#>%]", "%")
+	if err != nil {
+		return err
+	}
+	d.Prompt = prompt
+
+	return d.sessionPreparation()
 
 }
 
@@ -48,24 +54,21 @@ func (d *JunOSDevice) SendConfigSet(cmds []string) (string, error) {
 
 }
 
-func (d *JunOSDevice) sessionPreparation() {
-	utils.LogInfo(d.Host, "session preparation started...")
+func (d *JunOSDevice) sessionPreparation() error {
 
 	out, err := d.Driver.SendCommand("cli", d.Prompt)
 	if err != nil {
-		utils.LogFatal(d.Host, "failed to send cli command", err)
+		return errors.New("failed to send cli command" + err.Error())
 	}
 	if !strings.Contains(out, ">") {
-		utils.LogFatal(d.Host, "failed to enter cli mode", nil)
+		return errors.New("failed to enter cli mode, device output: " + out)
 	}
 
 	out, err = d.SendCommand("set cli screen-length 0")
 
 	if err != nil {
-		utils.LogFatal(d.Host, "failed to disable pagination", err)
+		return errors.New("failed to disable pagination" + err.Error())
 	}
-
-	utils.LogInfo(d.Host, "device output: "+out)
-	utils.LogInfo(d.Host, "session preparation done!")
+	return nil
 
 }

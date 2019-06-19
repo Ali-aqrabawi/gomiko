@@ -8,8 +8,9 @@ type mockBase struct {
 	Calls *string
 }
 
-func (b mockBase) Connect() {
+func (b mockBase) Connect() error{
 	*b.Calls = "Connect"
+	return nil
 
 }
 func (b mockBase) Disconnect() {
@@ -36,7 +37,8 @@ type mockDriver struct {
 	GenericCalls   *string
 }
 
-func (c mockDriver) Connect() {
+func (c mockDriver) Connect() error {
+	return nil
 
 }
 func (c mockDriver) Disconnect() {
@@ -50,7 +52,7 @@ func (c mockDriver) SendCommand(cmd string, expectPattern string) (string, error
 		c.CmdCalls = &cmd
 	}
 
-	return c.ReadUntil(expectPattern), nil
+	return c.ReadUntil(expectPattern)
 
 }
 func (c mockDriver) SendCommandsSet(cmds []string, expectPattern string) (string, error) {
@@ -60,20 +62,20 @@ func (c mockDriver) SendCommandsSet(cmds []string, expectPattern string) (string
 			panic(err)
 		}
 	}
-	return c.ReadUntil(expectPattern), nil
+	return c.ReadUntil(expectPattern)
 
 }
 
-func (c mockDriver) FindDevicePrompt(regex string, pattern string) string {
+func (c mockDriver) FindDevicePrompt(regex string, pattern string) (string, error) {
 	*c.PromptRegex = regex
 	return c.ReadUntil(pattern)
 
 }
 
-func (c mockDriver) ReadUntil(pattern string) string {
+func (c mockDriver) ReadUntil(pattern string) (string, error) {
 	*c.PatternCalls += pattern + ", "
 
-	return c.ReadSideEffect()
+	return c.ReadSideEffect(), nil
 
 }
 
@@ -86,7 +88,9 @@ func TestEOSDevice_Connect(t *testing.T) {
 
 	var calls string
 	mockb.Calls = &calls
-	eosDevice.Connect()
+	if err := eosDevice.Connect(); err != nil {
+		t.Fatal(err)
+	}
 
 	if calls != "Connect" {
 		t.Error("base.Connect() was not called")

@@ -13,7 +13,8 @@ type mockDriver struct {
 	GenericCalls   *string
 }
 
-func (c mockDriver) Connect() {
+func (c mockDriver) Connect() error {
+	return nil
 
 }
 func (c mockDriver) Disconnect() {
@@ -26,9 +27,7 @@ func (c mockDriver) SendCommand(cmd string, expectPattern string) (string, error
 	} else {
 		c.CmdCalls = &cmd
 	}
-
-	return c.ReadUntil(expectPattern), nil
-
+	return c.ReadUntil(expectPattern)
 }
 func (c mockDriver) SendCommandsSet(cmds []string, expectPattern string) (string, error) {
 	for _, cmd := range cmds {
@@ -37,20 +36,19 @@ func (c mockDriver) SendCommandsSet(cmds []string, expectPattern string) (string
 			panic(err)
 		}
 	}
-	return c.ReadUntil(expectPattern), nil
+	return c.ReadUntil(expectPattern)
 
 }
 
-func (c mockDriver) FindDevicePrompt(regex string, pattern string) string {
+func (c mockDriver) FindDevicePrompt(regex string, pattern string) (string, error) {
 	*c.PromptRegex = regex
 	return c.ReadUntil(pattern)
 
 }
 
-func (c mockDriver) ReadUntil(pattern string) string {
+func (c mockDriver) ReadUntil(pattern string) (string, error) {
 	*c.PatternCalls += pattern + ", "
-
-	return c.ReadSideEffect()
+	return c.ReadSideEffect(), nil
 
 }
 
@@ -80,7 +78,9 @@ func TestJunOSDevice_Connect(t *testing.T) {
 
 	}
 	base := JunOSDevice{"host", "password", "junos", "", mockD}
-	base.Connect()
+	if err := base.Connect(); err != nil {
+		t.Fatal(err)
+	}
 
 	if base.Prompt != "@jun189" {
 		t.Error("Driver.FindDevicePrompt was not called")
