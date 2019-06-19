@@ -3,9 +3,7 @@ package driver
 import (
 	"errors"
 	"github.com/Ali-aqrabawi/gomiko/pkg/connections"
-	"github.com/Ali-aqrabawi/gomiko/pkg/utils"
 	"regexp"
-	"strings"
 	"time"
 )
 
@@ -17,20 +15,18 @@ type Driver struct {
 	connection connections.Connection
 }
 
-func (d *Driver) Connect() {
-	utils.LogInfo(d.Host, "connecting to Device...")
-	d.connection.Connect()
+func (d *Driver) Connect() error {
+	err := d.connection.Connect()
+	return err
 
 }
 
 func (d *Driver) Disconnect() {
-	utils.LogInfo(d.Host, "disconnecting Device...")
 	d.connection.Disconnect()
 
 }
 
 func (d *Driver) SendCommand(cmd string, expectPattern string) (string, error) {
-	utils.LogInfo(d.Host, "sending command: "+cmd)
 
 	if d.connection == nil {
 		return "", errors.New("not connected to device, make sure to call .Connect() first")
@@ -40,14 +36,13 @@ func (d *Driver) SendCommand(cmd string, expectPattern string) (string, error) {
 
 	d.connection.Write(cmd)
 
-	result := d.ReadUntil(expectPattern)
+	result, err := d.ReadUntil(expectPattern)
 
-	return result, nil
+	return result, err
 
 }
 
 func (d *Driver) SendCommandsSet(cmds []string, expectPattern string) (string, error) {
-	utils.LogInfo(d.Host, "sending config set: "+strings.Join(cmds, ", "))
 	if d.connection == nil {
 		return "", errors.New("not connected to device, make sure to call .Connect() first")
 	}
@@ -61,24 +56,29 @@ func (d *Driver) SendCommandsSet(cmds []string, expectPattern string) (string, e
 
 }
 
-func (d *Driver) FindDevicePrompt(regex string, pattern string) string {
+func (d *Driver) FindDevicePrompt(regex string, pattern string) (string, error) {
 	var out string
+	var err error
 	r, _ := regexp.Compile(regex)
 
 	if pattern != "" {
-		out = d.ReadUntil(pattern)
+		out, err = d.ReadUntil(pattern)
+		if err != nil {
+			return "", err
+		}
 	} else {
 		out, _ = d.connection.Read()
 	}
 	if !r.MatchString(out) {
-		utils.LogFatal("", "failed to find prompt, pattern: "+pattern+" , output: "+out, nil)
+		return "", errors.New("failed to find prompt, pattern: " + pattern + " , output: " + out)
 	}
-	return r.FindStringSubmatch(out)[1]
+	return r.FindStringSubmatch(out)[1], nil
 
 }
 
-func (d *Driver) ReadUntil(pattern string) string {
+func (d *Driver) ReadUntil(pattern string) (string, error) {
 	outputChan := make(chan string)
+	var err error
 
 	go func(d *Driver, pattern string) {
 		buffChan := make(chan string)
@@ -88,16 +88,16 @@ func (d *Driver) ReadUntil(pattern string) string {
 			outputChan <- recv
 
 		case <-time.After(time.Duration(4) * time.Second):
-			panic("timeout while reading, read pattern not found pattern: " + pattern)
+			err = errors.New("timeout while reading, read pattern not found pattern: " + pattern)
+			break
 
 		}
 
 	}(d, pattern)
 
-	return <-outputChan
+	return <-outputChan, err
 
 }
-
 
 func readRoutine(d *Driver, pattern string, buffChan chan<- string) {
 	var result string
@@ -119,4 +119,3 @@ func readRoutine(d *Driver, pattern string, buffChan chan<- string) {
 	buffChan <- result
 
 }
-

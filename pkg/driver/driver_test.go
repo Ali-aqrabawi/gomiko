@@ -9,7 +9,8 @@ import (
 type MockConn struct {
 }
 
-func (MockConn) Connect() {
+func (MockConn) Connect() error{
+	return nil
 
 }
 func (MockConn) Disconnect() {
@@ -29,7 +30,8 @@ func (MockConn) Write(cmd string) int {
 type MockConn2 struct {
 }
 
-func (MockConn2) Connect() {
+func (MockConn2) Connect() error {
+	return nil
 
 }
 func (MockConn2) Disconnect() {
@@ -49,7 +51,10 @@ func TestDriver_FindDevicePrompt(t *testing.T) {
 
 	// [] valid input
 	testDriver := Driver{"host", "username", "password", "\n", MockConn{}}
-	prompt := testDriver.FindDevicePrompt("\r?(.*)[#>]", ">|#")
+	prompt, err := testDriver.FindDevicePrompt("\r?(.*)[#>]", ">|#")
+	if err != nil{
+		t.Fatal(err)
+	}
 	if prompt != "switch1" {
 		t.Error("find prompt failed: " + prompt)
 	}
@@ -64,7 +69,9 @@ func TestDriver_FindDevicePrompt(t *testing.T) {
 
 		}()
 
-		testDriver.FindDevicePrompt("\r?(.*)[#>]", ">|#")
+		if _, err := testDriver.FindDevicePrompt("\r?(.*)[#>]", ">|#"); err != nil {
+			t.Fatal(err)
+		}
 
 	}()
 
@@ -73,7 +80,7 @@ func TestDriver_FindDevicePrompt(t *testing.T) {
 func TestDriver_ReadUntil(t *testing.T) {
 	testDriver := Driver{"host", "username", "password", "\n", MockConn{}}
 
-	out := testDriver.ReadUntil("switch1")
+	out,_:= testDriver.ReadUntil("switch1")
 	if !strings.Contains(out, "Loged in as Admin!") && !strings.Contains(out, "switch1") {
 		t.Error("ReadUntil did not return expected data")
 	}

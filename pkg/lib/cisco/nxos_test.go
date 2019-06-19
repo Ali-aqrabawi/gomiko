@@ -12,7 +12,9 @@ func TestNXOSDevice_Connect(t *testing.T) {
 
 	var calls string
 	mockb.Calls = &calls
-	nxosDevice.Connect()
+	if err :=nxosDevice.Connect(); err != nil {
+		t.Fatal(err)
+	}
 
 	if calls != "Connect" {
 		t.Error("base.Connect() was not called")

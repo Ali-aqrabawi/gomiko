@@ -1,7 +1,7 @@
 package connections
 
 type Connection interface {
-	Connect()
+	Connect() error
 	Disconnect()
 	Read() (string, error)
 	Write(cmd string) int

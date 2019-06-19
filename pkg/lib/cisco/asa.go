@@ -13,8 +13,8 @@ type ASADevice struct {
 	base     types.Device
 }
 
-func (d *ASADevice) Connect() {
-	d.base.Connect()
+func (d *ASADevice) Connect() error{
+	return d.base.Connect()
 
 }
 

@@ -13,8 +13,8 @@ type mockDriver struct {
 	GenericCalls   *string
 }
 
-func (c mockDriver) Connect() {
-
+func (c mockDriver) Connect() error {
+	return nil
 }
 func (c mockDriver) Disconnect() {
 	*c.GenericCalls = "disconnect"
@@ -27,30 +27,30 @@ func (c mockDriver) SendCommand(cmd string, expectPattern string) (string, error
 		c.CmdCalls = &cmd
 	}
 
-	return c.ReadUntil(expectPattern), nil
+	return c.ReadUntil(expectPattern)
 
 }
 func (c mockDriver) SendCommandsSet(cmds []string, expectPattern string) (string, error) {
 	for _, cmd := range cmds {
-		_,err:=c.SendCommand(cmd, expectPattern)
+		_, err := c.SendCommand(cmd, expectPattern)
 		if err != nil {
 			panic(err)
 		}
 	}
-	return c.ReadUntil(expectPattern), nil
+	return c.ReadUntil(expectPattern)
 
 }
 
-func (c mockDriver) FindDevicePrompt(regex string, pattern string) string {
+func (c mockDriver) FindDevicePrompt(regex string, pattern string) (string, error) {
 	*c.PromptRegex = regex
 	return c.ReadUntil(pattern)
 
 }
 
-func (c mockDriver) ReadUntil(pattern string) string {
+func (c mockDriver) ReadUntil(pattern string) (string, error) {
 	*c.PatternCalls += pattern + ", "
 
-	return c.ReadSideEffect()
+	return c.ReadSideEffect(), nil
 
 }
 
@@ -80,7 +80,9 @@ func TestMikroTikROS_Connect(t *testing.T) {
 
 	}
 	base := MikroTikROS{"host", "password", "mikrotik", "", mockD}
-	base.Connect()
+	if err := base.Connect(); err != nil{
+		t.Fatal(err)
+	}
 
 	if base.Prompt != "@MikroTik] >" {
 		t.Error("Driver.FindDevicePrompt was not called")

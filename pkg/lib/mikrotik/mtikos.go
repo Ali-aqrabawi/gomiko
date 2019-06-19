@@ -2,7 +2,6 @@ package mikrotik
 
 import (
 	"github.com/Ali-aqrabawi/gomiko/pkg/driver"
-	"github.com/Ali-aqrabawi/gomiko/pkg/utils"
 )
 
 type MikroTikROS struct {
@@ -13,12 +12,17 @@ type MikroTikROS struct {
 	Driver     driver.IDriver
 }
 
-func (d *MikroTikROS) Connect() {
+func (d *MikroTikROS) Connect() error {
 
-	d.Driver.Connect()
-	d.Prompt = d.Driver.FindDevicePrompt("\\[.*(@.*\\] >)", "] >")
-	utils.LogInfo(d.Host, "prompt found: "+d.Prompt)
-	d.sessionPreparation()
+	if err := d.Driver.Connect(); err != nil {
+		return err
+	}
+	prompt, err := d.Driver.FindDevicePrompt("\\[.*(@.*\\] >)", "] >")
+	if err != nil {
+		return err
+	}
+	d.Prompt = prompt
+	return d.sessionPreparation()
 
 }
 
@@ -31,9 +35,7 @@ func (d *MikroTikROS) Disconnect() {
 func (d *MikroTikROS) SendCommand(cmd string) (string, error) {
 
 	result, err := d.Driver.SendCommand(cmd, d.Prompt)
-	if err != nil {
-		utils.LogFatal(d.Host, "failed to send command: "+cmd, err)
-	}
+
 
 	return result, err
 
@@ -47,11 +49,8 @@ func (d *MikroTikROS) SendConfigSet(cmds []string) (string, error) {
 
 }
 
-func (d *MikroTikROS) sessionPreparation() {
-	utils.LogInfo(d.Host, "session preparation started...")
-
-	out, _ := d.Driver.SendCommand("", d.Prompt)
-	utils.LogInfo(d.Host, "device output: "+out)
-	utils.LogInfo(d.Host, "session preparation done!")
+func (d *MikroTikROS) sessionPreparation() error {
+	_, err := d.Driver.SendCommand("", d.Prompt)
+	return err
 
 }

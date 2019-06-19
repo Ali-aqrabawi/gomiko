@@ -13,8 +13,9 @@ type EOSDevice struct {
 	base     types.Device
 }
 
-func (d *EOSDevice) Connect() {
-	d.base.Connect()
+func (d *EOSDevice) Connect() error{
+	return d.base.Connect()
+
 
 }
 

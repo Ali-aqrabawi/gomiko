@@ -13,8 +13,8 @@ type NXOSDevice struct {
 	base     types.Device
 }
 
-func (d *NXOSDevice) Connect() {
-	d.base.Connect()
+func (d *NXOSDevice) Connect() error{
+	return d.base.Connect()
 
 }
 
