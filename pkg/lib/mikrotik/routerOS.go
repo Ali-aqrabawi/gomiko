@@ -4,7 +4,7 @@ import (
 	"github.com/Ali-aqrabawi/gomiko/pkg/driver"
 )
 
-type MikroTikROS struct {
+type MikroTikRouterOS struct {
 	Host       string
 	Password   string
 	DeviceType string
@@ -12,7 +12,7 @@ type MikroTikROS struct {
 	Driver     driver.IDriver
 }
 
-func (d *MikroTikROS) Connect() error {
+func (d *MikroTikRouterOS) Connect() error {
 
 	if err := d.Driver.Connect(); err != nil {
 		return err
@@ -26,13 +26,13 @@ func (d *MikroTikROS) Connect() error {
 
 }
 
-func (d *MikroTikROS) Disconnect() {
+func (d *MikroTikRouterOS) Disconnect() {
 
 	d.Driver.Disconnect()
 
 }
 
-func (d *MikroTikROS) SendCommand(cmd string) (string, error) {
+func (d *MikroTikRouterOS) SendCommand(cmd string) (string, error) {
 
 	result, err := d.Driver.SendCommand(cmd, d.Prompt)
 
@@ -41,7 +41,7 @@ func (d *MikroTikROS) SendCommand(cmd string) (string, error) {
 
 }
 
-func (d *MikroTikROS) SendConfigSet(cmds []string) (string, error) {
+func (d *MikroTikRouterOS) SendConfigSet(cmds []string) (string, error) {
 
 	results, err := d.Driver.SendCommandsSet(cmds, d.Prompt)
 
@@ -49,7 +49,7 @@ func (d *MikroTikROS) SendConfigSet(cmds []string) (string, error) {
 
 }
 
-func (d *MikroTikROS) sessionPreparation() error {
+func (d *MikroTikRouterOS) sessionPreparation() error {
 	_, err := d.Driver.SendCommand("", d.Prompt)
 	return err
 
