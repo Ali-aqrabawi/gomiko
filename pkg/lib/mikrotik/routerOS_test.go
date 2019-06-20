@@ -79,7 +79,7 @@ func TestMikroTikROS_Connect(t *testing.T) {
 		}
 
 	}
-	base := MikroTikROS{"host", "password", "mikrotik", "", mockD}
+	base := MikroTikRouterOS{"host", "password", "mikrotik_routeros", "", mockD}
 	if err := base.Connect(); err != nil{
 		t.Fatal(err)
 	}
@@ -112,7 +112,7 @@ func TestMikroTikROS_Disconnect(t *testing.T) {
 	var genericCalls string
 	mockD.GenericCalls = &genericCalls
 
-	base := MikroTikROS{"host", "password", "mikrotik", "", mockD}
+	base := MikroTikRouterOS{"host", "password", "mikrotik_routeros", "", mockD}
 
 	base.Disconnect()
 
@@ -136,7 +136,7 @@ func TestMikroTikROS_SendCommand(t *testing.T) {
 
 	}
 
-	base := MikroTikROS{"host", "password", "mikrotik", "@MikroTik] >", mockD}
+	base := MikroTikRouterOS{"host", "password", "mikrotik_routeros", "@MikroTik] >", mockD}
 	result, _ := base.SendCommand("ip route print")
 
 	if !strings.Contains(result, "0 ADS  0.0.0.0/0") &&
@@ -166,7 +166,7 @@ func TestMikroTikROS_SendConfigSet(t *testing.T) {
 
 	}
 
-	base := MikroTikROS{"host", "password", "cisco_ios", "switch1", mockD}
+	base := MikroTikRouterOS{"host", "password", "cisco_ios", "switch1", mockD}
 	cmds := []string{"mikrotik command1", "mikrotik command2"}
 	_, err := base.SendConfigSet(cmds)
 	if err != nil {
