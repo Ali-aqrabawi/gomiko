@@ -41,9 +41,9 @@ func main() {
  2. execute config set:
 ```go
 import (
-    	    "fmt"
-    	    "github.com/Ali-aqrabawi/gomiko/pkg"
-        )
+	"fmt"
+	"github.com/Ali-aqrabawi/gomiko/pkg"
+)
 
 func main() {
 	device := gomiko.NewDevice("192.168.1.99", "admin", "pass", "cisco_asa")
