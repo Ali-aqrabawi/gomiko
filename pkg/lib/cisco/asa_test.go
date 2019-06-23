@@ -34,7 +34,7 @@ func TestASADevice_Connect(t *testing.T) {
 	// [1] test happy scenario with login -> userMode -> enableMode
 
 	mockb := mockBase{}
-	asaDevice := ASADevice{"host", "username", "password", mockDriver{}, &mockb}
+	asaDevice := ASADevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls
@@ -50,7 +50,7 @@ func TestASADevice_Connect(t *testing.T) {
 
 func TestASADevice_Disconnect(t *testing.T) {
 	mockb := mockBase{}
-	asaDevice := ASADevice{"host", "username", "password", mockDriver{}, &mockb}
+	asaDevice := ASADevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls
@@ -64,7 +64,7 @@ func TestASADevice_Disconnect(t *testing.T) {
 
 func TestASADevice_SendCommand(t *testing.T) {
 	mockb := mockBase{}
-	asaDevice := ASADevice{"host", "username", "password", mockDriver{}, &mockb}
+	asaDevice := ASADevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls
@@ -82,7 +82,7 @@ func TestASADevice_SendCommand(t *testing.T) {
 func TestASADevice_SendConfigSet(t *testing.T) {
 
 	mockb := mockBase{}
-	asaDevice := ASADevice{"host", "username", "password", mockDriver{}, &mockb}
+	asaDevice := ASADevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls

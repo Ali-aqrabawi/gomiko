@@ -80,7 +80,7 @@ func TestCSCODevice_Connect_userMode(t *testing.T) {
 		}
 
 	}
-	base := CSCODevice{"host", "password", "cisco_ios", "", mockD}
+	base := CSCODevice{mockD, "", "", ""}
 	if err := base.Connect(); err != nil {
 		t.Fatal(err)
 	}
@@ -133,7 +133,7 @@ func TestCSCODevice_Connect_noUserMode(t *testing.T) {
 		}
 
 	}
-	base := CSCODevice{"host", "password", "cisco_ios", "", mockD}
+	base := CSCODevice{mockD, "cisco_ios", "", ""}
 	if err := base.Connect(); err != nil {
 		t.Fatal(err)
 	}
@@ -158,7 +158,7 @@ func TestCSCODevice_Disconnect(t *testing.T) {
 	var genericCalls string
 	mockD.GenericCalls = &genericCalls
 
-	base := CSCODevice{"host", "password", "cisco_ios", "", mockD}
+	base := CSCODevice{mockD, "cisco_ios", "", ""}
 
 	base.Disconnect()
 
@@ -182,7 +182,7 @@ func TestCSCODevice_SendCommand(t *testing.T) {
 
 	}
 
-	base := CSCODevice{"host", "password", "cisco_ios", "switch1", mockD}
+	base := CSCODevice{mockD, "cisco_ios", "switch1", ""}
 	result, _ := base.SendCommand("show vlan")
 
 	if !strings.Contains(result, "vlan 1 v2") && !strings.Contains(result, "vlan 2 v2 ") {
@@ -211,7 +211,7 @@ func TestCSCODevice_SendConfigSet(t *testing.T) {
 
 	}
 
-	base := CSCODevice{"host", "password", "cisco_ios", "switch1", mockD}
+	base := CSCODevice{mockD, "cisco_ios", "switch1", ""}
 	cmds := []string{"show interface", "show ip route"}
 	_, err := base.SendConfigSet(cmds)
 	if err != nil {

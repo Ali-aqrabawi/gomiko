@@ -1,24 +1,41 @@
 package cisco
 
 import (
+	"github.com/Ali-aqrabawi/gomiko/pkg/connections"
 	"github.com/Ali-aqrabawi/gomiko/pkg/driver"
-	"github.com/Ali-aqrabawi/gomiko/pkg/types"
 	"log"
 )
 
-func NewDevice(Host string, Username string, Password string, DeviceType string) types.Device {
+func NewDevice(connection connections.Connection,  DeviceType string) CiscoDevice {
 
-	devDriver := driver.NewDriver(Host, Username, Password, "\n", "ssh")
-	base := CSCODevice{Host, Password, DeviceType, "", devDriver}
+	devDriver := driver.NewDriver(connection, "\n")
+	base := CSCODevice{
+		Driver:     devDriver,
+		Prompt:     "",
+		DeviceType: DeviceType,
+	}
 	switch DeviceType {
 	case "cisco_asa":
-		return &ASADevice{Host, Username, Password, devDriver, &base}
+		return &ASADevice{
+			Driver: devDriver,
+			Prompt: "",
+			base:   &base,
+		}
 	case "cisco_ios":
-		return &IOSDevice{Host, Username, Password, devDriver, &base}
+		return &IOSDevice{
+			Driver: devDriver,
+			Prompt: "",
+			base:   &base,}
 	case "cisco_nxos":
-		return &NXOSDevice{Host, Username, Password, devDriver, &base}
+		return &NXOSDevice{
+			Driver: devDriver,
+			Prompt: "",
+			base:   &base,}
 	case "cisco_iosxr":
-		return &IOSXRDevice{Host, Username, Password, devDriver, &base}
+		return &IOSXRDevice{
+			Driver: devDriver,
+			Prompt: "",
+			base:   &base,}
 
 	default:
 		log.Fatal("unsupported DeviceType: ", DeviceType)

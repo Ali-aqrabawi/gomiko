@@ -26,14 +26,15 @@ import (
 )
 
 func main() {
- device := gomiko.NewDevice("192.168.1.99", "admin", "pass", "cisco_asa")
- if err := device.Connect(); err != nil {
-     log.Fatal(err)    	    
- }
+	
+     device := gomiko.NewDevice("192.168.1.99", "admin", "pass", "cisco_asa")
+     if err := device.Connect(); err != nil {
+         log.Fatal(err)    	    
+     }
  	
- result, _ := device.SendCommand("show version")
-    device.Disconnect()
- fmt.Println(result)
+     result, _ := device.SendCommand("show version")
+     device.Disconnect()
+     fmt.Println(result)
  
 }
 ```
@@ -46,14 +47,17 @@ import (
 )
 
 func main() {
-	device := gomiko.NewDevice("192.168.1.99", "admin", "pass", "cisco_asa")
+	
+	device := gomiko.NewDevice("192.168.1.99", "admin", "pass", "cisco_asa", option)
 	if err := device.Connect(); err != nil {
 		log.Fatal(err)
-       }
+	}    
+	
 	cmds := []string{"object network GoLangObj","host 44.6.3.1"}
-    result, _ := device.SendConfigSet(cmds)
-    device.Disconnect()
-    fmt.Println(result)
+	result, _ := device.SendConfigSet(cmds)
+	device.Disconnect()
+	fmt.Println(result)
+
     
 }
 ```

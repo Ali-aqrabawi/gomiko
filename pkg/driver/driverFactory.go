@@ -11,8 +11,10 @@ type IDriver interface {
 	ReadUntil(pattern string) (string, error)
 }
 
-func NewDriver(Host string, Username string, Password string, Return string, protocol string) IDriver {
-	connection := connections.NewConnection(Host, Username, Password, protocol)
-	return &Driver{Host, Username, Password, Return, connection}
+func NewDriver(Connection connections.Connection, Return string) IDriver {
+	return &Driver{
+		Connection: Connection,
+		Return:     Return,
+	}
 
 }

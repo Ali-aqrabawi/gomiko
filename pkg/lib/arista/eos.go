@@ -6,16 +6,13 @@ import (
 )
 
 type EOSDevice struct {
-	Host     string
-	Username string
-	Password string
 	Driver driver.IDriver
-	base     types.Device
+	Prompt string
+	base   types.CiscoDevice
 }
 
-func (d *EOSDevice) Connect() error{
+func (d *EOSDevice) Connect() error {
 	return d.base.Connect()
-
 
 }
 
@@ -31,5 +28,10 @@ func (d *EOSDevice) SendConfigSet(cmds []string) (string, error) {
 
 func (d *EOSDevice) Disconnect() {
 	d.base.Disconnect()
+
+}
+
+func (d *EOSDevice) SetSecret(secret string) {
+	d.base.SetSecret(secret)
 
 }

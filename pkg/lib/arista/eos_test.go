@@ -8,7 +8,7 @@ type mockBase struct {
 	Calls *string
 }
 
-func (b mockBase) Connect() error{
+func (b mockBase) Connect() error {
 	*b.Calls = "Connect"
 	return nil
 
@@ -84,7 +84,7 @@ func TestEOSDevice_Connect(t *testing.T) {
 	// [1] test happy scenario with login -> userMode -> enableMode
 
 	mockb := mockBase{}
-	eosDevice := EOSDevice{"host", "username", "password", mockDriver{}, &mockb}
+	eosDevice := EOSDevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls
@@ -100,7 +100,7 @@ func TestEOSDevice_Connect(t *testing.T) {
 
 func TestEOSDevice_Disconnect(t *testing.T) {
 	mockb := mockBase{}
-	eosDevice := EOSDevice{"host", "username", "password", mockDriver{}, &mockb}
+	eosDevice := EOSDevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls
@@ -114,7 +114,7 @@ func TestEOSDevice_Disconnect(t *testing.T) {
 
 func TestEOSDevice_SendCommand(t *testing.T) {
 	mockb := mockBase{}
-	eosDevice := EOSDevice{"host", "username", "password", mockDriver{}, &mockb}
+	eosDevice := EOSDevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls
@@ -132,7 +132,7 @@ func TestEOSDevice_SendCommand(t *testing.T) {
 func TestEOSDevice_SendConfigSet(t *testing.T) {
 
 	mockb := mockBase{}
-	eosDevice := EOSDevice{"host", "username", "password", mockDriver{}, &mockb}
+	eosDevice := EOSDevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls

@@ -8,7 +8,7 @@ func TestNXOSDevice_Connect(t *testing.T) {
 
 	// [1] test happy scenario with login -> userMode -> enableMode
 	mockb := mockBase{}
-	nxosDevice := NXOSDevice{"host", "username", "password", mockDriver{}, &mockb}
+	nxosDevice := NXOSDevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls
@@ -24,7 +24,7 @@ func TestNXOSDevice_Connect(t *testing.T) {
 
 func TestNXOSDevice_Disconnect(t *testing.T) {
 	mockb := mockBase{}
-	nxosDevice := NXOSDevice{"host", "username", "password", mockDriver{}, &mockb}
+	nxosDevice := NXOSDevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls
@@ -38,7 +38,7 @@ func TestNXOSDevice_Disconnect(t *testing.T) {
 
 func TestNXOSDevice_SendCommand(t *testing.T) {
 	mockb := mockBase{}
-	nxosDevice := NXOSDevice{"host", "username", "password", mockDriver{}, &mockb}
+	nxosDevice := NXOSDevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls
@@ -56,7 +56,7 @@ func TestNXOSDevice_SendCommand(t *testing.T) {
 func TestNXOSDevice_SendConfigSet(t *testing.T) {
 
 	mockb := mockBase{}
-	nxosDevice := NXOSDevice{"host", "username", "password", mockDriver{}, &mockb}
+	nxosDevice := NXOSDevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls

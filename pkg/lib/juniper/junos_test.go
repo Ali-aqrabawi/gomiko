@@ -77,7 +77,7 @@ func TestJunOSDevice_Connect(t *testing.T) {
 		}
 
 	}
-	base := JunOSDevice{"host", "password", "junos", "", mockD}
+	base := JunOSDevice{mockD, "", ""}
 	if err := base.Connect(); err != nil {
 		t.Fatal(err)
 	}
@@ -110,7 +110,7 @@ func TestJunOSDevice_Disconnect(t *testing.T) {
 	var genericCalls string
 	mockD.GenericCalls = &genericCalls
 
-	base := JunOSDevice{"host", "password", "juniper", "", mockD}
+	base := JunOSDevice{mockD, "", ""}
 
 	base.Disconnect()
 
@@ -134,7 +134,7 @@ func TestJunOSDevice_SendCommand(t *testing.T) {
 
 	}
 
-	base := JunOSDevice{"host", "password", "juniper", "@jun189", mockD}
+	base := JunOSDevice{mockD, "juniper", "@jun189"}
 	result, _ := base.SendCommand("show interfaces brief")
 
 	if !strings.Contains(result, "Physical interface: cbp0, Enabled,") &&
@@ -164,7 +164,7 @@ func TestJunOSDevice_SendConfigSet(t *testing.T) {
 
 	}
 
-	base := JunOSDevice{"host", "password", "juniper", "jun189", mockD}
+	base := JunOSDevice{mockD, "juniper", "@jun189"}
 	cmds := []string{"set routing-options static route 192.168.47.0/24 next-hop 172.16.1.2"}
 	_, err := base.SendConfigSet(cmds)
 	if err != nil {

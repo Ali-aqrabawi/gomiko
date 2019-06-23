@@ -5,11 +5,9 @@ import (
 )
 
 type MikroTikRouterOS struct {
-	Host       string
-	Password   string
+	Driver     driver.IDriver
 	DeviceType string
 	Prompt     string
-	Driver     driver.IDriver
 }
 
 func (d *MikroTikRouterOS) Connect() error {

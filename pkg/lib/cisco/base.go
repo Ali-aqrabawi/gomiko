@@ -6,12 +6,19 @@ import (
 	"strings"
 )
 
+type CiscoDevice interface {
+	Connect() error
+	Disconnect()
+	SendCommand(cmd string) (string, error)
+	SendConfigSet(cmds []string) (string, error)
+	SetSecret(secret string)
+}
+
 type CSCODevice struct {
-	Host       string
-	Password   string
+	Driver     driver.IDriver
 	DeviceType string
 	Prompt     string
-	Driver     driver.IDriver
+	Secret     string
 }
 
 func (d *CSCODevice) Connect() error {
@@ -31,11 +38,15 @@ func (d *CSCODevice) Connect() error {
 func (d *CSCODevice) Disconnect() {
 	d.Driver.Disconnect()
 }
+func (d *CSCODevice) SetSecret(secret string) {
+
+	d.Secret = secret
+
+}
 
 func (d *CSCODevice) SendCommand(cmd string) (string, error) {
 
 	result, err := d.Driver.SendCommand(cmd, d.Prompt)
-
 
 	return result, err
 
@@ -61,7 +72,7 @@ func (d *CSCODevice) sessionPreparation() error {
 		return errors.New("failed to send enable command:" + err.Error())
 	}
 	if strings.Contains(out, "Password:") {
-		out, err = d.Driver.SendCommand(d.Password, d.Prompt)
+		out, err = d.Driver.SendCommand(d.Secret, d.Prompt)
 		if err != nil {
 			return errors.New("failed to send enable password:" + err.Error())
 		}
@@ -72,7 +83,6 @@ func (d *CSCODevice) sessionPreparation() error {
 	}
 
 	cmd := getPagerDisableCmd(d.DeviceType)
-
 	out, err = d.SendCommand(cmd)
 
 	return err
