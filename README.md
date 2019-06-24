@@ -27,7 +27,7 @@ import (
 
 func main() {
 	
-     device := gomiko.NewDevice("192.168.1.99", "admin", "pass", "cisco_asa")
+     device,_ := gomiko.NewDevice("192.168.1.99", "admin", "pass", "cisco_asa")
      if err := device.Connect(); err != nil {
          log.Fatal(err)    	    
      }
@@ -48,7 +48,7 @@ import (
 
 func main() {
 	
-	device := gomiko.NewDevice("192.168.1.99", "admin", "pass", "cisco_asa", option)
+	device,_ := gomiko.NewDevice("192.168.1.99", "admin", "pass", "cisco_asa", option)
 	if err := device.Connect(); err != nil {
 		log.Fatal(err)
 	}    

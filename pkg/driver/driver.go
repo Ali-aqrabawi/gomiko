@@ -13,7 +13,7 @@ type Driver struct {
 }
 
 func (d *Driver) Connect() error {
-	err := d.Connection.Connect()
+	err := d.Connection.OpenSession()
 	return err
 
 }

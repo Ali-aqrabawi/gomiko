@@ -30,5 +30,5 @@ func (d *ASADevice) SendConfigSet(cmds []string) (string, error) {
 }
 
 func (d *ASADevice) SetSecret(secret string) {
-	d.SetSecret(secret)
+	d.base.SetSecret(secret)
 }
