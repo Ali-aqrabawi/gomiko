@@ -2,16 +2,17 @@ package cisco
 
 import (
 	"github.com/Ali-aqrabawi/gomiko/pkg/driver"
+	"github.com/Ali-aqrabawi/gomiko/pkg/types"
 )
 
 type NXOSDevice struct {
 	Driver driver.IDriver
 	Prompt string
-	base   CiscoDevice
+	base   types.CiscoDevice
 }
 
-func (d *NXOSDevice) Connect() error {
-	return d.base.Connect()
+func (d *NXOSDevice) OpenSession() error {
+	return d.base.OpenSession()
 
 }
 

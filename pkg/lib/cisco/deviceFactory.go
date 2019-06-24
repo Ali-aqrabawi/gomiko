@@ -1,12 +1,13 @@
 package cisco
 
 import (
+	"errors"
 	"github.com/Ali-aqrabawi/gomiko/pkg/connections"
 	"github.com/Ali-aqrabawi/gomiko/pkg/driver"
-	"log"
+	"github.com/Ali-aqrabawi/gomiko/pkg/types"
 )
 
-func NewDevice(connection connections.Connection,  DeviceType string) CiscoDevice {
+func NewDevice(connection connections.Connection, DeviceType string) (types.CiscoDevice, error) {
 
 	devDriver := driver.NewDriver(connection, "\n")
 	base := CSCODevice{
@@ -20,27 +21,30 @@ func NewDevice(connection connections.Connection,  DeviceType string) CiscoDevic
 			Driver: devDriver,
 			Prompt: "",
 			base:   &base,
-		}
+		}, nil
+
 	case "cisco_ios":
 		return &IOSDevice{
 			Driver: devDriver,
 			Prompt: "",
-			base:   &base,}
+			base:   &base,
+		}, nil
 	case "cisco_nxos":
 		return &NXOSDevice{
 			Driver: devDriver,
 			Prompt: "",
-			base:   &base,}
+			base:   &base,
+		}, nil
 	case "cisco_iosxr":
 		return &IOSXRDevice{
 			Driver: devDriver,
 			Prompt: "",
-			base:   &base,}
+			base:   &base,
+		}, nil
 
 	default:
-		log.Fatal("unsupported DeviceType: ", DeviceType)
+		return nil, errors.New("unsupported DeviceType: " + DeviceType)
 
 	}
 
-	return nil
 }

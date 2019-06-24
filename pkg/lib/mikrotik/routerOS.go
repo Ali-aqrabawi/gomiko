@@ -10,7 +10,7 @@ type MikroTikRouterOS struct {
 	Prompt     string
 }
 
-func (d *MikroTikRouterOS) Connect() error {
+func (d *MikroTikRouterOS) OpenSession() error {
 
 	if err := d.Driver.Connect(); err != nil {
 		return err

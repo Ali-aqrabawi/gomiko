@@ -2,16 +2,17 @@ package cisco
 
 import (
 	"github.com/Ali-aqrabawi/gomiko/pkg/driver"
+	"github.com/Ali-aqrabawi/gomiko/pkg/types"
 )
 
 type IOSXRDevice struct {
 	Driver driver.IDriver
 	Prompt string
-	base   CiscoDevice
+	base   types.CiscoDevice
 }
 
-func (d *IOSXRDevice) Connect() error {
-	return d.base.Connect()
+func (d *IOSXRDevice) OpenSession() error {
+	return d.base.OpenSession()
 
 }
 

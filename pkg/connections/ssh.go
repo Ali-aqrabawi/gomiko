@@ -9,7 +9,12 @@ import (
 	"time"
 )
 
-var ciphers = []string{"3des-cbc", "aes128-cbc", "aes192-cbc", "aes256-cbc", "aes128-ctr"}
+var ciphers = []string{
+	"aes256-ctr",
+	"3des-cbc", "aes192-ctr",
+	"aes128-cbc", "aes192-cbc",
+	"aes256-cbc", "aes128-ctr",
+	"aes128-gcm@openssh.com"}
 
 type SSHConn struct {
 	client *ssh.Client
@@ -19,7 +24,12 @@ type SSHConn struct {
 
 func NewSSHConn(hostname string, username string, password string, port uint8) (SSHConn, error) {
 	sshConn := SSHConn{}
-	sshConfig := &ssh.ClientConfig{User: username, Auth: []ssh.AuthMethod{ssh.Password(password)}, HostKeyCallback: ssh.InsecureIgnoreHostKey(), Timeout: 6 * time.Second}
+	sshConfig := &ssh.ClientConfig{
+		User:            username,
+		Auth:            []ssh.AuthMethod{ssh.Password(password)},
+		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
+		Timeout:         6 * time.Second,
+	}
 	sshConfig.Ciphers = append(sshConfig.Ciphers, ciphers...)
 	addr := fmt.Sprintf("%s:%d", hostname, port)
 	conn, err := ssh.Dial("tcp", addr, sshConfig)

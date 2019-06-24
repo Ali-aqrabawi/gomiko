@@ -14,7 +14,7 @@ type JunOSDevice struct {
 
 }
 
-func (d *JunOSDevice) Connect() error {
+func (d *JunOSDevice) OpenSession() error {
 	if err := d.Driver.Connect(); err != nil {
 		return err
 	}

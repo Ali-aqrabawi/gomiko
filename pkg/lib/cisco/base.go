@@ -6,13 +6,6 @@ import (
 	"strings"
 )
 
-type CiscoDevice interface {
-	Connect() error
-	Disconnect()
-	SendCommand(cmd string) (string, error)
-	SendConfigSet(cmds []string) (string, error)
-	SetSecret(secret string)
-}
 
 type CSCODevice struct {
 	Driver     driver.IDriver
@@ -21,7 +14,7 @@ type CSCODevice struct {
 	Secret     string
 }
 
-func (d *CSCODevice) Connect() error {
+func (d *CSCODevice) OpenSession() error {
 	if err := d.Driver.Connect(); err != nil {
 		return err
 	}

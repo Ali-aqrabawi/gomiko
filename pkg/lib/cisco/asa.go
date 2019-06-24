@@ -2,16 +2,17 @@ package cisco
 
 import (
 	"github.com/Ali-aqrabawi/gomiko/pkg/driver"
+	"github.com/Ali-aqrabawi/gomiko/pkg/types"
 )
 
 type ASADevice struct {
 	Driver driver.IDriver
 	Prompt string
-	base   CiscoDevice
+	base   types.CiscoDevice
 }
 
-func (d *ASADevice) Connect() error {
-	return d.base.Connect()
+func (d *ASADevice) OpenSession() error {
+	return d.base.OpenSession()
 
 }
 

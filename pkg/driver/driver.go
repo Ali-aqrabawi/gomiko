@@ -33,7 +33,6 @@ func (d *Driver) SendCommand(cmd string, expectPattern string) (string, error) {
 	d.Connection.Write(cmd)
 
 	result, err := d.ReadUntil(expectPattern)
-	println(err == nil)
 
 	return result, err
 
