@@ -44,13 +44,6 @@ func NewSSHConnFromClient(client *ssh.Client) (SSHConn, error) {
 }
 
 func (c *SSHConn) OpenSession() error {
-	//sshConfig := &ssh.ClientConfig{User: c.Username, Auth: []ssh.AuthMethod{ssh.Password(c.Password)}, HostKeyCallback: ssh.InsecureIgnoreHostKey(), Timeout: 6 * time.Second}
-	//sshConfig.Ciphers = append(sshConfig.Ciphers, ciphers...)
-	//addr := c.Host + ":22"
-	//conn, err := ssh.Dial("tcp", addr, sshConfig)
-	//if err != nil {
-	//	return errors.New("failed to connect to device: " + err.Error())
-	//}
 
 	session, err := c.client.NewSession()
 

@@ -33,6 +33,7 @@ func (d *Driver) SendCommand(cmd string, expectPattern string) (string, error) {
 	d.Connection.Write(cmd)
 
 	result, err := d.ReadUntil(expectPattern)
+	println(err == nil)
 
 	return result, err
 
@@ -73,6 +74,7 @@ func (d *Driver) FindDevicePrompt(regex string, pattern string) (string, error) 
 }
 
 func (d *Driver) ReadUntil(pattern string) (string, error) {
+
 	outputChan := make(chan string)
 	var err error
 
@@ -85,11 +87,11 @@ func (d *Driver) ReadUntil(pattern string) (string, error) {
 
 		case <-time.After(time.Duration(4) * time.Second):
 			err = errors.New("timeout while reading, read pattern not found pattern: " + pattern)
-			break
-
+			close(outputChan)
 		}
 
 	}(d, pattern)
+
 
 	return <-outputChan, err
 

@@ -51,7 +51,7 @@ func NewDevice(Host string, Username string, Password string, DeviceType string,
 
 }
 
-func NewDeviceFromClient(client *ssh.Client, DeviceType string, Option...DeviceOption) (types.Device, error) {
+func NewDeviceFromClient(client *ssh.Client, DeviceType string, Options ...DeviceOption) (types.Device, error) {
 	var device types.Device
 
 	connection, err := connections.NewConnectionFromClient(client)
@@ -68,6 +68,12 @@ func NewDeviceFromClient(client *ssh.Client, DeviceType string, Option...DeviceO
 		device = mikrotik.NewDevice(connection, DeviceType)
 	} else {
 		return nil, errors.New("DeviceType not supported: " + DeviceType)
+	}
+	for _, option := range Options {
+		err := option(device)
+		if err != nil {
+			return nil, err
+		}
 	}
 	return device, nil
 }
