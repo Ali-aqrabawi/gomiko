@@ -11,10 +11,14 @@ import (
 
 var ciphers = []string{
 	"aes256-ctr",
-	"3des-cbc", "aes192-ctr",
-	"aes128-cbc", "aes192-cbc",
-	"aes256-cbc", "aes128-ctr",
+	"aes128-ctr",
+	"aes128-cbc",
+	"3des-cbc",
+	"aes192-ctr",
+	"aes192-cbc",
+	"aes256-cbc",
 	"aes128-gcm@openssh.com"}
+
 
 type SSHConn struct {
 	client *ssh.Client
@@ -24,9 +28,10 @@ type SSHConn struct {
 
 func NewSSHConn(hostname string, username string, password string, port uint8) (SSHConn, error) {
 	sshConn := SSHConn{}
+	interactive := getInteractiveCallBack(password)
 	sshConfig := &ssh.ClientConfig{
 		User:            username,
-		Auth:            []ssh.AuthMethod{ssh.Password(password)},
+		Auth:            []ssh.AuthMethod{ssh.Password(password), ssh.KeyboardInteractive(interactive)},
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 		Timeout:         6 * time.Second,
 	}
@@ -34,6 +39,7 @@ func NewSSHConn(hostname string, username string, password string, port uint8) (
 	addr := fmt.Sprintf("%s:%d", hostname, port)
 	conn, err := ssh.Dial("tcp", addr, sshConfig)
 	if err != nil {
+
 		return sshConn, errors.New("failed to connect to device: " + err.Error())
 	}
 
@@ -108,5 +114,20 @@ func (c *SSHConn) Write(cmd string) int {
 	commandBytes := []byte(cmd)
 	code, _ := c.writer.Write(commandBytes)
 	return code
+
+}
+
+func getInteractiveCallBack(password string) ssh.KeyboardInteractiveChallenge {
+
+	return func(user, instruction string, questions []string, echos []bool) (answers []string, err error) {
+		answers = make([]string, len(questions))
+		// The second parameter is unused
+		for n, _ := range questions {
+			answers[n] = password
+			println(password)
+		}
+
+		return answers, nil
+	}
 
 }
