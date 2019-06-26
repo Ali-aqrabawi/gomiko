@@ -6,15 +6,13 @@ import (
 )
 
 type IOSDevice struct {
-	Host     string
-	Username string
-	Password string
 	Driver driver.IDriver
-	base     types.Device
+	Prompt string
+	base   types.CiscoDevice
 }
 
-func (d *IOSDevice) Connect() error{
-	return d.base.Connect()
+func (d *IOSDevice) OpenSession() error {
+	return d.base.OpenSession()
 
 }
 
@@ -32,4 +30,7 @@ func (d *IOSDevice) SendCommand(cmd string) (string, error) {
 func (d *IOSDevice) SendConfigSet(cmds []string) (string, error) {
 	return d.base.SendConfigSet(cmds)
 
+}
+func (d *IOSDevice) SetSecret(secret string) {
+	d.base.SetSecret(secret)
 }

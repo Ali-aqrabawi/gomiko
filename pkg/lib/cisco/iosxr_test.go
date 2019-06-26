@@ -4,27 +4,27 @@ import (
 	"testing"
 )
 
-func TestIOSXRDevice_Connect(t *testing.T) {
+func TestIOSXRDevice_OpenSession(t *testing.T) {
 
 	// [1] test happy scenario with login -> userMode -> enableMode
 	mockb := mockBase{}
-	iosxrDevice := IOSXRDevice{"host", "username", "password", mockDriver{}, &mockb}
+	iosxrDevice := IOSXRDevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls
-	if err := iosxrDevice.Connect(); err != nil {
+	if err := iosxrDevice.OpenSession(); err != nil {
 		t.Fatal(err)
 	}
 
-	if calls != "Connect" {
-		t.Error("base.Connect() was not called")
+	if calls != "OpenSession" {
+		t.Error("base.OpenSession() was not called")
 	}
 
 }
 
 func TestIOSXRDevice_Disconnect(t *testing.T) {
 	mockb := mockBase{}
-	iosxrDevice := IOSXRDevice{"host", "username", "password", mockDriver{}, &mockb}
+	iosxrDevice := IOSXRDevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls
@@ -38,7 +38,7 @@ func TestIOSXRDevice_Disconnect(t *testing.T) {
 
 func TestIOSXRDevice_SendCommand(t *testing.T) {
 	mockb := mockBase{}
-	iosxrDevice := IOSXRDevice{"host", "username", "password", mockDriver{}, &mockb}
+	iosxrDevice := IOSXRDevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls
@@ -56,7 +56,7 @@ func TestIOSXRDevice_SendCommand(t *testing.T) {
 func TestIOSXRDevice_SendConfigSet(t *testing.T) {
 
 	mockb := mockBase{}
-	iosxrDevice := IOSXRDevice{"host", "username", "password", mockDriver{}, &mockb}
+	iosxrDevice := IOSXRDevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls

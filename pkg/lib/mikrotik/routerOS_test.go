@@ -13,7 +13,7 @@ type mockDriver struct {
 	GenericCalls   *string
 }
 
-func (c mockDriver) Connect() error {
+func (c mockDriver) OpenSession() error {
 	return nil
 }
 func (c mockDriver) Disconnect() {
@@ -54,7 +54,7 @@ func (c mockDriver) ReadUntil(pattern string) (string, error) {
 
 }
 
-func TestMikroTikROS_Connect(t *testing.T) {
+func TestMikroTikROS_OpenSession(t *testing.T) {
 
 	// [1] test happy scenario with login -> userMode -> enableMode
 	mockD := mockDriver{}
@@ -79,8 +79,8 @@ func TestMikroTikROS_Connect(t *testing.T) {
 		}
 
 	}
-	base := MikroTikRouterOS{"host", "password", "mikrotik_routeros", "", mockD}
-	if err := base.Connect(); err != nil{
+	base := MikroTikRouterOS{mockD, "mikrotik_routeros", ""}
+	if err := base.OpenSession(); err != nil {
 		t.Fatal(err)
 	}
 
@@ -112,12 +112,12 @@ func TestMikroTikROS_Disconnect(t *testing.T) {
 	var genericCalls string
 	mockD.GenericCalls = &genericCalls
 
-	base := MikroTikRouterOS{"host", "password", "mikrotik_routeros", "", mockD}
+	base := MikroTikRouterOS{mockD, "mikrotik_routeros", ""}
 
 	base.Disconnect()
 
 	if genericCalls != "disconnect" {
-		t.Error("Driver.Connect was not called")
+		t.Error("Driver.Disconnect was not called")
 	}
 
 }
@@ -136,7 +136,7 @@ func TestMikroTikROS_SendCommand(t *testing.T) {
 
 	}
 
-	base := MikroTikRouterOS{"host", "password", "mikrotik_routeros", "@MikroTik] >", mockD}
+	base := MikroTikRouterOS{mockD, "mikrotik_routeros", ""}
 	result, _ := base.SendCommand("ip route print")
 
 	if !strings.Contains(result, "0 ADS  0.0.0.0/0") &&
@@ -166,7 +166,7 @@ func TestMikroTikROS_SendConfigSet(t *testing.T) {
 
 	}
 
-	base := MikroTikRouterOS{"host", "password", "cisco_ios", "switch1", mockD}
+	base := MikroTikRouterOS{mockD, "mikrotik_routeros", ""}
 	cmds := []string{"mikrotik command1", "mikrotik command2"}
 	_, err := base.SendConfigSet(cmds)
 	if err != nil {

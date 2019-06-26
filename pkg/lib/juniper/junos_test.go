@@ -13,7 +13,7 @@ type mockDriver struct {
 	GenericCalls   *string
 }
 
-func (c mockDriver) Connect() error {
+func (c mockDriver) OpenSession() error {
 	return nil
 
 }
@@ -52,7 +52,7 @@ func (c mockDriver) ReadUntil(pattern string) (string, error) {
 
 }
 
-func TestJunOSDevice_Connect(t *testing.T) {
+func TestJunOSDevice_OpenSession(t *testing.T) {
 
 	// [1] test happy scenario with login -> userMode -> enableMode
 	mockD := mockDriver{}
@@ -77,8 +77,8 @@ func TestJunOSDevice_Connect(t *testing.T) {
 		}
 
 	}
-	base := JunOSDevice{"host", "password", "junos", "", mockD}
-	if err := base.Connect(); err != nil {
+	base := JunOSDevice{mockD, "", ""}
+	if err := base.OpenSession(); err != nil {
 		t.Fatal(err)
 	}
 
@@ -110,12 +110,12 @@ func TestJunOSDevice_Disconnect(t *testing.T) {
 	var genericCalls string
 	mockD.GenericCalls = &genericCalls
 
-	base := JunOSDevice{"host", "password", "juniper", "", mockD}
+	base := JunOSDevice{mockD, "", ""}
 
 	base.Disconnect()
 
 	if genericCalls != "disconnect" {
-		t.Error("Driver.Connect was not called")
+		t.Error("Driver.Disconnect() was not called")
 	}
 
 }
@@ -134,7 +134,7 @@ func TestJunOSDevice_SendCommand(t *testing.T) {
 
 	}
 
-	base := JunOSDevice{"host", "password", "juniper", "@jun189", mockD}
+	base := JunOSDevice{mockD, "juniper", "@jun189"}
 	result, _ := base.SendCommand("show interfaces brief")
 
 	if !strings.Contains(result, "Physical interface: cbp0, Enabled,") &&
@@ -164,7 +164,7 @@ func TestJunOSDevice_SendConfigSet(t *testing.T) {
 
 	}
 
-	base := JunOSDevice{"host", "password", "juniper", "jun189", mockD}
+	base := JunOSDevice{mockD, "juniper", "@jun189"}
 	cmds := []string{"set routing-options static route 192.168.47.0/24 next-hop 172.16.1.2"}
 	_, err := base.SendConfigSet(cmds)
 	if err != nil {

@@ -2,38 +2,66 @@ package connections
 
 import (
 	"errors"
+	"fmt"
 	"golang.org/x/crypto/ssh"
 	"io"
 	"log"
 	"time"
 )
 
-var ciphers = []string{"3des-cbc", "aes128-cbc", "aes192-cbc", "aes256-cbc", "aes128-ctr"}
+var ciphers = []string{
+	"aes256-ctr",
+	"aes128-ctr",
+	"aes128-cbc",
+	"3des-cbc",
+	"aes192-ctr",
+	"aes192-cbc",
+	"aes256-cbc",
+	"aes128-gcm@openssh.com"}
+
 
 type SSHConn struct {
-	Host     string
-	Username string
-	Password string
-	client   *ssh.Client
-	reader   io.Reader
-	writer   io.WriteCloser
+	client *ssh.Client
+	reader io.Reader
+	writer io.WriteCloser
 }
 
-func NewSSHConn(host string, username string, password string) *SSHConn {
-	return &SSHConn{host, username, password, nil, nil, nil}
-}
-
-func (c *SSHConn) Connect() error {
-
-	sshConfig := &ssh.ClientConfig{User: c.Username, Auth: []ssh.AuthMethod{ssh.Password(c.Password)}, HostKeyCallback: ssh.InsecureIgnoreHostKey(), Timeout: 6 * time.Second}
+func NewSSHConn(hostname string, username string, password string, port uint8) (SSHConn, error) {
+	sshConn := SSHConn{}
+	interactive := getInteractiveCallBack(password)
+	sshConfig := &ssh.ClientConfig{
+		User:            username,
+		Auth:            []ssh.AuthMethod{ssh.Password(password), ssh.KeyboardInteractive(interactive)},
+		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
+		Timeout:         6 * time.Second,
+	}
 	sshConfig.Ciphers = append(sshConfig.Ciphers, ciphers...)
-	addr := c.Host + ":22"
+	addr := fmt.Sprintf("%s:%d", hostname, port)
 	conn, err := ssh.Dial("tcp", addr, sshConfig)
 	if err != nil {
-		return errors.New("failed to connect to device: " + err.Error())
+
+		return sshConn, errors.New("failed to connect to device: " + err.Error())
 	}
 
-	session, err := conn.NewSession()
+	sshConn.client = conn
+
+	return sshConn, nil
+
+}
+
+func NewSSHConnFromClient(client *ssh.Client) (SSHConn, error) {
+	sshConn := SSHConn{}
+	if client.Conn == nil {
+		return sshConn, errors.New("*ssh.Client has no Conn, make sure to call .Dial() before")
+	}
+	sshConn.client = client
+	return sshConn, nil
+
+}
+
+func (c *SSHConn) OpenSession() error {
+
+	session, err := c.client.NewSession()
 
 	if err != nil {
 		return errors.New("failed to Start a new session: " + err.Error())
@@ -42,7 +70,7 @@ func (c *SSHConn) Connect() error {
 	reader, _ := session.StdoutPipe()
 	writer, _ := session.StdinPipe()
 
-	c.client = conn
+	//c.client = conn
 	c.reader = reader
 	c.writer = writer
 
@@ -86,5 +114,19 @@ func (c *SSHConn) Write(cmd string) int {
 	commandBytes := []byte(cmd)
 	code, _ := c.writer.Write(commandBytes)
 	return code
+
+}
+
+func getInteractiveCallBack(password string) ssh.KeyboardInteractiveChallenge {
+
+	return func(user, instruction string, questions []string, echos []bool) (answers []string, err error) {
+		answers = make([]string, len(questions))
+		// The second parameter is unused
+		for n := range questions {
+			answers[n] = password
+		}
+
+		return answers, nil
+	}
 
 }

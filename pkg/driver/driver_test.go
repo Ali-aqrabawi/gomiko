@@ -9,7 +9,7 @@ import (
 type MockConn struct {
 }
 
-func (MockConn) Connect() error{
+func (MockConn) OpenSession() error {
 	return nil
 
 }
@@ -30,7 +30,7 @@ func (MockConn) Write(cmd string) int {
 type MockConn2 struct {
 }
 
-func (MockConn2) Connect() error {
+func (MockConn2) OpenSession() error {
 	return nil
 
 }
@@ -50,9 +50,9 @@ func (MockConn2) Write(cmd string) int {
 func TestDriver_FindDevicePrompt(t *testing.T) {
 
 	// [] valid input
-	testDriver := Driver{"host", "username", "password", "\n", MockConn{}}
+	testDriver := Driver{MockConn{}, "\n"}
 	prompt, err := testDriver.FindDevicePrompt("\r?(.*)[#>]", ">|#")
-	if err != nil{
+	if err != nil {
 		t.Fatal(err)
 	}
 	if prompt != "switch1" {
@@ -60,7 +60,7 @@ func TestDriver_FindDevicePrompt(t *testing.T) {
 	}
 
 	// [] test timeout
-	testDriver = Driver{"host", "username", "password", "\n", MockConn2{}}
+	testDriver = Driver{MockConn2{}, "\n"}
 	go func() {
 		defer func() {
 			if r := recover(); r == nil {
@@ -78,16 +78,16 @@ func TestDriver_FindDevicePrompt(t *testing.T) {
 }
 
 func TestDriver_ReadUntil(t *testing.T) {
-	testDriver := Driver{"host", "username", "password", "\n", MockConn{}}
+	testDriver := Driver{MockConn{}, "\n"}
 
-	out,_:= testDriver.ReadUntil("switch1")
+	out, _ := testDriver.ReadUntil("switch1")
 	if !strings.Contains(out, "Loged in as Admin!") && !strings.Contains(out, "switch1") {
 		t.Error("ReadUntil did not return expected data")
 	}
 }
 
 func TestDriver_SendCommand(t *testing.T) {
-	testDriver := Driver{"host", "username", "password", "\n", MockConn{}}
+	testDriver := Driver{MockConn{}, "\n"}
 
 	result, _ := testDriver.SendCommand("show run", "switch1")
 	if !strings.Contains(result, "Loged in as Admin!") && !strings.Contains(result, "switch1") {
@@ -96,7 +96,7 @@ func TestDriver_SendCommand(t *testing.T) {
 }
 
 func TestDriver_SendCommandsSet(t *testing.T) {
-	testDriver := Driver{"host", "username", "password", "\n", MockConn{}}
+	testDriver := Driver{MockConn{}, "\n"}
 
 	cmds := []string{"cmd1", "cmd2"}
 

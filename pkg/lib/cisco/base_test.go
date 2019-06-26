@@ -13,7 +13,7 @@ type mockDriver struct {
 	GenericCalls   *string
 }
 
-func (c mockDriver) Connect() error {
+func (c mockDriver) OpenSession() error {
 	return nil
 
 }
@@ -55,7 +55,7 @@ func (c mockDriver) ReadUntil(pattern string) (string, error) {
 
 }
 
-func TestCSCODevice_Connect_userMode(t *testing.T) {
+func TestCSCODevice_OpenSessiont_userMode(t *testing.T) {
 
 	// [1] test happy scenario with login -> userMode -> enableMode
 	mockD := mockDriver{}
@@ -76,12 +76,11 @@ func TestCSCODevice_Connect_userMode(t *testing.T) {
 			return "lorem ipsum 123\nswitch#lorem"
 		default:
 			return ""
-
 		}
-
 	}
-	base := CSCODevice{"host", "password", "cisco_ios", "", mockD}
-	if err := base.Connect(); err != nil {
+
+	base := CSCODevice{mockD, "", "", ""}
+	if err := base.OpenSession(); err != nil {
 		t.Fatal(err)
 	}
 
@@ -94,10 +93,11 @@ func TestCSCODevice_Connect_userMode(t *testing.T) {
 		t.Errorf("wrong Cisco Pattern calls, Expected: (%s) Got: (%s)", expected, patternCalls)
 	}
 
-	expected = "enable, password, terminal len 0, "
+	expected = "enable, , terminal len 0, "
 
+	// Test no Secret
 	if cmdCalls != expected {
-		t.Errorf("wrong Cisco commands calls, Expected: (%s) Got: (%s)", expected, patternCalls)
+		t.Errorf("wrong Cisco commands calls, Expected: (%s) Got: (%s)", expected, cmdCalls)
 	}
 
 	expected = "\r?(.*)[#>]"
@@ -106,9 +106,21 @@ func TestCSCODevice_Connect_userMode(t *testing.T) {
 		t.Errorf("wrong Cisco prompt regex calls, Expected: (%s) Got: (%s)", expected, promptRegexCall)
 	}
 
+	// Test with Secret
+	base.SetSecret("mySecret")
+	cmdCalls = ""
+	callsCount = 0
+	if err := base.OpenSession(); err != nil {
+		t.Fatal(err)
+	}
+	expected = "enable, mySecret, terminal len 0, "
+	if cmdCalls != expected {
+		t.Errorf("wrong Cisco commands calls, Expected: (%s) Got: (%s)", expected, cmdCalls)
+	}
+
 }
 
-func TestCSCODevice_Connect_noUserMode(t *testing.T) {
+func TestCSCODevice_OpenSession_noUserMode(t *testing.T) {
 
 	// [2] test no userMode scenario login -> enableMode
 	mockD := mockDriver{}
@@ -133,8 +145,8 @@ func TestCSCODevice_Connect_noUserMode(t *testing.T) {
 		}
 
 	}
-	base := CSCODevice{"host", "password", "cisco_ios", "", mockD}
-	if err := base.Connect(); err != nil {
+	base := CSCODevice{mockD, "cisco_ios", "", ""}
+	if err := base.OpenSession(); err != nil {
 		t.Fatal(err)
 	}
 
@@ -158,12 +170,12 @@ func TestCSCODevice_Disconnect(t *testing.T) {
 	var genericCalls string
 	mockD.GenericCalls = &genericCalls
 
-	base := CSCODevice{"host", "password", "cisco_ios", "", mockD}
+	base := CSCODevice{mockD, "cisco_ios", "", ""}
 
 	base.Disconnect()
 
 	if genericCalls != "disconnect" {
-		t.Error("Driver.Connect was not called")
+		t.Error("Driver.Disconnect() was not called")
 	}
 
 }
@@ -182,7 +194,7 @@ func TestCSCODevice_SendCommand(t *testing.T) {
 
 	}
 
-	base := CSCODevice{"host", "password", "cisco_ios", "switch1", mockD}
+	base := CSCODevice{mockD, "cisco_ios", "switch1", ""}
 	result, _ := base.SendCommand("show vlan")
 
 	if !strings.Contains(result, "vlan 1 v2") && !strings.Contains(result, "vlan 2 v2 ") {
@@ -211,7 +223,7 @@ func TestCSCODevice_SendConfigSet(t *testing.T) {
 
 	}
 
-	base := CSCODevice{"host", "password", "cisco_ios", "switch1", mockD}
+	base := CSCODevice{mockD, "cisco_ios", "switch1", ""}
 	cmds := []string{"show interface", "show ip route"}
 	_, err := base.SendConfigSet(cmds)
 	if err != nil {

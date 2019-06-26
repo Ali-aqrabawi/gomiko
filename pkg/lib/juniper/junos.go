@@ -7,15 +7,15 @@ import (
 )
 
 type JunOSDevice struct {
-	Host       string
-	Password   string
+	Driver     driver.IDriver
 	DeviceType string
 	Prompt     string
-	Driver     driver.IDriver
+
+
 }
 
-func (d *JunOSDevice) Connect() error {
-	if err := d.Driver.Connect(); err != nil {
+func (d *JunOSDevice) OpenSession() error {
+	if err := d.Driver.OpenSession(); err != nil {
 		return err
 	}
 	prompt, err := d.Driver.FindDevicePrompt("(@.*)[#>%]", "%")

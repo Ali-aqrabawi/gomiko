@@ -6,20 +6,17 @@ import (
 )
 
 type ASADevice struct {
-	Host     string
-	Username string
-	Password string
 	Driver driver.IDriver
-	base     types.Device
+	Prompt string
+	base   types.CiscoDevice
 }
 
-func (d *ASADevice) Connect() error{
-	return d.base.Connect()
+func (d *ASADevice) OpenSession() error {
+	return d.base.OpenSession()
 
 }
 
 func (d *ASADevice) Disconnect() {
-
 	d.base.Disconnect()
 
 }
@@ -31,4 +28,8 @@ func (d *ASADevice) SendCommand(cmd string) (string, error) {
 
 func (d *ASADevice) SendConfigSet(cmds []string) (string, error) {
 	return d.base.SendConfigSet(cmds)
+}
+
+func (d *ASADevice) SetSecret(secret string) {
+	d.base.SetSecret(secret)
 }

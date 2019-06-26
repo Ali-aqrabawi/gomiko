@@ -1,22 +1,25 @@
 package mikrotik
 
 import (
+	"errors"
+	"github.com/Ali-aqrabawi/gomiko/pkg/connections"
 	"github.com/Ali-aqrabawi/gomiko/pkg/driver"
 	"github.com/Ali-aqrabawi/gomiko/pkg/types"
-	"log"
 )
 
-func NewDevice(Host string, Username string, Password string, DeviceType string) types.Device {
-	Username += "+ct200w" // disable paging and disable coloring
-	devDriver := driver.NewDriver(Host, Username, Password, "\r", "ssh")
+func NewDevice(connection connections.Connection, DeviceType string) (types.Device, error) {
+	devDriver := driver.NewDriver(connection, "\r")
 
 	switch DeviceType {
 	case "mikrotik_routeros":
-		return &MikroTikRouterOS{Host, Password, DeviceType, "", devDriver}
+		return &MikroTikRouterOS{
+			Driver:     devDriver,
+			DeviceType: DeviceType,
+			Prompt:     "",
+		}, nil
 	default:
-		log.Fatal("unsupported DeviceType: ", DeviceType)
+		return nil, errors.New("unsupported DeviceType: " + DeviceType)
 
 	}
-	return nil
 
 }

@@ -3,7 +3,9 @@
 [![GolangCI](https://golangci.com/badges/github.com/Ali-aqrabawi/gomiko.svg)](https://golangci.com)
 
 multi-vendor networking SDK.
-inspired by `netmiko`.
+this is library is a `Go` implentation of [netmiko](https://github.com/ktbyers/netmiko).
+this library helps to communicate and execute commands on interactive `shell`
+without caring about handling the device prompts and terminal modes.
  
 ## Supports
 * Cisco IOS
@@ -18,7 +20,7 @@ inspired by `netmiko`.
 get gomiko pkg `go get -u github.com/Ali-aqrabawi/gomiko/pkg`.
 
 ## Examples 
- 1. execute a command:
+ 1. create device using basic parameters and execute commands:
 ```go
 import (
 	"fmt"
@@ -26,19 +28,33 @@ import (
 )
 
 func main() {
- device := gomiko.NewDevice("192.168.1.99", "admin", "pass", "cisco_asa")
- if err := device.Connect(); err != nil {
-     log.Fatal(err)    	    
- }
- 	
- result, _ := device.SendCommand("show version")
-    device.Disconnect()
- fmt.Println(result)
+	
+     device, err := gomiko.NewDevice("192.168.1.1", "admin", "mySecret", "cisco_ios", 22)
+     if err != nil {
+     	log.Fatal(err)
+     }
+     
+     //Open Session with device
+     if err := device.OpenSession(); err != nil {
+     	log.Fatal(err)
+     }
+     
+     // send command
+     output1, _ := device.SendCommand("show vlan")
+     
+     // send a set of config commands
+     commands := []string{"vlan 120", "name v120"}
+     output2, _ := device.SendConfigSet(commands)
+     
+     device.Disconnect()
+     
+     fmt.Println(output1)
+     fmt.Println(output2)
  
 }
 ```
 
- 2. execute config set:
+ 2. create device using `*ssh.Clinet` and execute commands:
 ```go
 import (
 	"fmt"
@@ -46,15 +62,36 @@ import (
 )
 
 func main() {
-	device := gomiko.NewDevice("192.168.1.99", "admin", "pass", "cisco_asa")
-	if err := device.Connect(); err != nil {
+	
+	opt := gomiko.SecretOption("mySecret")
+    
+	// create ssh client config
+	sshConfig := &ssh.ClientConfig{User: "admin", Auth: []ssh.AuthMethod{ssh.Password("mySecret")}, HostKeyCallback: ssh.InsecureIgnoreHostKey(), Timeout: 6 * time.Second}
+	var ciphers = []string{"3des-cbc", "aes128-cbc", "aes192-cbc", "aes256-cbc", "aes128-ctr"}
+	sshConfig.Ciphers = append(sshConfig.Ciphers, ciphers...)
+    
+	// connect to device
+	conn, _ := ssh.Dial("tcp", "192.168.1.1:22", sshConfig)
+    
+	// create device using that connection which will be used by gomiko to start session
+	device,err := gomiko.NewDeviceFromClient(conn,"cisco_ios",opt)
+    
+	if err != nil{
 		log.Fatal(err)
-       }
-	cmds := []string{"object network GoLangObj","host 44.6.3.1"}
-    result, _ := device.SendConfigSet(cmds)
-    device.Disconnect()
-    fmt.Println(result)
+   	}
+	// Open Session to device.
+	if err :=device.OpenSession(); err!=nil{
+		log.Fatal(err)
+   	}
+    
+	// execut commands
+	result, _ := device.SendCommand("show vlan")
+	cmds := []string{"vlan 898","name v898"}
+	result2, _ := device.SendConfigSet(cmds)
+    
+	fmt.Println(result)
+	fmt.Println(result2)
     
 }
 ```
-        
+

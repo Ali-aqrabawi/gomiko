@@ -8,33 +8,29 @@ import (
 )
 
 type Driver struct {
-	Host       string
-	Username   string
-	Password   string
+	Connection connections.Connection
 	Return     string `defaults:"\n"`
-	connection connections.Connection
 }
 
-func (d *Driver) Connect() error {
-	err := d.connection.Connect()
+func (d *Driver) OpenSession() error {
+	err := d.Connection.OpenSession()
 	return err
 
 }
 
 func (d *Driver) Disconnect() {
-	d.connection.Disconnect()
+	d.Connection.Disconnect()
 
 }
 
 func (d *Driver) SendCommand(cmd string, expectPattern string) (string, error) {
-
-	if d.connection == nil {
+	if d.Connection == nil {
 		return "", errors.New("not connected to device, make sure to call .Connect() first")
 	}
 
 	cmd += d.Return
 
-	d.connection.Write(cmd)
+	d.Connection.Write(cmd)
 
 	result, err := d.ReadUntil(expectPattern)
 
@@ -43,7 +39,7 @@ func (d *Driver) SendCommand(cmd string, expectPattern string) (string, error) {
 }
 
 func (d *Driver) SendCommandsSet(cmds []string, expectPattern string) (string, error) {
-	if d.connection == nil {
+	if d.Connection == nil {
 		return "", errors.New("not connected to device, make sure to call .Connect() first")
 	}
 	var results string
@@ -67,7 +63,7 @@ func (d *Driver) FindDevicePrompt(regex string, pattern string) (string, error) 
 			return "", err
 		}
 	} else {
-		out, _ = d.connection.Read()
+		out, _ = d.Connection.Read()
 	}
 	if !r.MatchString(out) {
 		return "", errors.New("failed to find prompt, pattern: " + pattern + " , output: " + out)
@@ -77,6 +73,7 @@ func (d *Driver) FindDevicePrompt(regex string, pattern string) (string, error) 
 }
 
 func (d *Driver) ReadUntil(pattern string) (string, error) {
+
 	outputChan := make(chan string)
 	var err error
 
@@ -89,24 +86,28 @@ func (d *Driver) ReadUntil(pattern string) (string, error) {
 
 		case <-time.After(time.Duration(4) * time.Second):
 			err = errors.New("timeout while reading, read pattern not found pattern: " + pattern)
-			break
-
+			close(outputChan)
 		}
 
 	}(d, pattern)
+
 
 	return <-outputChan, err
 
 }
 
+func (d Driver) SetReturn(Return string) {
+	d.Return = Return
+}
+
 func readRoutine(d *Driver, pattern string, buffChan chan<- string) {
 	var result string
-	result, err := d.connection.Read()
+	result, err := d.Connection.Read()
 
 	r, _ := regexp.Compile(pattern)
 
 	for (err == nil) && (!r.MatchString(result)) {
-		outSlice, _ := d.connection.Read()
+		outSlice, _ := d.Connection.Read()
 		result += outSlice
 
 	}

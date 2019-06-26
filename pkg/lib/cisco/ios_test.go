@@ -4,27 +4,27 @@ import (
 	"testing"
 )
 
-func TestIOSDevice_Connect(t *testing.T) {
+func TestIOSDevice_OpenSession(t *testing.T) {
 
 	// [1] test happy scenario with login -> userMode -> enableMode
 	mockb := mockBase{}
-	iosDevice := IOSDevice{"host", "username", "password", mockDriver{}, &mockb}
+	iosDevice := IOSDevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls
-	if err := iosDevice.Connect(); err != nil {
+	if err := iosDevice.OpenSession(); err != nil {
 		t.Fatal(err)
 	}
 
-	if calls != "Connect" {
-		t.Error("base.Connect() was not called")
+	if calls != "OpenSession" {
+		t.Error("base.OpenSession() was not called")
 	}
 
 }
 
 func TestIOSDevice_Disconnect(t *testing.T) {
 	mockb := mockBase{}
-	iosDevice := IOSDevice{"host", "username", "password", mockDriver{}, &mockb}
+	iosDevice := IOSDevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls
@@ -38,7 +38,7 @@ func TestIOSDevice_Disconnect(t *testing.T) {
 
 func TestIOSDevice_SendCommand(t *testing.T) {
 	mockb := mockBase{}
-	iosDevice := IOSDevice{"host", "username", "password", mockDriver{}, &mockb}
+	iosDevice := IOSDevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls
@@ -56,7 +56,7 @@ func TestIOSDevice_SendCommand(t *testing.T) {
 func TestIOSDevice_SendConfigSet(t *testing.T) {
 
 	mockb := mockBase{}
-	iosDevice := IOSDevice{"host", "username", "password", mockDriver{}, &mockb}
+	iosDevice := IOSDevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls

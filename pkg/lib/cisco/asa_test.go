@@ -8,8 +8,8 @@ type mockBase struct {
 	Calls *string
 }
 
-func (b mockBase) Connect() error {
-	*b.Calls = "Connect"
+func (b mockBase) OpenSession() error {
+	*b.Calls = "OpenSession"
 	return nil
 
 }
@@ -28,29 +28,33 @@ func (b mockBase) SendConfigSet(cmds []string) (string, error) {
 	return "", nil
 
 }
+func (b mockBase) SetSecret(secret string) {
+	*b.Calls = "SetSecret"
 
-func TestASADevice_Connect(t *testing.T) {
+}
+
+func TestASADevice_OpenSession(t *testing.T) {
 
 	// [1] test happy scenario with login -> userMode -> enableMode
 
 	mockb := mockBase{}
-	asaDevice := ASADevice{"host", "username", "password", mockDriver{}, &mockb}
+	asaDevice := ASADevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls
-	if err := asaDevice.Connect(); err != nil {
+	if err := asaDevice.OpenSession(); err != nil {
 		t.Fatal(err)
 	}
 
-	if calls != "Connect" {
-		t.Error("base.Connect() was not called")
+	if calls != "OpenSession" {
+		t.Error("base.OpenSession() was not called")
 	}
 
 }
 
 func TestASADevice_Disconnect(t *testing.T) {
 	mockb := mockBase{}
-	asaDevice := ASADevice{"host", "username", "password", mockDriver{}, &mockb}
+	asaDevice := ASADevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls
@@ -64,7 +68,7 @@ func TestASADevice_Disconnect(t *testing.T) {
 
 func TestASADevice_SendCommand(t *testing.T) {
 	mockb := mockBase{}
-	asaDevice := ASADevice{"host", "username", "password", mockDriver{}, &mockb}
+	asaDevice := ASADevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls
@@ -82,7 +86,7 @@ func TestASADevice_SendCommand(t *testing.T) {
 func TestASADevice_SendConfigSet(t *testing.T) {
 
 	mockb := mockBase{}
-	asaDevice := ASADevice{"host", "username", "password", mockDriver{}, &mockb}
+	asaDevice := ASADevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls

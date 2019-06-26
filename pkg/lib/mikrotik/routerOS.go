@@ -5,16 +5,14 @@ import (
 )
 
 type MikroTikRouterOS struct {
-	Host       string
-	Password   string
+	Driver     driver.IDriver
 	DeviceType string
 	Prompt     string
-	Driver     driver.IDriver
 }
 
-func (d *MikroTikRouterOS) Connect() error {
+func (d *MikroTikRouterOS) OpenSession() error {
 
-	if err := d.Driver.Connect(); err != nil {
+	if err := d.Driver.OpenSession(); err != nil {
 		return err
 	}
 	prompt, err := d.Driver.FindDevicePrompt("\\[.*(@.*\\] >)", "] >")

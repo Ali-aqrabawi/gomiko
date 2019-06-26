@@ -8,8 +8,8 @@ type mockBase struct {
 	Calls *string
 }
 
-func (b mockBase) Connect() error{
-	*b.Calls = "Connect"
+func (b mockBase) OpenSession() error {
+	*b.Calls = "OpenSession"
 	return nil
 
 }
@@ -28,6 +28,10 @@ func (b mockBase) SendConfigSet(cmds []string) (string, error) {
 	return "", nil
 
 }
+func (b mockBase) SetSecret(secret string) {
+	*b.Calls = "SetSecret"
+
+}
 
 type mockDriver struct {
 	ReadSideEffect func() string
@@ -37,7 +41,7 @@ type mockDriver struct {
 	GenericCalls   *string
 }
 
-func (c mockDriver) Connect() error {
+func (c mockDriver) OpenSession() error {
 	return nil
 
 }
@@ -84,23 +88,23 @@ func TestEOSDevice_Connect(t *testing.T) {
 	// [1] test happy scenario with login -> userMode -> enableMode
 
 	mockb := mockBase{}
-	eosDevice := EOSDevice{"host", "username", "password", mockDriver{}, &mockb}
+	eosDevice := EOSDevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls
-	if err := eosDevice.Connect(); err != nil {
+	if err := eosDevice.OpenSession(); err != nil {
 		t.Fatal(err)
 	}
 
-	if calls != "Connect" {
-		t.Error("base.Connect() was not called")
+	if calls != "OpenSession" {
+		t.Error("base.OpenSession() was not called")
 	}
 
 }
 
 func TestEOSDevice_Disconnect(t *testing.T) {
 	mockb := mockBase{}
-	eosDevice := EOSDevice{"host", "username", "password", mockDriver{}, &mockb}
+	eosDevice := EOSDevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls
@@ -114,7 +118,7 @@ func TestEOSDevice_Disconnect(t *testing.T) {
 
 func TestEOSDevice_SendCommand(t *testing.T) {
 	mockb := mockBase{}
-	eosDevice := EOSDevice{"host", "username", "password", mockDriver{}, &mockb}
+	eosDevice := EOSDevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls
@@ -132,7 +136,7 @@ func TestEOSDevice_SendCommand(t *testing.T) {
 func TestEOSDevice_SendConfigSet(t *testing.T) {
 
 	mockb := mockBase{}
-	eosDevice := EOSDevice{"host", "username", "password", mockDriver{}, &mockb}
+	eosDevice := EOSDevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls

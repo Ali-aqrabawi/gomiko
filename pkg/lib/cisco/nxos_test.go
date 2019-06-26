@@ -4,27 +4,27 @@ import (
 	"testing"
 )
 
-func TestNXOSDevice_Connect(t *testing.T) {
+func TestNXOSDevice_OpenSession(t *testing.T) {
 
 	// [1] test happy scenario with login -> userMode -> enableMode
 	mockb := mockBase{}
-	nxosDevice := NXOSDevice{"host", "username", "password", mockDriver{}, &mockb}
+	nxosDevice := NXOSDevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls
-	if err :=nxosDevice.Connect(); err != nil {
+	if err :=nxosDevice.OpenSession(); err != nil {
 		t.Fatal(err)
 	}
 
-	if calls != "Connect" {
-		t.Error("base.Connect() was not called")
+	if calls != "OpenSession" {
+		t.Error("base.OpenSession() was not called")
 	}
 
 }
 
 func TestNXOSDevice_Disconnect(t *testing.T) {
 	mockb := mockBase{}
-	nxosDevice := NXOSDevice{"host", "username", "password", mockDriver{}, &mockb}
+	nxosDevice := NXOSDevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls
@@ -38,7 +38,7 @@ func TestNXOSDevice_Disconnect(t *testing.T) {
 
 func TestNXOSDevice_SendCommand(t *testing.T) {
 	mockb := mockBase{}
-	nxosDevice := NXOSDevice{"host", "username", "password", mockDriver{}, &mockb}
+	nxosDevice := NXOSDevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls
@@ -56,7 +56,7 @@ func TestNXOSDevice_SendCommand(t *testing.T) {
 func TestNXOSDevice_SendConfigSet(t *testing.T) {
 
 	mockb := mockBase{}
-	nxosDevice := NXOSDevice{"host", "username", "password", mockDriver{}, &mockb}
+	nxosDevice := NXOSDevice{mockDriver{}, "", &mockb}
 
 	var calls string
 	mockb.Calls = &calls
