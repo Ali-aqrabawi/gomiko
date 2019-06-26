@@ -3,7 +3,7 @@ package driver
 import "github.com/Ali-aqrabawi/gomiko/pkg/connections"
 
 type IDriver interface {
-	Connect() error
+	OpenSession() error
 	Disconnect()
 	SendCommand(cmd string, expectPattern string) (string, error)
 	SendCommandsSet(cmds []string, expectPattern string) (string, error)

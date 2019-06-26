@@ -9,7 +9,7 @@ import (
 type MockConn struct {
 }
 
-func (MockConn) Connect() error {
+func (MockConn) OpenSession() error {
 	return nil
 
 }
@@ -30,7 +30,7 @@ func (MockConn) Write(cmd string) int {
 type MockConn2 struct {
 }
 
-func (MockConn2) Connect() error {
+func (MockConn2) OpenSession() error {
 	return nil
 
 }

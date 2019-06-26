@@ -13,7 +13,7 @@ type mockDriver struct {
 	GenericCalls   *string
 }
 
-func (c mockDriver) Connect() error {
+func (c mockDriver) OpenSession() error {
 	return nil
 }
 func (c mockDriver) Disconnect() {
@@ -54,7 +54,7 @@ func (c mockDriver) ReadUntil(pattern string) (string, error) {
 
 }
 
-func TestMikroTikROS_Connect(t *testing.T) {
+func TestMikroTikROS_OpenSession(t *testing.T) {
 
 	// [1] test happy scenario with login -> userMode -> enableMode
 	mockD := mockDriver{}
@@ -80,7 +80,7 @@ func TestMikroTikROS_Connect(t *testing.T) {
 
 	}
 	base := MikroTikRouterOS{mockD, "mikrotik_routeros", ""}
-	if err := base.Connect(); err != nil {
+	if err := base.OpenSession(); err != nil {
 		t.Fatal(err)
 	}
 
@@ -117,7 +117,7 @@ func TestMikroTikROS_Disconnect(t *testing.T) {
 	base.Disconnect()
 
 	if genericCalls != "disconnect" {
-		t.Error("Driver.Connect was not called")
+		t.Error("Driver.Disconnect was not called")
 	}
 
 }

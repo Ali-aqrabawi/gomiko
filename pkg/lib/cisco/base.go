@@ -15,7 +15,7 @@ type CSCODevice struct {
 }
 
 func (d *CSCODevice) OpenSession() error {
-	if err := d.Driver.Connect(); err != nil {
+	if err := d.Driver.OpenSession(); err != nil {
 		return err
 	}
 	prompt, err := d.Driver.FindDevicePrompt("\r?(.*)[#>]", "#|>")
@@ -67,7 +67,7 @@ func (d *CSCODevice) sessionPreparation() error {
 	if strings.Contains(out, "Password:") {
 		out, err = d.Driver.SendCommand(d.Secret, d.Prompt)
 		if err != nil {
-			return errors.New("failed to send enable password:" + err.Error())
+			return errors.New("failed to send enable password, make sure you have passed SecretOption() option: " + err.Error())
 		}
 	}
 

@@ -12,7 +12,7 @@ type Driver struct {
 	Return     string `defaults:"\n"`
 }
 
-func (d *Driver) Connect() error {
+func (d *Driver) OpenSession() error {
 	err := d.Connection.OpenSession()
 	return err
 

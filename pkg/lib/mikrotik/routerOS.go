@@ -12,7 +12,7 @@ type MikroTikRouterOS struct {
 
 func (d *MikroTikRouterOS) OpenSession() error {
 
-	if err := d.Driver.Connect(); err != nil {
+	if err := d.Driver.OpenSession(); err != nil {
 		return err
 	}
 	prompt, err := d.Driver.FindDevicePrompt("\\[.*(@.*\\] >)", "] >")
