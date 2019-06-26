@@ -124,7 +124,6 @@ func getInteractiveCallBack(password string) ssh.KeyboardInteractiveChallenge {
 		// The second parameter is unused
 		for n, _ := range questions {
 			answers[n] = password
-			println(password)
 		}
 
 		return answers, nil
