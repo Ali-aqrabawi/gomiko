@@ -122,7 +122,7 @@ func getInteractiveCallBack(password string) ssh.KeyboardInteractiveChallenge {
 	return func(user, instruction string, questions []string, echos []bool) (answers []string, err error) {
 		answers = make([]string, len(questions))
 		// The second parameter is unused
-		for n, _ := range questions {
+		for n := range questions {
 			answers[n] = password
 		}
 
