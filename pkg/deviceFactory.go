@@ -8,7 +8,6 @@ import (
 	"github.com/Ali-aqrabawi/gomiko/pkg/lib/mikrotik"
 	"github.com/Ali-aqrabawi/gomiko/pkg/types"
 	"github.com/pkg/errors"
-	"golang.org/x/crypto/ssh"
 	"strings"
 )
 
@@ -21,20 +20,20 @@ func NewDevice(Host string, Username string, Password string, DeviceType string,
 	}
 
 	//create connection
-	connection, err := connections.NewSSHConn(Host, Username, Password, Port)
+	connection, err := connections.NewConnection(Host, Username, Password, "ssh", Port)
 	if err != nil {
 		return nil, err
 	}
 
 	//create the Device
 	if strings.Contains(DeviceType, "cisco") {
-		device, err = cisco.NewDevice(&connection, DeviceType)
+		device, err = cisco.NewDevice(connection, DeviceType)
 	} else if strings.Contains(DeviceType, "arista") {
-		device, err = arista.NewDevice(&connection, DeviceType)
+		device, err = arista.NewDevice(connection, DeviceType)
 	} else if strings.Contains(DeviceType, "juniper") {
-		device, err = juniper.NewDevice(&connection, DeviceType)
+		device, err = juniper.NewDevice(connection, DeviceType)
 	} else if strings.Contains(DeviceType, "mikrotik") {
-		device, err = mikrotik.NewDevice(&connection, DeviceType)
+		device, err = mikrotik.NewDevice(connection, DeviceType)
 	} else {
 		return nil, errors.New("DeviceType not supported: " + DeviceType)
 	}
@@ -52,35 +51,4 @@ func NewDevice(Host string, Username string, Password string, DeviceType string,
 
 	return device, nil
 
-}
-
-func NewDeviceFromClient(client *ssh.Client, DeviceType string, Options ...DeviceOption) (types.Device, error) {
-	var device types.Device
-
-	connection, err := connections.NewConnectionFromClient(client)
-	if err != nil {
-		return nil, err
-	}
-	if strings.Contains(DeviceType, "cisco") {
-		device, err = cisco.NewDevice(connection, DeviceType)
-	} else if strings.Contains(DeviceType, "arista") {
-		device, err = arista.NewDevice(connection, DeviceType)
-	} else if strings.Contains(DeviceType, "juniper") {
-		device, err = juniper.NewDevice(connection, DeviceType)
-	} else if strings.Contains(DeviceType, "mikrotik") {
-		device, err = mikrotik.NewDevice(connection, DeviceType)
-	} else {
-		return nil, errors.New("DeviceType not supported: " + DeviceType)
-	}
-	if err != nil {
-		return nil, err
-	}
-
-	for _, option := range Options {
-		err := option(device)
-		if err != nil {
-			return nil, err
-		}
-	}
-	return device, nil
 }

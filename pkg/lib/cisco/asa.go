@@ -11,8 +11,8 @@ type ASADevice struct {
 	base   types.CiscoDevice
 }
 
-func (d *ASADevice) OpenSession() error {
-	return d.base.OpenSession()
+func (d *ASADevice) Connect() error {
+	return d.base.Connect()
 
 }
 

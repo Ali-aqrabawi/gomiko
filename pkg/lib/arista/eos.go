@@ -11,8 +11,8 @@ type EOSDevice struct {
 	base   types.CiscoDevice
 }
 
-func (d *EOSDevice) OpenSession() error {
-	return d.base.OpenSession()
+func (d *EOSDevice) Connect() error {
+	return d.base.Connect()
 
 }
 

@@ -14,8 +14,8 @@ type JunOSDevice struct {
 
 }
 
-func (d *JunOSDevice) OpenSession() error {
-	if err := d.Driver.OpenSession(); err != nil {
+func (d *JunOSDevice) Connect() error {
+	if err := d.Driver.Connect(); err != nil {
 		return err
 	}
 	prompt, err := d.Driver.FindDevicePrompt("(@.*)[#>%]", "%")

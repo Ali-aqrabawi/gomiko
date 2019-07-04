@@ -14,8 +14,8 @@ type CSCODevice struct {
 	Secret     string
 }
 
-func (d *CSCODevice) OpenSession() error {
-	if err := d.Driver.OpenSession(); err != nil {
+func (d *CSCODevice) Connect() error {
+	if err := d.Driver.Connect(); err != nil {
 		return err
 	}
 	prompt, err := d.Driver.FindDevicePrompt("\r?(.*)[#>]", "#|>")

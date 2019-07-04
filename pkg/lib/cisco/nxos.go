@@ -11,8 +11,8 @@ type NXOSDevice struct {
 	base   types.CiscoDevice
 }
 
-func (d *NXOSDevice) OpenSession() error {
-	return d.base.OpenSession()
+func (d *NXOSDevice) Connect() error {
+	return d.base.Connect()
 
 }
 

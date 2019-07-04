@@ -13,7 +13,7 @@ type mockDriver struct {
 	GenericCalls   *string
 }
 
-func (c mockDriver) OpenSession() error {
+func (c mockDriver) Connect() error {
 	return nil
 
 }
@@ -55,7 +55,7 @@ func (c mockDriver) ReadUntil(pattern string) (string, error) {
 
 }
 
-func TestCSCODevice_OpenSessiont_userMode(t *testing.T) {
+func TestCSCODevice_Connect_userMode(t *testing.T) {
 
 	// [1] test happy scenario with login -> userMode -> enableMode
 	mockD := mockDriver{}
@@ -80,7 +80,7 @@ func TestCSCODevice_OpenSessiont_userMode(t *testing.T) {
 	}
 
 	base := CSCODevice{mockD, "", "", ""}
-	if err := base.OpenSession(); err != nil {
+	if err := base.Connect(); err != nil {
 		t.Fatal(err)
 	}
 
@@ -110,7 +110,7 @@ func TestCSCODevice_OpenSessiont_userMode(t *testing.T) {
 	base.SetSecret("mySecret")
 	cmdCalls = ""
 	callsCount = 0
-	if err := base.OpenSession(); err != nil {
+	if err := base.Connect(); err != nil {
 		t.Fatal(err)
 	}
 	expected = "enable, mySecret, terminal len 0, "
@@ -120,7 +120,7 @@ func TestCSCODevice_OpenSessiont_userMode(t *testing.T) {
 
 }
 
-func TestCSCODevice_OpenSession_noUserMode(t *testing.T) {
+func TestCSCODevice_Connect_noUserMode(t *testing.T) {
 
 	// [2] test no userMode scenario login -> enableMode
 	mockD := mockDriver{}
@@ -146,7 +146,7 @@ func TestCSCODevice_OpenSession_noUserMode(t *testing.T) {
 
 	}
 	base := CSCODevice{mockD, "cisco_ios", "", ""}
-	if err := base.OpenSession(); err != nil {
+	if err := base.Connect(); err != nil {
 		t.Fatal(err)
 	}
 

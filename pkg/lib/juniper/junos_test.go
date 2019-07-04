@@ -13,7 +13,7 @@ type mockDriver struct {
 	GenericCalls   *string
 }
 
-func (c mockDriver) OpenSession() error {
+func (c mockDriver) Connect() error {
 	return nil
 
 }
@@ -52,7 +52,7 @@ func (c mockDriver) ReadUntil(pattern string) (string, error) {
 
 }
 
-func TestJunOSDevice_OpenSession(t *testing.T) {
+func TestJunOSDevice_Connect(t *testing.T) {
 
 	// [1] test happy scenario with login -> userMode -> enableMode
 	mockD := mockDriver{}
@@ -78,7 +78,7 @@ func TestJunOSDevice_OpenSession(t *testing.T) {
 
 	}
 	base := JunOSDevice{mockD, "", ""}
-	if err := base.OpenSession(); err != nil {
+	if err := base.Connect(); err != nil {
 		t.Fatal(err)
 	}
 
