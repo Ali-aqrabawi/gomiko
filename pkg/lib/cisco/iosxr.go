@@ -11,8 +11,8 @@ type IOSXRDevice struct {
 	base   types.CiscoDevice
 }
 
-func (d *IOSXRDevice) OpenSession() error {
-	return d.base.OpenSession()
+func (d *IOSXRDevice) Connect() error {
+	return d.base.Connect()
 
 }
 

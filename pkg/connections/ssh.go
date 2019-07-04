@@ -19,47 +19,42 @@ var ciphers = []string{
 	"aes256-cbc",
 	"aes128-gcm@openssh.com"}
 
-
 type SSHConn struct {
-	client *ssh.Client
-	reader io.Reader
-	writer io.WriteCloser
+	addr     string
+	username string
+	password string
+	client   *ssh.Client
+	reader   io.Reader
+	writer   io.WriteCloser
 }
 
 func NewSSHConn(hostname string, username string, password string, port uint8) (SSHConn, error) {
 	sshConn := SSHConn{}
-	interactive := getInteractiveCallBack(password)
+
+	addr := fmt.Sprintf("%s:%d", hostname, port)
+	sshConn.addr = addr
+	sshConn.username = username
+	sshConn.password = password
+
+	return sshConn, nil
+
+}
+
+func (c *SSHConn) Connect() error {
+	interactive := getInteractiveCallBack(c.password)
 	sshConfig := &ssh.ClientConfig{
-		User:            username,
-		Auth:            []ssh.AuthMethod{ssh.Password(password), ssh.KeyboardInteractive(interactive)},
+		User:            c.username,
+		Auth:            []ssh.AuthMethod{ssh.Password(c.password), ssh.KeyboardInteractive(interactive)},
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 		Timeout:         6 * time.Second,
 	}
 	sshConfig.Ciphers = append(sshConfig.Ciphers, ciphers...)
-	addr := fmt.Sprintf("%s:%d", hostname, port)
-	conn, err := ssh.Dial("tcp", addr, sshConfig)
+	conn, err := ssh.Dial("tcp", c.addr, sshConfig)
 	if err != nil {
 
-		return sshConn, errors.New("failed to connect to device: " + err.Error())
+		return errors.New("failed to connect to device: " + err.Error())
 	}
-
-	sshConn.client = conn
-
-	return sshConn, nil
-
-}
-
-func NewSSHConnFromClient(client *ssh.Client) (SSHConn, error) {
-	sshConn := SSHConn{}
-	if client.Conn == nil {
-		return sshConn, errors.New("*ssh.Client has no Conn, make sure to call .Dial() before")
-	}
-	sshConn.client = client
-	return sshConn, nil
-
-}
-
-func (c *SSHConn) OpenSession() error {
+	c.client = conn
 
 	session, err := c.client.NewSession()
 

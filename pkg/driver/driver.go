@@ -12,8 +12,8 @@ type Driver struct {
 	Return     string `defaults:"\n"`
 }
 
-func (d *Driver) OpenSession() error {
-	err := d.Connection.OpenSession()
+func (d *Driver) Connect() error {
+	err := d.Connection.Connect()
 	return err
 
 }

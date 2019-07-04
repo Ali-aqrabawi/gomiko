@@ -1,14 +1,14 @@
 package types
 
 type Device interface {
-	OpenSession() error
+	Connect() error
 	Disconnect()
 	SendCommand(cmd string) (string, error)
 	SendConfigSet(cmds []string) (string, error)
 }
 
 type CiscoDevice interface {
-	OpenSession() error
+	Connect() error
 	Disconnect()
 	SendCommand(cmd string) (string, error)
 	SendConfigSet(cmds []string) (string, error)

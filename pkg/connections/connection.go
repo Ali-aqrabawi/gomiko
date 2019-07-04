@@ -2,11 +2,10 @@ package connections
 
 import (
 	"errors"
-	"golang.org/x/crypto/ssh"
 )
 
 type Connection interface {
-	OpenSession() error
+	Connect() error
 	Disconnect()
 	Read() (string, error)
 	Write(cmd string) int
@@ -23,13 +22,4 @@ func NewConnection(host string, username string, password string, protocol strin
 	default:
 		return nil, errors.New("unsupported protocol: " + protocol)
 	}
-}
-
-func NewConnectionFromClient(client *ssh.Client) (Connection, error) {
-	conn, err := NewSSHConnFromClient(client)
-	if err != nil {
-		return nil, err
-	}
-	return &conn, nil
-
 }

@@ -10,9 +10,9 @@ type MikroTikRouterOS struct {
 	Prompt     string
 }
 
-func (d *MikroTikRouterOS) OpenSession() error {
+func (d *MikroTikRouterOS) Connect() error {
 
-	if err := d.Driver.OpenSession(); err != nil {
+	if err := d.Driver.Connect(); err != nil {
 		return err
 	}
 	prompt, err := d.Driver.FindDevicePrompt("\\[.*(@.*\\] >)", "] >")

@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestIOSDevice_OpenSession(t *testing.T) {
+func TestIOSDevice_Connect(t *testing.T) {
 
 	// [1] test happy scenario with login -> userMode -> enableMode
 	mockb := mockBase{}
@@ -12,12 +12,12 @@ func TestIOSDevice_OpenSession(t *testing.T) {
 
 	var calls string
 	mockb.Calls = &calls
-	if err := iosDevice.OpenSession(); err != nil {
+	if err := iosDevice.Connect(); err != nil {
 		t.Fatal(err)
 	}
 
-	if calls != "OpenSession" {
-		t.Error("base.OpenSession() was not called")
+	if calls != "Connect" {
+		t.Error("base.Connect() was not called")
 	}
 
 }

@@ -8,8 +8,8 @@ type mockBase struct {
 	Calls *string
 }
 
-func (b mockBase) OpenSession() error {
-	*b.Calls = "OpenSession"
+func (b mockBase) Connect() error {
+	*b.Calls = "Connect"
 	return nil
 
 }
@@ -41,7 +41,7 @@ type mockDriver struct {
 	GenericCalls   *string
 }
 
-func (c mockDriver) OpenSession() error {
+func (c mockDriver) Connect() error {
 	return nil
 
 }
@@ -92,12 +92,12 @@ func TestEOSDevice_Connect(t *testing.T) {
 
 	var calls string
 	mockb.Calls = &calls
-	if err := eosDevice.OpenSession(); err != nil {
+	if err := eosDevice.Connect(); err != nil {
 		t.Fatal(err)
 	}
 
-	if calls != "OpenSession" {
-		t.Error("base.OpenSession() was not called")
+	if calls != "Connect" {
+		t.Error("base.Connect() was not called")
 	}
 
 }
