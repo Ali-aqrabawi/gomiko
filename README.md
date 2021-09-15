@@ -27,7 +27,7 @@ import (
 
 func main() {
 	
-     device, err := gomiko.NewDevice("192.168.1.1", "admin", "mySecret", "cisco_ios", 22)
+     device, err := gomiko.NewDevice("192.168.1.1", "admin", "password", "cisco_ios", 22)
      if err != nil {
      	log.Fatal(err)
      }
