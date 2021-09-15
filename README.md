@@ -22,6 +22,7 @@ get gomiko pkg: `go get -u github.com/Ali-aqrabawi/gomiko/pkg`.
 ```go
 import (
 	"fmt"
+	"log"
 	"github.com/Ali-aqrabawi/gomiko/pkg"
 )
 
@@ -57,6 +58,7 @@ func main() {
 ```go
 import (
 	"fmt"
+	"log"
 	"github.com/Ali-aqrabawi/gomiko/pkg"
 )
 
