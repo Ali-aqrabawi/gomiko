@@ -97,7 +97,7 @@ func (c *SSHConn) Disconnect() {
 
 func (c *SSHConn) Read() (string, error) {
 
-	buff := make([]byte, 2048)
+	buff := make([]byte, 204800)
 
 	n, err := c.reader.Read(buff)
 	return string(buff[:n]), err
