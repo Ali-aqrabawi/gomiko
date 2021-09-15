@@ -28,6 +28,7 @@ import (
 func main() {
 	
      device, err := gomiko.NewDevice("192.168.1.1", "admin", "password", "cisco_ios", 22)
+     
      if err != nil {
      	log.Fatal(err)
      }
@@ -49,5 +50,23 @@ func main() {
      fmt.Println(output1)
      fmt.Println(output2)
  
+}
+```
+
+## create device with enable password:
+```go
+import (
+	"fmt"
+	"github.com/Ali-aqrabawi/gomiko/pkg"
+)
+
+func main() {
+	
+     device, err := gomiko.NewDevice("192.168.1.1", "admin", "password", "cisco_ios", 22, gomiko.SecretOption("enablePass"))
+     
+     if err != nil {
+     	log.Fatal(err)
+     }     
+
 }
 ```
