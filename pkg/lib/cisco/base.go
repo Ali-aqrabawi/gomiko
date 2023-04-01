@@ -6,7 +6,6 @@ import (
 	"strings"
 )
 
-
 type CSCODevice struct {
 	Driver     driver.IDriver
 	DeviceType string
@@ -18,7 +17,7 @@ func (d *CSCODevice) Connect() error {
 	if err := d.Driver.Connect(); err != nil {
 		return err
 	}
-	prompt, err := d.Driver.FindDevicePrompt("\r?(.*)[#>]", "#|>")
+	prompt, err := d.Driver.FindDevicePrompt("\r\n?(\\S+)[#>]", "#|>")
 
 	if err != nil {
 		return err
