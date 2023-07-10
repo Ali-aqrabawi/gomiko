@@ -30,10 +30,9 @@ func (d *CSCODevice) Connect() error {
 func (d *CSCODevice) Disconnect() {
 	d.Driver.Disconnect()
 }
+
 func (d *CSCODevice) SetSecret(secret string) {
-
 	d.Secret = secret
-
 }
 
 func (d *CSCODevice) SendCommand(cmd string) (string, error) {
@@ -75,7 +74,7 @@ func (d *CSCODevice) sessionPreparation() error {
 	}
 
 	cmd := getPagerDisableCmd(d.DeviceType)
-	out, err = d.SendCommand(cmd)
+	_, err = d.SendCommand(cmd)
 
 	return err
 

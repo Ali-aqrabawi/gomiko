@@ -26,15 +26,21 @@ type SSHConn struct {
 	client   *ssh.Client
 	reader   io.Reader
 	writer   io.WriteCloser
+	timeout  uint8
 }
 
-func NewSSHConn(hostname string, username string, password string, port uint8) (SSHConn, error) {
+func NewSSHConn(hostname string, username string, password string, port uint8, timeout ...uint8) (SSHConn, error) {
 	sshConn := SSHConn{}
 
 	addr := fmt.Sprintf("%s:%d", hostname, port)
 	sshConn.addr = addr
 	sshConn.username = username
 	sshConn.password = password
+	if len(timeout) > 0 {
+		sshConn.timeout = timeout[0]
+	} else {
+		sshConn.timeout = 6 // Default timeout is 6 seconds
+	}
 
 	return sshConn, nil
 
@@ -46,7 +52,7 @@ func (c *SSHConn) Connect() error {
 		User:            c.username,
 		Auth:            []ssh.AuthMethod{ssh.Password(c.password), ssh.KeyboardInteractive(interactive)},
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
-		Timeout:         6 * time.Second,
+		Timeout:         time.Duration(c.timeout) * time.Second,
 	}
 	sshConfig.Ciphers = append(sshConfig.Ciphers, ciphers...)
 	conn, err := ssh.Dial("tcp", c.addr, sshConfig)
