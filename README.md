@@ -72,3 +72,22 @@ func main() {
 
 }
 ```
+
+## create device with custom timeout:
+```go
+import (
+	"fmt"
+	"log"
+	"github.com/Ali-aqrabawi/gomiko/pkg"
+)
+
+func main() {
+	
+     device, err := gomiko.NewDevice("192.168.1.1", "admin", "password", "cisco_ios", 22, gomiko.SecretOption("enablePass"), gomiko.TimeoutOption(10))
+     
+     if err != nil {
+     	log.Fatal(err)
+     }     
+
+}
+```

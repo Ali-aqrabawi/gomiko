@@ -2,9 +2,10 @@ package driver
 
 import (
 	"errors"
-	"github.com/Ali-aqrabawi/gomiko/pkg/connections"
 	"regexp"
 	"time"
+
+	"github.com/Ali-aqrabawi/gomiko/pkg/connections"
 )
 
 type Driver struct {
@@ -91,9 +92,12 @@ func (d *Driver) ReadUntil(pattern string) (string, error) {
 
 	}(d, pattern)
 
-
 	return <-outputChan, err
 
+}
+
+func (d Driver) SetTimeout(timeout uint8) {
+	d.Connection.SetTimeout(timeout)
 }
 
 func (d Driver) SetReturn(Return string) {

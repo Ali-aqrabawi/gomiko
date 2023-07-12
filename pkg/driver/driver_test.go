@@ -27,6 +27,9 @@ func (MockConn) Write(cmd string) int {
 	return 1
 }
 
+func (MockConn) SetTimeout(timeout uint8) {
+}
+
 type MockConn2 struct {
 }
 
@@ -45,6 +48,9 @@ func (MockConn2) Read() (string, error) {
 
 func (MockConn2) Write(cmd string) int {
 	return 1
+}
+
+func (MockConn2) SetTimeout(timeout uint8) {
 }
 
 func TestDriver_FindDevicePrompt(t *testing.T) {

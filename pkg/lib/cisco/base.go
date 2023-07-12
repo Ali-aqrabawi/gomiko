@@ -2,8 +2,9 @@ package cisco
 
 import (
 	"errors"
-	"github.com/Ali-aqrabawi/gomiko/pkg/driver"
 	"strings"
+
+	"github.com/Ali-aqrabawi/gomiko/pkg/driver"
 )
 
 type CSCODevice struct {
@@ -30,10 +31,13 @@ func (d *CSCODevice) Connect() error {
 func (d *CSCODevice) Disconnect() {
 	d.Driver.Disconnect()
 }
+
 func (d *CSCODevice) SetSecret(secret string) {
-
 	d.Secret = secret
+}
 
+func (d *CSCODevice) SetTimeout(timeout uint8) {
+	d.Driver.SetTimeout(timeout)
 }
 
 func (d *CSCODevice) SendCommand(cmd string) (string, error) {
@@ -75,7 +79,7 @@ func (d *CSCODevice) sessionPreparation() error {
 	}
 
 	cmd := getPagerDisableCmd(d.DeviceType)
-	out, err = d.SendCommand(cmd)
+	_, err = d.SendCommand(cmd)
 
 	return err
 

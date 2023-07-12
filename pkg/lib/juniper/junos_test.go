@@ -52,6 +52,9 @@ func (c mockDriver) ReadUntil(pattern string) (string, error) {
 
 }
 
+func (c mockDriver) SetTimeout(timeout uint8) {
+}
+
 func TestJunOSDevice_Connect(t *testing.T) {
 
 	// [1] test happy scenario with login -> userMode -> enableMode

@@ -55,6 +55,9 @@ func (c mockDriver) ReadUntil(pattern string) (string, error) {
 
 }
 
+func (c mockDriver) SetTimeout(timeout uint8) {
+}
+
 func TestCSCODevice_Connect_userMode(t *testing.T) {
 
 	// [1] test happy scenario with login -> userMode -> enableMode
@@ -100,7 +103,8 @@ func TestCSCODevice_Connect_userMode(t *testing.T) {
 		t.Errorf("wrong Cisco commands calls, Expected: (%s) Got: (%s)", expected, cmdCalls)
 	}
 
-	expected = "\r?(.*)[#>]"
+	// expected = "\r?(.*)[#>]" - This does not match what's used in the Connect function making the call to FindDevicePrompt. What's below is used instead.
+	expected = "\r\n?(\\S+)[#>]"
 
 	if promptRegexCall != expected {
 		t.Errorf("wrong Cisco prompt regex calls, Expected: (%s) Got: (%s)", expected, promptRegexCall)
@@ -164,7 +168,6 @@ func TestCSCODevice_Connect_noUserMode(t *testing.T) {
 
 }
 
-//
 func TestCSCODevice_Disconnect(t *testing.T) {
 	mockD := mockDriver{}
 	var genericCalls string

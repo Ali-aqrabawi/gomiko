@@ -33,6 +33,9 @@ func (b mockBase) SetSecret(secret string) {
 
 }
 
+func (b mockBase) SetTimeout(timeout uint8) {
+}
+
 type mockDriver struct {
 	ReadSideEffect func() string
 	CmdCalls       *string
@@ -81,6 +84,9 @@ func (c mockDriver) ReadUntil(pattern string) (string, error) {
 
 	return c.ReadSideEffect(), nil
 
+}
+
+func (c mockDriver) SetTimeout(timeout uint8) {
 }
 
 func TestEOSDevice_Connect(t *testing.T) {

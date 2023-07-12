@@ -33,6 +33,9 @@ func (b mockBase) SetSecret(secret string) {
 
 }
 
+func (b mockBase) SetTimeout(timeout uint8) {
+}
+
 func TestASADevice_Connect(t *testing.T) {
 
 	// [1] test happy scenario with login -> userMode -> enableMode
