@@ -33,7 +33,7 @@ func (b mockBase) SetSecret(secret string) {
 
 }
 
-func (b mockBase) SetTimeout(timeout int) {
+func (b mockBase) SetTimeout(timeout uint8) {
 }
 
 type mockDriver struct {
@@ -86,8 +86,7 @@ func (c mockDriver) ReadUntil(pattern string) (string, error) {
 
 }
 
-func (c mockDriver) SetTimeout(timeout int) {
-	return
+func (c mockDriver) SetTimeout(timeout uint8) {
 }
 
 func TestEOSDevice_Connect(t *testing.T) {

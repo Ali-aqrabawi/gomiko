@@ -5,7 +5,7 @@ type Device interface {
 	Disconnect()
 	SendCommand(cmd string) (string, error)
 	SendConfigSet(cmds []string) (string, error)
-	SetTimeout(timeout int)
+	SetTimeout(timeout uint8)
 }
 
 type CiscoDevice interface {
@@ -14,5 +14,5 @@ type CiscoDevice interface {
 	SendCommand(cmd string) (string, error)
 	SendConfigSet(cmds []string) (string, error)
 	SetSecret(secret string)
-	SetTimeout(timeout int)
+	SetTimeout(timeout uint8)
 }

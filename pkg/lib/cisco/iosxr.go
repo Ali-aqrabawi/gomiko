@@ -35,6 +35,6 @@ func (d *IOSXRDevice) SetSecret(secret string) {
 	d.base.SetSecret(secret)
 }
 
-func (d *IOSXRDevice) SetTimeout(timeout int) {
+func (d *IOSXRDevice) SetTimeout(timeout uint8) {
 	d.base.SetTimeout(timeout)
 }

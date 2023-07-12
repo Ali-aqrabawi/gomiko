@@ -2,8 +2,9 @@ package cisco
 
 import (
 	"errors"
-	"github.com/Ali-aqrabawi/gomiko/pkg/driver"
 	"strings"
+
+	"github.com/Ali-aqrabawi/gomiko/pkg/driver"
 )
 
 type CSCODevice struct {
@@ -35,8 +36,8 @@ func (d *CSCODevice) SetSecret(secret string) {
 	d.Secret = secret
 }
 
-func (d *CSCODevice) SetTimeout(timeout int) {
-	d.Driver.SetTimeout(timeout)	
+func (d *CSCODevice) SetTimeout(timeout uint8) {
+	d.Driver.SetTimeout(timeout)
 }
 
 func (d *CSCODevice) SendCommand(cmd string) (string, error) {

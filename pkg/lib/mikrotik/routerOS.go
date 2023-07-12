@@ -34,7 +34,6 @@ func (d *MikroTikRouterOS) SendCommand(cmd string) (string, error) {
 
 	result, err := d.Driver.SendCommand(cmd, d.Prompt)
 
-
 	return result, err
 
 }
@@ -53,6 +52,6 @@ func (d *MikroTikRouterOS) sessionPreparation() error {
 
 }
 
-func (d *MikroTikRouterOS) SetTimeout(timeout int) {
+func (d *MikroTikRouterOS) SetTimeout(timeout uint8) {
 	d.Driver.SetTimeout(timeout)
 }

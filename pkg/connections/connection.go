@@ -9,7 +9,7 @@ type Connection interface {
 	Disconnect()
 	Read() (string, error)
 	Write(cmd string) int
-	SetTimeout(timeout int)
+	SetTimeout(timeout uint8)
 }
 
 func NewConnection(host string, username string, password string, protocol string, port uint8) (Connection, error) {

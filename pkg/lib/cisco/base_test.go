@@ -55,7 +55,7 @@ func (c mockDriver) ReadUntil(pattern string) (string, error) {
 
 }
 
-func (c mockDriver) SetTimeout(timeout int) {
+func (c mockDriver) SetTimeout(timeout uint8) {
 }
 
 func TestCSCODevice_Connect_userMode(t *testing.T) {
@@ -168,7 +168,6 @@ func TestCSCODevice_Connect_noUserMode(t *testing.T) {
 
 }
 
-//
 func TestCSCODevice_Disconnect(t *testing.T) {
 	mockD := mockDriver{}
 	var genericCalls string

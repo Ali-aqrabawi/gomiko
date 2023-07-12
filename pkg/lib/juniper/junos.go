@@ -2,16 +2,15 @@ package juniper
 
 import (
 	"errors"
-	"github.com/Ali-aqrabawi/gomiko/pkg/driver"
 	"strings"
+
+	"github.com/Ali-aqrabawi/gomiko/pkg/driver"
 )
 
 type JunOSDevice struct {
 	Driver     driver.IDriver
 	DeviceType string
 	Prompt     string
-
-
 }
 
 func (d *JunOSDevice) Connect() error {
@@ -73,6 +72,6 @@ func (d *JunOSDevice) sessionPreparation() error {
 
 }
 
-func (d *JunOSDevice) SetTimeout(timeout int) {
+func (d *JunOSDevice) SetTimeout(timeout uint8) {
 	d.Driver.SetTimeout(timeout)
 }

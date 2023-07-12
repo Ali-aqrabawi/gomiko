@@ -13,7 +13,7 @@ func SecretOption(secret string) func(device interface{}) error {
 	}
 }
 
-func TimeoutOption(timeout int) func(device interface{}) error {
+func TimeoutOption(timeout uint8) func(device interface{}) error {
 	return func(device interface{}) error {
 		device.(types.CiscoDevice).SetTimeout(timeout)
 		return nil

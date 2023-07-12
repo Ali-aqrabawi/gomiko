@@ -3,10 +3,11 @@ package connections
 import (
 	"errors"
 	"fmt"
-	"golang.org/x/crypto/ssh"
 	"io"
 	"log"
 	"time"
+
+	"golang.org/x/crypto/ssh"
 )
 
 var ciphers = []string{
@@ -26,7 +27,7 @@ type SSHConn struct {
 	client   *ssh.Client
 	reader   io.Reader
 	writer   io.WriteCloser
-	timeout  int
+	timeout  uint8
 }
 
 func NewSSHConn(hostname string, username string, password string, port uint8) (SSHConn, error) {
@@ -42,7 +43,7 @@ func NewSSHConn(hostname string, username string, password string, port uint8) (
 
 }
 
-func (c *SSHConn) SetTimeout(timeout int) {
+func (c *SSHConn) SetTimeout(timeout uint8) {
 	c.timeout = timeout
 }
 

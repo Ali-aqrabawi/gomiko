@@ -35,6 +35,6 @@ func (d *NXOSDevice) SetSecret(secret string) {
 
 }
 
-func (d *NXOSDevice) SetTimeout(timeout int) {
+func (d *NXOSDevice) SetTimeout(timeout uint8) {
 	d.base.SetTimeout(timeout)
 }

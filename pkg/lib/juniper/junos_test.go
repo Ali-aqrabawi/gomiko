@@ -52,8 +52,7 @@ func (c mockDriver) ReadUntil(pattern string) (string, error) {
 
 }
 
-func (c mockDriver) SetTimeout(timeout int) {
-	return
+func (c mockDriver) SetTimeout(timeout uint8) {
 }
 
 func TestJunOSDevice_Connect(t *testing.T) {

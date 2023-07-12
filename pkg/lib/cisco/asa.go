@@ -34,6 +34,6 @@ func (d *ASADevice) SetSecret(secret string) {
 	d.base.SetSecret(secret)
 }
 
-func (d *ASADevice) SetTimeout(timeout int) {
+func (d *ASADevice) SetTimeout(timeout uint8) {
 	d.base.SetTimeout(timeout)
 }
