@@ -72,3 +72,7 @@ func (d *JunOSDevice) sessionPreparation() error {
 	return nil
 
 }
+
+func (d *JunOSDevice) SetTimeout(timeout int) {
+	d.Driver.SetTimeout(timeout)
+}

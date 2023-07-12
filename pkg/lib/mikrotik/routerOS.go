@@ -52,3 +52,7 @@ func (d *MikroTikRouterOS) sessionPreparation() error {
 	return err
 
 }
+
+func (d *MikroTikRouterOS) SetTimeout(timeout int) {
+	d.Driver.SetTimeout(timeout)
+}

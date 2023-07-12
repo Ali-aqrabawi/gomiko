@@ -35,3 +35,7 @@ func (d *EOSDevice) SetSecret(secret string) {
 	d.base.SetSecret(secret)
 
 }
+
+func (d *EOSDevice) SetTimeout(timeout int) {
+	d.base.SetTimeout(timeout)
+}

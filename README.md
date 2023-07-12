@@ -83,7 +83,9 @@ import (
 
 func main() {
 	
-     device, err := gomiko.NewDeviceWithTimeout("192.168.1.1", "admin", "password", "cisco_ios", 22, 10)
+     secret := gomiko.SecretOption("enablePass")
+     timeout := gomiko.TimeoutOption(10)  // Default is 6
+     device, err := gomiko.NewDevice("192.168.1.1", "admin", "password", "cisco_ios", 22, secret, timeout)
      
      if err != nil {
      	log.Fatal(err)

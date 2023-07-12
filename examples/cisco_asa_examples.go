@@ -46,7 +46,7 @@ func exampleNoSecretASA() {
 // then execute some commands
 func exampleWithTimeoutNoSecretASA() {
 	//create Cisco IOS Device without Secret and connect to it.
-	device, err := gomiko.NewDeviceWithTimeout("192.168.1.102", "admin", "mySecret", "cisco_asa", 22, 10)
+	device, err := gomiko.NewDevice("192.168.1.102", "admin", "mySecret", "cisco_asa", 22, gomiko.TimeoutOption(10))
 	if err != nil {
 		log.Fatal(err)
 	}

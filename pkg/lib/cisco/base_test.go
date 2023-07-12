@@ -55,6 +55,9 @@ func (c mockDriver) ReadUntil(pattern string) (string, error) {
 
 }
 
+func (c mockDriver) SetTimeout(timeout int) {
+}
+
 func TestCSCODevice_Connect_userMode(t *testing.T) {
 
 	// [1] test happy scenario with login -> userMode -> enableMode

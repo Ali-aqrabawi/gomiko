@@ -80,10 +80,11 @@ func exampleWithSecrect() {
 func exampleWithTimeoutWithSecrect() {
 	// create Cisco IOS Device with SecretOption and connect to it.
 	secOption := gomiko.SecretOption("mySecret")
-	device, err := gomiko.NewDeviceWithTimeout(
+	timeoutOption := gomiko.TimeoutOption(10)
+	device, err := gomiko.NewDevice(
 		"192.168.1.1", "admin",
 		"mySecret", "cisco_ios",
-		22, 10, secOption,
+		22, secOption, timeoutOption,
 	)
 	if err != nil {
 		log.Fatal(err)

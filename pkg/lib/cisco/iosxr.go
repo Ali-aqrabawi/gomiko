@@ -34,3 +34,7 @@ func (d *IOSXRDevice) SendConfigSet(cmds []string) (string, error) {
 func (d *IOSXRDevice) SetSecret(secret string) {
 	d.base.SetSecret(secret)
 }
+
+func (d *IOSXRDevice) SetTimeout(timeout int) {
+	d.base.SetTimeout(timeout)
+}

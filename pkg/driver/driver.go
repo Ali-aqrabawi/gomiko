@@ -96,6 +96,10 @@ func (d *Driver) ReadUntil(pattern string) (string, error) {
 
 }
 
+func (d Driver) SetTimeout(timeout int) {
+	d.Connection.SetTimeout(timeout)
+}
+
 func (d Driver) SetReturn(Return string) {
 	d.Return = Return
 }

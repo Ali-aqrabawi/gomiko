@@ -54,6 +54,10 @@ func (c mockDriver) ReadUntil(pattern string) (string, error) {
 
 }
 
+func (c mockDriver) SetTimeout(timeout int) {
+	return
+}
+
 func TestMikroTikROS_Connect(t *testing.T) {
 
 	// [1] test happy scenario with login -> userMode -> enableMode

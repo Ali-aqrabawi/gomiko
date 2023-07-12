@@ -35,6 +35,10 @@ func (d *CSCODevice) SetSecret(secret string) {
 	d.Secret = secret
 }
 
+func (d *CSCODevice) SetTimeout(timeout int) {
+	d.Driver.SetTimeout(timeout)	
+}
+
 func (d *CSCODevice) SendCommand(cmd string) (string, error) {
 
 	result, err := d.Driver.SendCommand(cmd, d.Prompt)

@@ -33,3 +33,7 @@ func (d *ASADevice) SendConfigSet(cmds []string) (string, error) {
 func (d *ASADevice) SetSecret(secret string) {
 	d.base.SetSecret(secret)
 }
+
+func (d *ASADevice) SetTimeout(timeout int) {
+	d.base.SetTimeout(timeout)
+}
