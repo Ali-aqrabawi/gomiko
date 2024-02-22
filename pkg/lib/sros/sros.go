@@ -63,5 +63,5 @@ func (d *SROSDevice) sessionPreparation() error {
 }
 
 func (d *SROSDevice) SetTimeout(timeout uint8) {
-	d.base.SetTimeout(timeout)
+	// TODO: implenet me.
 }
