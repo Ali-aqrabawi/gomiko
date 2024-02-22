@@ -62,6 +62,6 @@ func (d *SROSDevice) sessionPreparation() error {
 	return nil
 }
 
-func (d *EOSDevice) SetTimeout(timeout uint8) {
+func (d *SROSDevice) SetTimeout(timeout uint8) {
 	d.base.SetTimeout(timeout)
 }
