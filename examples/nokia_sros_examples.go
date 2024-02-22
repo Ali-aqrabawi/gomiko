@@ -1,4 +1,4 @@
-package main
+package examples
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-func main() {
+func mainNokia() {
 	exampleBasicSROS()
 }
 
