@@ -14,6 +14,7 @@ without needing to care about handling device prompts and terminal modes.
 * Mikrotik RouterOS
 * Arista EOS
 * Juniper JunOS
+* Nokia SROS
 
 ## Installation
 get gomiko pkg: `go get -u github.com/Ali-aqrabawi/gomiko/pkg`.
