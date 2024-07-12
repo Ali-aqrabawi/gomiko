@@ -1,7 +1,7 @@
 package gomiko
 
 import (
-	"github.com/Ali-aqrabawi/gomiko/pkg/types"
+	"github.com/asadarafat/gomiko/pkg/types"
 )
 
 type DeviceOption func(interface{}) error

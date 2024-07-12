@@ -1,8 +1,9 @@
-package sros
+package nokia
 
 import (
 	"errors"
-	"github.com/Ali-aqrabawi/gomiko/pkg/driver"
+
+	"github.com/asadarafat/gomiko/pkg/driver"
 )
 
 type SROSDevice struct {

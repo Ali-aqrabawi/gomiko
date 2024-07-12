@@ -4,7 +4,7 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/Ali-aqrabawi/gomiko/pkg/driver"
+	"github.com/asadarafat/gomiko/pkg/driver"
 )
 
 type JunOSDevice struct {

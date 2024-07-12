@@ -1,9 +1,9 @@
-package sros
+package nokia
 
 import (
-	"github.com/Ali-aqrabawi/gomiko/pkg/connections"
-	"github.com/Ali-aqrabawi/gomiko/pkg/driver"
-	"github.com/Ali-aqrabawi/gomiko/pkg/types"
+	"github.com/asadarafat/gomiko/pkg/connections"
+	"github.com/asadarafat/gomiko/pkg/driver"
+	"github.com/asadarafat/gomiko/pkg/types"
 )
 
 func NewDevice(connection connections.Connection, DeviceType string) (types.Device, error) {

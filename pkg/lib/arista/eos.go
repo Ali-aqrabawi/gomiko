@@ -1,8 +1,8 @@
 package arista
 
 import (
-	"github.com/Ali-aqrabawi/gomiko/pkg/driver"
-	"github.com/Ali-aqrabawi/gomiko/pkg/types"
+	"github.com/asadarafat/gomiko/pkg/driver"
+	"github.com/asadarafat/gomiko/pkg/types"
 )
 
 type EOSDevice struct {

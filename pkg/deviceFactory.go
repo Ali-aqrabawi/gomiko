@@ -1,15 +1,17 @@
 package gomiko
 
 import (
-	"github.com/Ali-aqrabawi/gomiko/pkg/connections"
-	"github.com/Ali-aqrabawi/gomiko/pkg/lib/arista"
-	"github.com/Ali-aqrabawi/gomiko/pkg/lib/cisco"
-	"github.com/Ali-aqrabawi/gomiko/pkg/lib/juniper"
-	"github.com/Ali-aqrabawi/gomiko/pkg/lib/mikrotik"
-	"github.com/Ali-aqrabawi/gomiko/pkg/lib/sros"
-	"github.com/Ali-aqrabawi/gomiko/pkg/types"
-	"github.com/pkg/errors"
 	"strings"
+
+	"github.com/asadarafat/gomiko/pkg/connections"
+	"github.com/asadarafat/gomiko/pkg/lib/arista"
+	"github.com/asadarafat/gomiko/pkg/lib/cisco"
+	"github.com/asadarafat/gomiko/pkg/lib/juniper"
+	"github.com/asadarafat/gomiko/pkg/lib/mikrotik"
+	"github.com/asadarafat/gomiko/pkg/lib/nokia"
+
+	"github.com/asadarafat/gomiko/pkg/types"
+	"github.com/pkg/errors"
 )
 
 func NewDevice(Host string, Username string, Password string, DeviceType string, Port uint8, Options ...DeviceOption) (types.Device, error) {
@@ -35,8 +37,8 @@ func NewDevice(Host string, Username string, Password string, DeviceType string,
 		device, err = juniper.NewDevice(connection, DeviceType)
 	} else if strings.Contains(DeviceType, "mikrotik") {
 		device, err = mikrotik.NewDevice(connection, DeviceType)
-	} else if strings.Contains(DeviceType, "nokia_sros") {
-		device, err = sros.NewDevice(connection, DeviceType)
+	} else if strings.Contains(DeviceType, "nokia") {
+		device, err = nokia.NewDevice(connection, DeviceType)
 	} else {
 		return nil, errors.New("DeviceType not supported: " + DeviceType)
 	}

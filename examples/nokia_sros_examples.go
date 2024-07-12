@@ -2,8 +2,9 @@ package examples
 
 import (
 	"fmt"
-	"github.com/Ali-aqrabawi/gomiko/pkg"
 	"log"
+
+	gomiko "github.com/asadarafat/gomiko/pkg"
 )
 
 func mainNokia() {
