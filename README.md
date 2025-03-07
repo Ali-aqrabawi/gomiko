@@ -1,6 +1,6 @@
 # Gomiko
 [![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/Ali-aqrabawi/gomiko)
-[<img src="https://api.gitsponsors.com/api/badge/img?id=192590075" height="20">](https://api.gitsponsors.com/api/badge/link?p=xOtJljV6r7vHqTB7WwqJPvHjy9mv5zm1vUkLp13Uar0JcZYpgrTgWJHMoakqNuul)
+
 
 
 
